@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="tabletop.min.js"></script>
+<script type='text/javascript'>
+    function init() {
+        Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1M_9bqLirG6H-7wCaJ0WIL8PLwb9o3XCXI_SHEYbKXFc/pubhtml",
+                         callback: showInfo,
+                         wanted: [ "Sheet1", "Sheet2" ] } );
+    }
+    window.addEventListener("DOMContentLoaded", init);
+
+// data:
+//   
+    function showInfo(data, tabletop) {
+        sheet1 = data["Sheet1"];
+        console.log(sheet1.elements[0]);
+        $.each( sheet1.elements, function (rownum, rowdata) {
+            if (rownum != 0) {
+//                console.log(" rownum = " + rownum + ", rowdata: " + rowdata);
+//                console.log("  Percent = " + rowdata["Percent"]);
+//                console.log("  Team = " + rowdata["Team"]);
+//                console.log("  Us = " + rowdata["Us"]);
+//                console.log("  Them = " + rowdata["Them"]);
+                $("#table").append("<tr><td>" + rowdata["Team"] + "</td><td>" + rowdata["Percent"] + "</td><td>" + rowdata["Us"] + "</td><td>" + rowdata["Them"] + "</td></tr>");
+            }
+        });
+    }
+</script>
+
+<style type="text/css">
+  
+</style>
+</head>
+
+<body>
+<div>
+Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
+</div>
+<div>
+    <table id="table">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Percent</th>
+                <th>Us</th>
+                <th>Them</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+</body>
+</html>
