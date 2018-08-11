@@ -56,12 +56,13 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
 </div>
 
 <script type='text/javascript'>
-    Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1M_9bqLirG6H-7wCaJ0WIL8PLwb9o3XCXI_SHEYbKXFc/pubhtml",
+    TEAMSHEET = "Sheet3";
+    Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1-VoIO4Wjer8G1XTJcf74jXJGi4-Jqedjiye5bux_K2s/pubhtml",
                      callback: showInfo,
-                     wanted: [ "Sheet1", "Sheet2" ] } );
+                     wanted: [ TEAMSHEET ] } );
 
     function showInfo(data, tabletop) {
-        resultssheet = data["Sheet1"];
+        resultssheet = data[TEAMSHEET];
         results = resultssheet.elements;
         resultsrows = results.length;
         resultscols = Object.keys(results[0]).length;
