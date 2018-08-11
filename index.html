@@ -9,6 +9,31 @@
 <script type="text/javascript" src="tabletop.min.js"></script>
 
 <style type="text/css">
+
+body {
+    font-family: sans-serif;
+}
+.team {
+    color: blue;
+    font-weight: bold;
+}
+.percent {
+    color: white;
+    font-weight: bold;
+    text-align: right;
+}
+.win {
+    background-color: limegreen;
+}
+.lose {
+    background-color: red;
+}
+.tie {
+    background-color: gold;
+}
+.us_won, .us_lost {
+    text-align: center;
+}
   
 </style>
 </head>
@@ -45,11 +70,21 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
         console.log("cols = " + resultscols);
         $.each( results, function (rownum, rowdata) {
             if (rownum != 0) {
+                us = rowdata["Us"];
+                iUs = parseInt(us, 10);
+                them = rowdata["Them"];
+                iThem = parseInt(them, 10);
+                if (iUs > iThem)
+                    percent_class = "win";
+                else if (iThem > iUs)
+                    percent_class = "lose";
+                else
+                    percent_class = "tie";
                 $("#table").append("<tr>" +
-                                       "<td>" + rowdata["Team"] + "</td>" +
-                                       "<td>" + rowdata["Percent"] + "</td>" +
-                                       "<td>" + rowdata["Us"] + "</td>" +
-                                       "<td>" + rowdata["Them"] + "</td>" +
+                                       "<td class='team'>" + rowdata["Team"] + "</td>" +
+                                       "<td class='percent " + percent_class + "'>" + rowdata["Percent"] + "</td>" +
+                                       "<td class='us_won'>" + rowdata["Us"] + "</td>" +
+                                       "<td class='us_lost'>" + rowdata["Them"] + "</td>" +
                                    "</tr>");
             }
         });
