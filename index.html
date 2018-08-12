@@ -5,10 +5,25 @@
 
 <title>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</title>
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="tabletop.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
 <style type="text/css">
+
+td.details-control {
+    text-align:center;
+    color:forestgreen;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    text-align:center; 
+    color:red;
+}
 
 body {
     font-family: sans-serif;
@@ -17,7 +32,7 @@ body {
     color: blue;
     font-weight: bold;
 }
-.percent {
+.percent, .win, .lose, .tie {
     color: white;
     font-weight: bold;
     text-align: right;
@@ -43,52 +58,121 @@ body {
 Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
 </div>
 <div>
-    <table id="table">
+    <table id="teamtable" class="display" style="width:100%">
         <thead>
             <tr>
+                <th></th>
                 <th>Team</th>
                 <th>Percent</th>
                 <th>Us</th>
                 <th>Them</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>Team</th>
+                <th>Percent</th>
+                <th>Us</th>
+                <th>Them</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
 <script type='text/javascript'>
     TEAMSHEET = "Sheet3";
-    Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1-VoIO4Wjer8G1XTJcf74jXJGi4-Jqedjiye5bux_K2s/pubhtml",
-                     callback: showInfo,
-                     wanted: [ TEAMSHEET ] } );
+    SETSHEET = "Sheet1";
 
-    function showInfo(data, tabletop) {
-        resultssheet = data[TEAMSHEET];
-        results = resultssheet.elements;
-        resultsrows = results.length;
-        resultscols = Object.keys(results[0]).length;
-        
-        console.log("rows = " + resultsrows);
-        console.log("cols = " + resultscols);
-        $.each( results, function (rownum, rowdata) {
-            if (rownum != 0) {
-                us = rowdata["Us"];
-                iUs = parseInt(us, 10);
-                them = rowdata["Them"];
-                iThem = parseInt(them, 10);
-                if (iUs > iThem)
-                    percent_class = "win";
-                else if (iThem > iUs)
-                    percent_class = "lose";
-                else
-                    percent_class = "tie";
-                $("#table").append("<tr>" +
-                                       "<td class='team'>" + rowdata["Team"] + "</td>" +
-                                       "<td class='percent " + percent_class + "'>" + rowdata["Percent"] + "</td>" +
-                                       "<td class='us_won'>" + rowdata["Us"] + "</td>" +
-                                       "<td class='us_lost'>" + rowdata["Them"] + "</td>" +
-                                   "</tr>");
-            }
+    function winlosetie(us, them) {
+        var iUs = parseInt(us);
+        var iThem = parseInt(them);
+        return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
+    }
+
+    function format ( d ) {
+        // `d` is the original data object for the row
+        console.log(d);
+        sets = setsheet.elements;
+        console.log(sets);
+        console.log(d["Team"]);
+        var setarray = $.grep(sets, function(e){ return e.Opponent == d["Team"]; });
+        console.log(setarray);
+        detailtable = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
+        $.each(setarray, function( index, value ) {
+            var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + "'>";
+            detailtable += '<tr>'+
+                '<td>' + value["Tournament"] + '</td>'+
+                '<td>' + value["Date"] + '</td>'+
+                '<td>' + value["Round"] + '</td>'+
+                tdwlt + value["Us"] + '</td>'+
+                tdwlt + value["Them"] + '</td>'+
+            '</tr>';
         });
+        detailtable += '</table>';
+        return detailtable;
+    }
+    
+    $(document).ready(function() {
+        Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1-VoIO4Wjer8G1XTJcf74jXJGi4-Jqedjiye5bux_K2s/pubhtml",
+                         callback: showDataTable,
+                         wanted: [ SETSHEET, TEAMSHEET ] } );
+    } );
+    
+    function showDataTable(dataarray, tabletop) {
+        teamsheet = dataarray[TEAMSHEET];
+        setsheet = dataarray[SETSHEET];
+        results = teamsheet.elements;
+        overall = results[0];
+        results.splice(0, 1);
+        var table = $('#teamtable').DataTable( {
+            data: results,
+            columns: [
+                {
+                    "className": 'details-control',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '',
+                    "render": function () {
+                        return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+                    },
+                    width:"15px"
+                },
+                { data: 'Team' },
+                { data: 'Percent' },
+                { data: 'Us' },
+                { data: 'Them' }
+            ],
+            paging: false,
+            searching: false,
+            scrollY: false,
+            fixedHeader: {
+                header: true,
+                footer: true
+            },
+            rowCallback: function(row, data, index) {
+                $(row).find('td:eq(2)').addClass(winlosetie(data["Us"], data["Them"]));
+            },
+            "order": [[1, 'asc']]
+        } );
+         
+        // Add event listener for opening and closing details
+        $('#teamtable tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+     
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
     }
 </script>
 
