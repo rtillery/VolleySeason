@@ -24,15 +24,17 @@ tr.shown td.details-control {
     text-align:center; 
     color:red;
 }
-
 body {
     font-family: sans-serif;
 }
 .dataTable th {
-    font-size: 3vh;
+    font-size: 2.5vh;
 }
 .dataTable td {
-    font-size: 2.5vh;
+    font-size: 2vh;
+}
+.set td {
+    font-size: 1.75vh;
 }
 .team {
     color: blue;
@@ -104,13 +106,13 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
         console.log(d["Team"]);
         var setarray = $.grep(sets, function(e){ return e.Opponent == d["Team"]; });
         console.log(setarray);
-        detailtable = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
             '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
         $.each(setarray, function( index, value ) {
-            var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + "'>";
-            detailtable += '<tr>'+
+            var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+            detailtable += '<tr class=\'set\'>'+
                 '<td>' + value["Tournament"] + '</td>'+
-                '<td>' + value["Date"] + '</td>'+
+                '<td class=\'dt-center\'>' + value["Date"] + '</td>'+
                 '<td>' + value["Round"] + '</td>'+
                 tdwlt + value["Us"] + '</td>'+
                 tdwlt + value["Them"] + '</td>'+
@@ -143,7 +145,7 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
                     "render": function () {
                         return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
                     },
-                    width:"15px"
+                    width:"1em"
                 },
                 { "data": 'Team' },
                 { "data": 'Percent',
