@@ -29,7 +29,7 @@ body {
     font-family: sans-serif;
 }
 .dataTable th {
-    font-size: 4vh;
+    font-size: 3vh;
 }
 .dataTable td {
     font-size: 2.5vh;
@@ -69,7 +69,7 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
             <tr>
                 <th></th>
                 <th>Team</th>
-                <th>Percent</th>
+                <th>Win %</th>
                 <th>Us</th>
                 <th>Them</th>
             </tr>
@@ -78,7 +78,7 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
             <tr>
                 <th></th>
                 <th>Team</th>
-                <th>Percent</th>
+                <th>Win %</th>
                 <th>Us</th>
                 <th>Them</th>
             </tr>
@@ -133,7 +133,7 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
         overall = results[0];
         results.splice(0, 1);
         var table = $('#teamtable').DataTable( {
-            data: results,
+            "data": results,
             columns: [
                 {
                     "className": 'details-control',
@@ -145,10 +145,15 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
                     },
                     width:"15px"
                 },
-                { data: 'Team' },
-                { data: 'Percent' },
-                { data: 'Us' },
-                { data: 'Them' }
+                { "data": 'Team' },
+                { "data": 'Percent',
+                  "width": '3em' },
+                { "data": 'Us',
+                  "width": '2em',
+                  "className": 'dt-center' },
+                { "data": 'Them',
+                  "width": '2em',
+                  "className": 'dt-center' }
             ],
             paging: false,
             searching: false,
