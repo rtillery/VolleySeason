@@ -27,6 +27,9 @@ tr.shown td.details-control {
 body {
     font-family: sans-serif;
 }
+tr {
+    height: 2em;
+}
 .dataTable th {
     font-size: 2.5vh;
 }
@@ -56,6 +59,24 @@ body {
 }
 .us_won, .us_lost {
     text-align: center;
+}
+
+@media only screen and (min--moz-device-pixel-ratio: 1.5),
+                       (-o-min-device-pixel-ratio: 3/2),
+                       (-webkit-min-device-pixel-ratio: 1.5),
+                       (min-device-pixel-ratio: 1.5) {
+    tr {
+        height: 4em;
+    }
+    .dataTable th {
+        font-size: 5vh;
+    }
+    .dataTable td {
+        font-size: 4vh;
+    }
+    .set td {
+        font-size: 3.5vh;
+    }
 }
   
 </style>
@@ -136,6 +157,9 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
         results.splice(0, 1);
         var table = $('#teamtable').DataTable( {
             "data": results,
+            fixedColumns:   {
+                heightMatch: 'none'
+            },
             columns: [
                 {
                     "className": 'details-control',
