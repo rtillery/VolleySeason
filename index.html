@@ -10,6 +10,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="tabletop.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
@@ -30,6 +31,8 @@ body {
 
 .ourteamname {
     font-size: 3vmin;
+    background-color: white;
+    color: black;
 }
 
 /* Height of table rows */
@@ -50,6 +53,7 @@ tr {
 /* Detail table row font */
 .set td {
     font-size: 2vmin;
+    height: 2vmin;
 }
 
 .team {
@@ -88,9 +92,24 @@ tr {
     bottom: 0;
     right: 0;
 }
+.overall {
+    font-size: 2.5vmin;
+    background-color: black;
+    color: white;
+    border-spacing: 1vmin 0;
+}
 
 @media (pointer: coarse),
        (-moz-touch-enabled) {
+    .ourteamname {
+        font-size: 4vmin;
+    }
+    .overall {
+        font-size: 5vmin;
+        border-spacing: 2vmin 0;
+        height: 5vmin;
+    }
+
     /* Height of table rows */
     tr {
         height: 10vmin;
@@ -109,6 +128,7 @@ tr {
     /* Detail table row font */
     .set td {
         font-size: 3.5vmin;
+        height: 3.5vmin;
     }
 }
   
@@ -116,9 +136,19 @@ tr {
 </head>
 
 <body>
-<div class='ourteamname'>
-Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
-</div>
+    <table class='teamheader'><tbody>
+        <tr>
+            <td>
+                <table class='ourteamname'><tbody>
+                    <tr><td>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</td></tr>
+                </tbody></table>
+            </td>
+            <td>
+                <table class='overall'><tbody>
+                </tbody></table>
+            </td>
+        </tr>
+    </tbody></table>
 <div>
     <table id="teamtable" class="display invisible" style="width:100%">
         <thead>
@@ -130,15 +160,6 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
                 <th>Them</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th>Team</th>
-                <th>%</th>
-                <th>Us</th>
-                <th>Them</th>
-            </tr>
-        </tfoot>
     </table>
 </div>
 
@@ -154,12 +175,8 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
 
     function format ( d ) {
         // `d` is the original data object for the row
-        console.log(d);
         sets = setsheet.elements;
-        console.log(sets);
-        console.log(d["Team"]);
         var setarray = $.grep(sets, function(e){ return e.Opponent == d["Team"]; });
-        console.log(setarray);
         detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
             '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
         $.each(setarray, function( index, value ) {
@@ -193,6 +210,13 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
         results = teamsheet.elements;
         overall = results[0];
         results.splice(0, 1);
+        
+        
+        $(".overall").append("<tr>" +
+                                     "<td>Overall:</td>" +
+                                     "<td>" + overall.Percent + "</td>" +
+                                     "<td>(" + overall.Us + "&nbsp-&nbsp" + overall.Them + ")</td>" +
+                                 "</tr>");
         var table = $('#teamtable').DataTable( {
             "data": results,
             fixedColumns:   {
@@ -221,10 +245,9 @@ Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)
             ],
             paging: false,
             searching: false,
-            scrollY: false,
             fixedHeader: {
                 header: true,
-                footer: true
+                footer: false
             },
             rowCallback: function(row, data, index) {
                 $(row).find('td:eq(2)').addClass(winlosetie(data["Us"], data["Them"]));
