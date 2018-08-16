@@ -98,7 +98,10 @@ tr {
     color: white;
     border-spacing: 1vmin 0;
 }
-
+.tall {
+    font-size: 2vmin;
+    transform: scaleY(1.5);
+}
 @media (pointer: coarse),
        (-moz-touch-enabled) {
     .ourteamname {
@@ -130,6 +133,9 @@ tr {
         font-size: 3.5vmin;
         height: 3.5vmin;
     }
+    .tall {
+        font-size: 2.67vmin;
+    }
 }
   
 </style>
@@ -155,9 +161,10 @@ tr {
             <tr>
                 <th></th>
                 <th>Team</th>
-                <th>%</th>
+                <th><div class='tall'>Rank</div></th>
+                <th><div class='tall'>Win%</div></th>
                 <th>Us</th>
-                <th>Them</th>
+                <th><div class='tall'>Them</div></th>
             </tr>
         </thead>
     </table>
@@ -220,22 +227,23 @@ tr {
         var table = $('#teamtable').DataTable( {
             "data": results,
             fixedColumns:   {
-                heightMatch: 'none'
+                "heightMatch": 'none'
             },
             columns: [
-                {
-                    "className": 'details-control',
-                    "orderable": false,
-                    "data": null,
-                    "defaultContent": '',
-                    "render": function () {
-                        return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
-                    },
-                    width:"1.5em"
-                },
+                { "className": 'details-control',
+                  "orderable": false,
+                  "data": null,
+                  "defaultContent": '',
+                  "render": function () {
+                      return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+                  },
+                  "width":'1.5em' },
                 { "data": 'Team' },
+                { "data": null,
+                  "defaultContent": '',
+                  "width": '1.5em' },
                 { "data": 'Percent',
-                  "width": '2em' },
+                  "width": '1.75em' },
                 { "data": 'Us',
                   "width": '1.5em',
                   "className": 'dt-center' },
@@ -250,7 +258,7 @@ tr {
                 footer: false
             },
             rowCallback: function(row, data, index) {
-                $(row).find('td:eq(2)').addClass(winlosetie(data["Us"], data["Them"]));
+                $(row).find('td:eq(3)').addClass(winlosetie(data["Us"], data["Them"]));
             },
             "order": [[1, 'asc']]
         } );
