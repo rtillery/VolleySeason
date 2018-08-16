@@ -171,8 +171,8 @@ tr {
 </div>
 
 <script type='text/javascript'>
-    TEAMSHEET = "Sheet3";
-    SETSHEET = "Sheet1";
+    TEAMSHEET = "Opponents";
+    SETSHEET = "Sets";
 
     function winlosetie(us, them) {
         var iUs = parseInt(us);
@@ -183,7 +183,7 @@ tr {
     function format ( d ) {
         // `d` is the original data object for the row
         sets = setsheet.elements;
-        var setarray = $.grep(sets, function(e){ return e.Opponent == d["Team"]; });
+        var setarray = $.grep(sets, function(e){ return e.OpponentCode == d["UniqueOpponentCode"]; });
         detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
             '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
         $.each(setarray, function( index, value ) {
@@ -203,7 +203,7 @@ tr {
     $(document).ready(function() {
         $("body").prepend('<i class="fas fa-volleyball-ball fa-spin loading" style="font-size:25vmin"></i>');
 
-        Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1-VoIO4Wjer8G1XTJcf74jXJGi4-Jqedjiye5bux_K2s/pubhtml",
+        Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1wXLmCIAl1-0Z25OVh0zf2TtauGjt0xGY0MJRhTJBf-k/pubhtml",
                          callback: showDataTable,
                          wanted: [ SETSHEET, TEAMSHEET ] } );
     } );
@@ -216,14 +216,13 @@ tr {
         setsheet = dataarray[SETSHEET];
         results = teamsheet.elements;
         overall = results[0];
-        results.splice(0, 1);
-        
         
         $(".overall").append("<tr>" +
                                      "<td>Overall:</td>" +
-                                     "<td>" + overall.Percent + "</td>" +
-                                     "<td>(" + overall.Us + "&nbsp-&nbsp" + overall.Them + ")</td>" +
+                                     "<td>" + overall.OverallPercent + "</td>" +
+                                     "<td>(" + overall.OverallWins + "&nbsp-&nbsp" + overall.OverallLosses + ")</td>" +
                                  "</tr>");
+
         var table = $('#teamtable').DataTable( {
             "data": results,
             fixedColumns:   {
@@ -238,16 +237,16 @@ tr {
                       return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
                   },
                   "width":'1.5em' },
-                { "data": 'Team' },
-                { "data": null,
-                  "defaultContent": '',
-                  "width": '1.5em' },
+                { "data": 'OpponentName' },
+                { "data": 'LatestRanking',
+                  "width": '1.5em',
+                  "defaultContent": '' },
                 { "data": 'Percent',
                   "width": '1.75em' },
-                { "data": 'Us',
+                { "data": 'Wins',
                   "width": '1.5em',
                   "className": 'dt-center' },
-                { "data": 'Them',
+                { "data": 'Losses',
                   "width": '1.5em',
                   "className": 'dt-center' }
             ],
@@ -258,7 +257,7 @@ tr {
                 footer: false
             },
             rowCallback: function(row, data, index) {
-                $(row).find('td:eq(3)').addClass(winlosetie(data["Us"], data["Them"]));
+                $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
             },
             "order": [[1, 'asc']]
         } );
