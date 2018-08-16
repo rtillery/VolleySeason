@@ -209,6 +209,15 @@ tr {
     } );
     
     function showDataTable(dataarray, tabletop) {
+
+$.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+    if ( data == "" ) {
+        return 999.0;
+    } else {
+        return parseFloat( data );
+    }
+};
+
         $("#teamtable").removeClass('invisible');
         $(".loading").remove();
 
@@ -240,7 +249,8 @@ tr {
                 { "data": 'OpponentName' },
                 { "data": 'LatestRanking',
                   "width": '1.5em',
-                  "className": 'dt-center' },
+                  "className": 'dt-center',
+                  "type": 'custom' },
                 { "data": 'Percent',
                   "width": '1.75em' },
                 { "data": 'Wins',
