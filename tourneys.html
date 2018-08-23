@@ -213,13 +213,26 @@ tr {
     
     function showDataTable(dataarray, tabletop) {
 
-$.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
-    if ( data == "" ) {
-        return 999.0;
-    } else {
-        return parseFloat( data );
-    }
-};
+        order = { "Nov": 0,
+                  "Dec": 30,
+                  "Jan": 61,
+                  "Feb": 92,
+                  "Mar": 121,
+                  "Apr": 152,
+                  "May": 182,
+                  "Jun": 213,
+                  "Jul": 243};
+        $.fn.dataTable.ext.type.order['custom2-pre'] = function ( data ) {
+            console.log("data: " + data);
+            month = data.substr(0, 3);
+            console.log("month: " + month);
+            var pat = /\s*\d+/g;
+            day = pat.exec(data);
+            console.log("day: " + day);
+            val = parseInt(order[month], 10) + parseInt(day, 10);
+            console.log("val: " + val);
+            return val;
+        };
 
         $("#tourneytable").removeClass('invisible');
         $(".loading").remove();
@@ -248,9 +261,12 @@ $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
                   "render": function () {
                       return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
                   },
-                  "width":'1.5em' },
+                  "width":'1em' },
                 { "data": 'Tournament' },
-                { "data": 'Dates' },
+                { "data": 'Dates',
+                  "width": '4em',
+                  "className": 'dt-center',
+                  "type": 'custom2' },
                 { "data": 'Wins',
                   "width": '1.5em',
                   "className": 'dt-center' },
@@ -258,10 +274,10 @@ $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
                   "width": '1.5em',
                   "className": 'dt-center' },
                 { "data": 'Round' },
-                { "data": 'Finish'',
+                { "data": 'Finish',
                   "width": '1.5em',
                   "className": 'dt-center' },
-                { "data": 'Teams'',
+                { "data": 'Teams',
                   "width": '1.5em',
                   "className": 'dt-center' },
                 { "data": 'Points' }
@@ -274,8 +290,9 @@ $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
             },
             rowCallback: function(row, data, index) {
                 $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+                $(row).find('td:eq(4)').addClass(winlosetie(data["Wins"], data["Losses"]));
             },
-            "order": [[1, 'asc']]
+            "order": [[2, 'asc']]
         } );
 
         $("body").css("cursor", "default");
