@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</title>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="tabletop.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
+<style type="text/css">
+
+td.details-control {
+    text-align:center;
+    color:forestgreen;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    text-align:center; 
+    color:red;
+}
+body {
+    font-family: sans-serif;
+}
+
+.ourteamname {
+    font-size: 3vmin;
+    background-color: white;
+    color: black;
+}
+
+/* Height of table rows */
+tr {
+    height: 4vmin;
+}
+
+/* Height of table heading font */
+.dataTable th {
+    font-size: 3vmin;
+}
+
+/* Height of table row font */
+.dataTable td {
+    font-size: 2.5vmin;
+}
+
+/* Detail table row font */
+.set td {
+    font-size: 2vmin;
+    height: 2vmin;
+}
+
+.team {
+    color: blue;
+    font-weight: bold;
+}
+.percent, .win, .lose, .tie {
+    color: white;
+    font-weight: bold;
+    text-align: right;
+}
+.win {
+    background-color: limegreen;
+}
+.lose {
+    background-color: red;
+}
+.tie {
+    background-color: gold;
+}
+.us_won, .us_lost {
+    text-align: center;
+}
+.invisible {
+    visibility: hidden;
+}
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 25vmin;
+    width: 25vmin;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.overall {
+    font-size: 2.5vmin;
+    background-color: black;
+    color: white;
+    border-spacing: 1vmin 0;
+}
+.tall {
+    font-size: 2vmin;
+    transform: scaleY(1.5);
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+    .ourteamname {
+        font-size: 4vmin;
+    }
+    .overall {
+        font-size: 5vmin;
+        border-spacing: 2vmin 0;
+        height: 5vmin;
+    }
+
+    /* Height of table rows */
+    tr {
+        height: 10vmin;
+    }
+    
+    /* Height of table heading font */
+    .dataTable th {
+        font-size: 4vmin;
+    }
+    
+    /* Height of table row font */
+    .dataTable td {
+        font-size: 4vmin;
+    }
+    
+    /* Detail table row font */
+    .set td {
+        font-size: 3.5vmin;
+        height: 3.5vmin;
+    }
+    .tall {
+        font-size: 2.67vmin;
+    }
+}
+  
+</style>
+</head>
+
+<body>
+    <table class='teamheader'><tbody>
+        <tr>
+            <td>
+                <table class='ourteamname'><tbody>
+                    <tr><td>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</td></tr>
+                </tbody></table>
+            </td>
+            <td>
+                <table class='overall'><tbody>
+                </tbody></table>
+            </td>
+        </tr>
+    </tbody></table>
+<div>
+    <table id="tourneytable" class="display invisible" style="width:100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Tournament</th>
+                <th>Dates</th>
+                <th><div class='tall'>Wins</div></th>
+                <th><div class='tall'>Losses</div></th>
+                <th>Round</th>
+                <th><div class='tall'>Finish</div></th>
+                <th><div class='tall'>Out Of</div></th>
+                <th>Points</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<script type='text/javascript'>
+    TOURNEYSHEET = "Tourneys";
+    SETSHEET = "Sets";
+
+    function winlosetie(us, them) {
+        var iUs = parseInt(us);
+        var iThem = parseInt(them);
+        return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
+    }
+
+    function format ( d ) {
+        // `d` is the original data object for the row
+        sets = setsheet.elements;
+        var setarray = $.grep(sets, function(e){ return e.OpponentCode == d["UniqueOpponentCode"]; });
+        detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
+        $.each(setarray, function( index, value ) {
+            var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+            detailtable += '<tr class=\'set\'>'+
+                '<td>' + value["Tournament"] + '</td>'+
+                '<td class=\'dt-center\'>' + value["Date"] + '</td>'+
+                '<td>' + value["Round"] + '</td>'+
+                tdwlt + value["Us"] + '</td>'+
+                tdwlt + value["Them"] + '</td>'+
+            '</tr>';
+        });
+        detailtable += '</table>';
+        return detailtable;
+    }
+    
+    $(document).ready(function() {
+        $("body").prepend('<i class="fas fa-volleyball-ball fa-spin loading" style="font-size:25vmin"></i>');
+
+        Tabletop.init( { key: "https://docs.google.com/spreadsheets/d/1wXLmCIAl1-0Z25OVh0zf2TtauGjt0xGY0MJRhTJBf-k/pubhtml",
+                         callback: showDataTable,
+                         wanted: [ SETSHEET, TOURNEYSHEET ] } );
+    } );
+    
+    function showDataTable(dataarray, tabletop) {
+
+$.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+    if ( data == "" ) {
+        return 999.0;
+    } else {
+        return parseFloat( data );
+    }
+};
+
+        $("#tourneytable").removeClass('invisible');
+        $(".loading").remove();
+
+        tourneysheet = dataarray[TOURNEYSHEET];
+        setsheet = dataarray[SETSHEET];
+        results = tourneysheet.elements;
+        overall = results[0];
+        
+        $(".overall").append("<tr>" +
+                                     "<td>Overall:</td>" +
+                                     "<td>" + overall.OverallPercent + "</td>" +
+                                     "<td>(" + overall.OverallWins + "&nbsp-&nbsp" + overall.OverallLosses + ")</td>" +
+                                 "</tr>");
+
+        var table = $('#tourneytable').DataTable( {
+            "data": results,
+            fixedColumns:   {
+                "heightMatch": 'none'
+            },
+            columns: [
+                { "className": 'details-control',
+                  "orderable": false,
+                  "data": null,
+                  "defaultContent": '',
+                  "render": function () {
+                      return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+                  },
+                  "width":'1.5em' },
+                { "data": 'Tournament' },
+                { "data": 'Dates' },
+                { "data": 'Wins',
+                  "width": '1.5em',
+                  "className": 'dt-center' },
+                { "data": 'Losses',
+                  "width": '1.5em',
+                  "className": 'dt-center' },
+                { "data": 'Round' },
+                { "data": 'Finish'',
+                  "width": '1.5em',
+                  "className": 'dt-center' },
+                { "data": 'Teams'',
+                  "width": '1.5em',
+                  "className": 'dt-center' },
+                { "data": 'Points' }
+            ],
+            paging: false,
+            searching: false,
+            fixedHeader: {
+                header: true,
+                footer: false
+            },
+            rowCallback: function(row, data, index) {
+                $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+            },
+            "order": [[1, 'asc']]
+        } );
+
+        $("body").css("cursor", "default");
+
+        // Add event listener for opening and closing details
+        $('#tourneytable tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+     
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+    }
+</script>
+
+</body>
+</html>
