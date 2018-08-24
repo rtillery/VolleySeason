@@ -26,10 +26,8 @@ tr.shown td.details-control {
     color:red;
 }
 body {
-  font-family: /*iOS*/"AvenirNextCondensed-Bold", "Futura-CondensedExtraBold", /*MacOSX*/HelveticaNeue-CondensedBold, /*Ubuntu*/ "Ubuntu Condensed", "Liberation Sans Narrow",  /*Windows*/"Franklin Gothic Demi Cond", "Arial Narrow", /*Android*/sans-serif-condensed, /*Fallback*/Arial, "Trebuchet MS", "Lucida Grande", Tahoma, Verdana, sans-serif;
-  font-stretch: condensed;
-/*    font-family: "Helvetica Narrow","Arial Narrow","Roboto Condensed","HelveticaNeue-Light",sans-serif-condensed,sans-serif;
-    font-stretch: condensed; */
+    font-family: /*iOS*/"AvenirNextCondensed-Bold", "Futura-CondensedExtraBold", /*MacOSX*/HelveticaNeue-CondensedBold, /*Ubuntu*/ "Ubuntu Condensed", "Liberation Sans Narrow",  /*Windows*/"Franklin Gothic Demi Cond", "Arial Narrow", /*Android*/sans-serif-condensed, /*Fallback*/Arial, "Trebuchet MS", "Lucida Grande", Tahoma, Verdana, sans-serif;
+    font-stretch: condensed;
 }
 
 .ourteamname {
@@ -189,15 +187,15 @@ tr {
     function format ( d ) {
         // `d` is the original data object for the row
         sets = setsheet.elements;
-        var setarray = $.grep(sets, function(e){ return e.OpponentCode == d["UniqueOpponentCode"]; });
-        detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-            '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
+        var setarray = $.grep(sets, function(e){ return e.Tournament == d["Tournament"]; });
+        detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>"+
+            "<thead><tr><th>Date</th><th>Round</th><th>Opponent</th><th>Us</th><th><div class='tall'>Them</div></th></tr></thead>";
         $.each(setarray, function( index, value ) {
             var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
             detailtable += '<tr class=\'set\'>'+
-                '<td>' + value["Tournament"] + '</td>'+
                 '<td class=\'dt-center\'>' + value["Date"] + '</td>'+
                 '<td>' + value["Round"] + '</td>'+
+                '<td>' + value["Opponent"] + '</td>'+
                 tdwlt + value["Us"] + '</td>'+
                 tdwlt + value["Them"] + '</td>'+
             '</tr>';
