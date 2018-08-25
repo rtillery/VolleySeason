@@ -98,10 +98,12 @@ tr {
     color: white;
     border-spacing: 1vmin 0;
 }
-.tall {
+.cond {
     font-size: 2vmin;
+    font-family: sans-serif;
     transform: scaleY(1.5);
 }
+
 @media (pointer: coarse),
        (-moz-touch-enabled) {
     .ourteamname {
@@ -133,7 +135,7 @@ tr {
         font-size: 3.5vmin;
         height: 3.5vmin;
     }
-    .tall {
+    .cond {
         font-size: 2.67vmin;
     }
 }
@@ -161,10 +163,10 @@ tr {
             <tr>
                 <th></th>
                 <th>Team</th>
-                <th><div class='tall'>Rank</div></th>
-                <th><div class='tall'>Win%</div></th>
+                <th><div class='cond'>Rank</div></th>
+                <th><div class='cond'>Win%</div></th>
                 <th>Us</th>
-                <th><div class='tall'>Them</div></th>
+                <th><div class='cond'>Them</div></th>
             </tr>
         </thead>
     </table>
@@ -184,19 +186,19 @@ tr {
         // `d` is the original data object for the row
         sets = setsheet.elements;
         var setarray = $.grep(sets, function(e){ return e.OpponentCode == d["UniqueOpponentCode"]; });
-        detailtable = '<table class=\'sets\' cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-            '<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>';
+        detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
+            "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th>Them</th></tr></thead>";
         $.each(setarray, function( index, value ) {
             var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-            detailtable += '<tr class=\'set\'>'+
-                '<td>' + value["Tournament"] + '</td>'+
-                '<td class=\'dt-center\'>' + value["Date"] + '</td>'+
-                '<td>' + value["Round"] + '</td>'+
-                tdwlt + value["Us"] + '</td>'+
-                tdwlt + value["Them"] + '</td>'+
-            '</tr>';
+            detailtable += "<tr class='set'>" +
+                "<td><div class='cond'>" + value["Tournament"] + "</div></td>" +
+                "<td class='dt-center'><div class='cond'>" + value["Date"] + "</div></td>" +
+                "<td><div class='cond'>" + value["Round"] + "</div></td>" +
+                tdwlt + value["Us"] + "</td>" +
+                tdwlt + value["Them"] + "</td>" +
+            "</tr>";
         });
-        detailtable += '</table>';
+        detailtable += "</table>";
         return detailtable;
     }
     
@@ -267,6 +269,7 @@ $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
                 footer: false
             },
             rowCallback: function(row, data, index) {
+                $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
                 $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
             },
             "order": [[1, 'asc']]
