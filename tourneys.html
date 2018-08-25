@@ -245,8 +245,7 @@ tr {
                 <th><div class='cond'>Ws</div></th>
                 <th><div class='cond'>Ls</div></th>
 <!--                <th>Round</th> -->
-                <th><div class='cond'>Fin</div></th>
-                <th><div class='cond'>Tms</div></th>
+                <th><div class='cond'>Finish</div></th>
                 <th><div class='cond'>Points</div></th>
             </tr>
         </thead>
@@ -352,11 +351,9 @@ tr {
                   "width": '1em',
                   "className": 'dt-center' },
 //                { "data": 'Round' },
-                { "data": 'Finish',
-                  "width": '1em',
-                  "className": 'dt-center' },
-                { "data": 'Teams',
-                  "width": '1em',
+                { "data": null,
+                  "defaultContent": '',
+                  "width": '2em',
                   "className": 'dt-center' },
                 { "data": 'Points',
                   "width": '2em',
@@ -373,7 +370,10 @@ tr {
                 $(row).find('td:eq(2)').wrapInner("<div class='cond'></div>");
                 $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
                 $(row).find('td:eq(4)').addClass(winlosetie(data["Wins"], data["Losses"]));
-                $(row).find('td:eq(7)').wrapInner("<div class='cond'></div>");
+                var item = $(row).find('td:eq(5)');
+                item[0].innerHTML = data["Finish"] + "/" + data["Teams"];
+                item.wrapInner("<div class='cond'></div>");
+                $(row).find('td:eq(6)').wrapInner("<div class='cond'></div>");
             },
             "order": [[2, 'asc']]
         } );
