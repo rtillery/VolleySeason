@@ -293,7 +293,7 @@ tr {
             $.each(dtrdsetarray, function(index, value) {
                 var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
                 detailtable += "<tr class='set'>" +
-                    "<td colspan='2'><div class='cond'>" + value['Opponent'] + "</td>" +
+                    "<td colspan='2'><div>" + value['Opponent'] + "</td>" +
                     tdwlt + value['Us'] + "</td>" +
                     tdwlt + value['Them'] + "</td>" +
                 "</tr>";
@@ -396,7 +396,7 @@ tr {
                 $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
                 $(row).find('td:eq(4)').addClass(winlosetie(data["Wins"], data["Losses"]));
                 var item = $(row).find('td:eq(5)');
-                item[0].innerHTML = data["Finish"] + "/" + data["Teams"];
+                item[0].innerHTML = data["Finish"] + " / " + data["Teams"];
                 item.wrapInner("<div class='cond'></div>");
                 $(row).find('td:eq(6)').wrapInner("<div class='cond'></div>");
             },
