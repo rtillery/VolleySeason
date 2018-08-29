@@ -173,6 +173,10 @@ tr {
 .round {
     text-decoration: underline;
 }
+table.sets tbody tr.evenopp {}
+table.sets tbody tr.oddopp {
+    background-color: #f9f9f9;
+}
 
 @media (pointer: coarse),
        (-moz-touch-enabled) {
@@ -290,10 +294,17 @@ tr {
         $.each(daterounds, function(index, dtrd) {
             var dtrdsetarray = $.grep(sets, function(e) { return dtrd == e.Date + e.Round; });
             detailtable += "<tr><td class='dt-right round'>" + dtrdsetarray[0]["Date"] + "</td><td class='round'>" + dtrdsetarray[0]["Round"] + "</td><td class='heading'>Us</td><td><div class='cond heading'>Them</div></td>";
+            var evenopp = true;
+            var lastopponent = "";
             $.each(dtrdsetarray, function(index, value) {
+                var opponent = value['Opponent'];
+                if (opponent !== lastopponent) {
+                    evenopp = !evenopp;
+                    lastopponent = opponent;
+                }
                 var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-                detailtable += "<tr class='set'>" +
-                    "<td colspan='2'><div>" + value['Opponent'] + "</td>" +
+                detailtable += "<tr class='set " + (evenopp ? "evenopp" : "oddopp") + "'>" +
+                    "<td colspan='2'><div>" + opponent + "</td>" +
                     tdwlt + value['Us'] + "</td>" +
                     tdwlt + value['Them'] + "</td>" +
                 "</tr>";
