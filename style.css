@@ -1,3 +1,17 @@
+@font-face {
+font-family: 'Enter-Sansman-Bold-Italic';
+  src: url('Enter-Sansman-Bold-Italic.ttf.woff') format('woff'),
+       url('Enter-Sansman-Bold-Italic.ttf.svg#Enter-Sansman-Bold-Italic') format('svg'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot?#iefix') format('embedded-opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* h1 { 
+  font-family: 'Enter-Sansman-Bold-Italic';
+} */
+
 td.details-control {
     text-align:center;
     color:forestgreen;
