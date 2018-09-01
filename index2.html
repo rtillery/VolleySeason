@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-<meta name='viewport' content='width=device-width, initial-scale=2'>
+<head>
+
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -14,18 +16,18 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 34pt;
 }
 
 .icon, .home a, .navbar a {
-  font-size: 17px;
 }
 .icon, .net {
-  width: 17px;
+  width: 1.28571429em;
   stroke-width: 2;
   float: left;
 }
 .net {
-  width: 17px;
+  width: 1.28571429em;
   stroke-width: .75;
 }
 
@@ -48,7 +50,7 @@ body {
   font-family: 'Enter-Sansman-Bold-Italic';
   background-color: white;
   color: maroon;
-  font-size: 28px;
+  font-size: 51pt;
   padding: .25em;
   margin: 0;
 /*  text-decoration: underline; */
@@ -70,7 +72,7 @@ body {
 }
 
 .active {
-  background-color: navy;
+  background-color: maroon;
 }
 
 @media screen and (max-width: 500px) {
@@ -82,45 +84,46 @@ body {
     display: initial;
   }
 }
+
 </style>
+
+<svg width='0' height='0' style='display: block'>
+  <defs>
+    <symbol id='bracket'>
+      <path class='white' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
+    </symbol>
+
+    <symbol id='net'>
+      <path d='M1,5c5,2 26,2 30,0' />
+      <path d='M1,8c5,2 26,2 30,0' />
+      <path d='M1,11c5,2 26,2 30,0' />
+      <path d='M1,14c5,2 26,2 30,0' />
+      <path d='M1,4v21m-2,0h4' />
+      <path d='M31,4v21m-2,0h4' />
+      <path d='M4,5.9v9' />
+      <path d='M7,6v9' />
+      <path d='M10,6.2v9' />
+      <path d='M13,6.6v9' />
+      <path d='M16,6.6v9' />
+      <path d='M19,6.6v9' />
+      <path d='M22,6.2v9' />
+      <path d='M25,6v9' />
+      <path d='M28,5.9v9' />
+    </symbol>
+  </defs>
+</svg>
+
+</head>
 <body>
 
-<div class='home'><a href='#'><i class='fa fa-fw fa-home'></i> Teams</a></div>
 <h3 class='team'>K<span>NIGHTS</span> 15 A<span>DIDAS</span> M<span>AROON</span></h3>
 
 <div class='navbar'>
   <a class='active' href='#'><i class='fa fa-fw fa-user'></i> Players</a> 
-  <a href='#'>
-    <div class='icon'>
-      <svg viewbox=" 0 0 32 32">
-        <path class='white' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
-      </svg>
-    </div>
-    &nbsp;Tournaments
-  </a>
-    <a href='#'>
-    <div class='net'>
-      <svg class='white' viewbox=" 0 0 32 32">
-        <path d='M1,5c5,2 26,2 30,0' />
-        <path d='M1,8c5,2 26,2 30,0' />
-        <path d='M1,11c5,2 26,2 30,0' />
-        <path d='M1,14c5,2 26,2 30,0' />
-        <path d='M1,4v21m-2,0h4' />
-        <path d='M31,4v21m-2,0h4' />
-        <path d='M4,5.9v9' />
-        <path d='M7,6v9' />
-        <path d='M10,6.2v9' />
-        <path d='M13,6.6v9' />
-        <path d='M16,6.6v9' />
-        <path d='M19,6.6v9' />
-        <path d='M22,6.2v9' />
-        <path d='M25,6v9' />
-        <path d='M28,5.9v9' />
-      </svg>
-    </div>
-    &nbsp;Opponents
-  </a> 
+  <a href='#'><svg class='icon' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;Tournaments</a>
+  <a href='#'><svg class='net white' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;Opponents</a> 
   <a href='#'><i class='fa fa-fw fa-camera'></i> Photos</a>
+  <a href='#'><i class='fa fa-fw fa-home'></i> Teams</a>
 </div>
 
 <div style='margin-left: 10em; background-color: lightgray'>
