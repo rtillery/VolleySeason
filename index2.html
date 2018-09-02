@@ -53,11 +53,12 @@ body {
   font-size: 51pt;
   padding: .25em;
   margin: 0;
-/*  text-decoration: underline; */
+  letter-spacing: -.05em;
 }
 .team span {
   transform: scaleX(.75);
   font-size: 85%;
+  letter-spacing: normal;
 }
 
 .navbar {
@@ -94,21 +95,9 @@ body {
     </symbol>
 
     <symbol id='net'>
-      <path d='M1,5c5,2 26,2 30,0' />
-      <path d='M1,8c5,2 26,2 30,0' />
-      <path d='M1,11c5,2 26,2 30,0' />
-      <path d='M1,14c5,2 26,2 30,0' />
-      <path d='M1,4v21m-2,0h4' />
-      <path d='M31,4v21m-2,0h4' />
-      <path d='M4,5.9v9' />
-      <path d='M7,6v9' />
-      <path d='M10,6.2v9' />
-      <path d='M13,6.6v9' />
-      <path d='M16,6.6v9' />
-      <path d='M19,6.6v9' />
-      <path d='M22,6.2v9' />
-      <path d='M25,6v9' />
-      <path d='M28,5.9v9' />
+      <path d='M1,5c5,2 26,2 30,0M1,8c5,2 26,2 30,0M1,11c5,2 26,2 30,0M1,14c5,2 26,2 30,0' />
+      <path d='M1,4v21m-2,0h4M31,4v21m-2,0h4' />
+      <path d='M4,5.9v9M7,6v9M10,6.2v9M13,6.6v9M16,6.6v9M19,6.6v9M22,6.2v9M25,6v9M28,5.9v9' />
     </symbol>
   </defs>
 </svg>
@@ -123,7 +112,7 @@ body {
   <a href='#'><svg class='icon' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;Tournaments</a>
   <a href='#'><svg class='net white' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;Opponents</a> 
   <a href='#'><i class='fa fa-fw fa-camera'></i> Photos</a>
-  <a href='#'><i class='fa fa-fw fa-home'></i> Teams</a>
+  <a href='#' style='background-color:darkgray'><i class='fa fa-fw fa-home'></i> Teams</a>
 </div>
 
 <div style='margin-left: 10em; background-color: lightgray'>
