@@ -37,10 +37,10 @@
       <tr>
         <th></th>
         <th>Team</th>
-        <th><div class='cond'>Rank</div></th>
-        <th><div class='cond'>Win%</div></th>
+        <th><p>Rank</p></th>
+        <th><p>Win%</p></th>
         <th>Us</th>
-        <th><div class='cond'>Them</div></th>
+        <th><p>Them</p></th>
       </tr>
     </thead>
   </table>
@@ -62,13 +62,13 @@
     sets = setsheet.elements;
     var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
     detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
-                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><div class='cond'>Them</div></th></tr></thead>";
+                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
     $.each(setarray, function(index, value) {
       var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
       detailtable += "<tr class='set'>" +
-                       "<td><div class='cond'>" + value["Tournament"] + "</div></td>" +
-                       "<td class='dt-center'><div class='cond'>" + value["Date"] + "</div></td>" +
-                       "<td><div class='cond'>" + value["Round"] + "</div></td>" +
+                       "<td><p>" + value["Tournament"] + "</p></td>" +
+                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
+                       "<td><p>" + value["Round"] + "</p></td>" +
                        tdwlt + value["Us"] + "</td>" +
                        tdwlt + value["Them"] + "</td>" +
                      "</tr>";
@@ -149,7 +149,7 @@
         var tester = $(row).find('td:eq(3)');
         if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
           return;
-        $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
+        $(row).find('td:eq(1)').wrapInner("<p></p>");
         $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
       },
       'order': [[1, 'asc']]
