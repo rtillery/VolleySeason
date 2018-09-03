@@ -5,7 +5,16 @@
 <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
 
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css' integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ' crossorigin='anonymous'>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='tabletop.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script>
+<script type='text/javascript' language='javascript' src='https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js'></script>
+
+<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css'>
+<link rel='stylesheet' type='text/css' href='style.css'>
 
 <style>
 
@@ -15,6 +24,7 @@
 }
 
 body {
+  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
@@ -25,11 +35,12 @@ body {
   margin: 0;
   letter-spacing: -.05em;
   text-align: center;
+  display: inline-block;
 }
 .club {
   font-size: 36px;
   color: #555;
-  padding: 0 2px 2px 2px;
+  padding: 2px;
 }
 .team {
   font-size: 26px;
@@ -43,22 +54,25 @@ body {
 }
 
 .navbar {
-  width: 10em;
-  position: fixed!important;
   background-color: #555;
-  overflow: auto;
+  width: 20%;
+  float: left;
 }
 .navbar a {
-  float: none;
-  display: block;
-  padding: .5em;
   color: white;
   text-decoration: none;
+  display: list-item;
+  padding: .5em;
+}
+.navbar a svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 14px;
 }
 .icon, .net {
   width: 1em;
   float: left;
-  margin: 0 auto;
   top: .15em;
   position: relative;
 }
@@ -93,13 +107,22 @@ body {
   content: "Photos";
 }
 
+.page {
+  margin-left: 20%;
+  background-color: lightgray;
+}
+
 @media screen and (max-aspect-ratio: 1/1) {
+  .club, .team {
+    display: block;
+  }
+
   .navbar {
     width: 100%;
+    float: none;
   }
   .navbar a {
-    float: left;
-    padding: 1em .5em 1em .5em;
+    display: inline-block;
   }
 
   #home:before {
@@ -116,6 +139,10 @@ body {
   }
   #photos:before {
     content: "Pics";
+  }
+
+  .page {
+    margin-left: 0;
   }
 }
 
@@ -137,22 +164,94 @@ body {
 
 </head>
 <body>
-  <h3 class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></h3>
-<h3 class='team'>15 A<span>DIDAS</span> M<span>AROON</span></h3>
 
-<div class='navbar'>
-  <a class='home' href='#'><i class='fa fa-fw fa-home'></i>&nbsp;<span id='home' /></a>
-  <a class='active' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a> 
-  <a href='#'>&nbsp;<svg class='icon' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;<span id='tourneys' /></a>
-  <a href='#'>&nbsp;<svg class='net' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;<span id='foes' /></a> 
-  <a href='#'><i class='fa fa-fw fa-camera'></i>&nbsp;<span id='photos' /></a>
+<div>
+  <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
+  <div class='team'>15 A<span>DIDAS</span> M<span>AROON</span></div>
 </div>
 
-<div style='margin-left: 10em; background-color: lightgray'>
+<div class='navbar'>
+  <a class='home active' href='#'><i class='fa fa-fw fa-home'></i>&nbsp;<span id='home' /></a>
+  <a class='invisibl' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a>
+  <a class='invisibl' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;<span id='tourneys' /></a>
+  <a class='invisibl' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;<span id='foes' /></a>
+  <a class='invisibl' href='#'><i class='fa fa-fw fa-camera'></i>&nbsp;<span id='photos' /></a>
+</div>
+
+<div class='page'>
   <div style='padding: .75em'>
     <h1>My Page</h1>
   </div>
 </div>
+
+<script type='text/javascript'>
+    TEAMSHEET = "Sheet1";
+
+    $(document).ready(function() {
+        $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
+
+        Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml',
+                         callback: showDataTable,
+                         wanted: [ TEAMSHEET ] } );
+    } );
+    
+    function showDataTable(dataarray, tabletop) {
+
+        $('#teamtable').removeClass('invisible');
+        $('.loading').remove();
+
+        teamsheet = dataarray[TEAMSHEET];
+        results = teamsheet.elements;
+
+console.log(results);
+
+//        var table = $('#teamtable').DataTable( {
+//            'data': results,
+//            fixedColumns:   {
+//                'heightMatch': 'none'
+//            },
+//            columns: [
+//                { 'className': 'details-control',
+//                  'orderable': false,
+//                  'data': null,
+//                  'defaultContent': '',
+//                  'render': function () {
+//                      return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
+//                  },
+//                  'width':'6mm' },
+//                { 'data': 'OpponentName' },
+//                { 'data': 'LatestRanking',
+//                  'width': '9mm',
+//                  'className': 'dt-center',
+//                  'type': 'custom' },
+//                { 'data': 'Percent',
+//                  'width': '9mm' },
+//                { 'data': 'Wins',
+//                  'width': '9mm',
+//                  'className': 'dt-center' },
+//                { 'data': 'Losses',
+//                  'width': '9mm',
+//                  'className': 'dt-center' }
+//            ],
+//            paging: false,
+//            searching: false,
+//            fixedHeader: {
+//                header: true,
+//                footer: false
+//            },
+//            rowCallback: function(row, data, index) {
+//                var tester = $(row).find('td:eq(3)');
+//                if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
+//                    return;
+//                $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
+//                $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+//            },
+//            'order': [[1, 'asc']]
+//        } );
+
+        $('body').css('cursor', 'default');
+    }
+</script>
 
 </body>
 </html> 
