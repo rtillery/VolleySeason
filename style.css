@@ -88,10 +88,12 @@ tr {
   right: 0;
 }
 
-p {
-  padding: .5em 0;
+p, .cond {
   font-size: 66.7%;
   transform: scaleY(1.5);
+}
+p {
+  padding: .5em 0;
 }
 
 .round {
