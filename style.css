@@ -8,18 +8,14 @@ font-family: 'Enter-Sansman-Bold-Italic';
   font-style: normal;
 }
 
-/* h1 { 
-  font-family: 'Enter-Sansman-Bold-Italic';
-} */
-
 td.details-control {
-    text-align:center;
-    color:forestgreen;
+    text-align: center;
+    color: forestgreen;
     cursor: pointer;
 }
 tr.shown td.details-control {
-    text-align:center; 
-    color:red;
+    text-align: center; 
+    color: red;
 }
 
 body {
@@ -27,36 +23,35 @@ body {
 }
 
 .ourteamname {
-    font-size: 3vmin;
+    font-size: 7mm;
     background-color: white;
     color: black;
 }
 .overall {
-    font-size: 2.5vmin;
-    background-color: black;
+    font-size: 7mm;
+    background-color: orange;
     color: white;
-    border-spacing: 1vmin 0;
 }
 
 /* Height of table rows */
 tr {
-    height: 4vmin;
+    height: 9mm;
 }
 
 /* Height of table heading font */
 .dataTable th {
-    font-size: 3vmin;
+    font-size: 8mm;
 }
 
 /* Height of table row font */
 .dataTable td {
-    font-size: 2.5vmin;
+    font-size: 7mm;
 }
 
 /* Detail table row font */
 .set td {
-    font-size: 2vmin;
-    height: 2vmin;
+    font-size: 7mm;
+    height: 9mm;
 }
 
 .percent, .win, .lose, .tie {
@@ -94,8 +89,7 @@ tr {
 }
 
 .cond {
-    font-size: 2vmin;
-    font-family: sans-serif;
+    font-size: 66.7%;
     transform: scaleY(1.5);
 }
 
@@ -111,7 +105,7 @@ table.sets tbody tr.evenopp {}
 table.sets tbody tr.oddopp {
     background-color: #f9f9f9;
 }
-
+/*
 @media (pointer: coarse),
        (-moz-touch-enabled) {
     .ourteamname {
@@ -122,24 +116,24 @@ table.sets tbody tr.oddopp {
         border-spacing: 2vmin 0;
         height: 5vmin;
     }
-
+*/
     /* Height of table rows */
-    tr {
+/*    tr {
         height: 10vmin;
     }
-    
+*/    
     /* Height of table heading font */
-    .dataTable th {
+/*    .dataTable th {
         font-size: 4vmin;
     }
-    
+*/    
     /* Height of table row font */
-    .dataTable td {
+/*    .dataTable td {
         font-size: 4vmin;
     }
-    
+*/    
     /* Detail table row font */
-    .set td {
+/*    .set td {
         font-size: 3.5vmin;
         height: 3.5vmin;
     }
@@ -147,3 +141,4 @@ table.sets tbody tr.oddopp {
         font-size: 2.67vmin;
     }
 }
+*/
