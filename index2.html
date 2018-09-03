@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 
@@ -16,46 +16,27 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: .2in;
+  font-size: 14px;
 }
 
-.icon, .home a, .navbar a {
-}
-.icon, .net {
-  width: 1.28571429em;
-  stroke-width: 2;
-  float: left;
-}
-.net {
-  width: 1.28571429em;
-  stroke-width: .75;
-}
-
-.home {
-  width: 7em;
-  float: left;
-  margin-right: 1em;
-}
-.home a, .navbar a {
-  display: block;
-  padding: .75em;
-  color: white;
-  text-decoration: none;
-}
-.home a {
-  background-color: darkgray;
-}
-
-.team {
+.club, .team {
   font-family: 'Enter-Sansman-Bold-Italic';
   background-color: white;
-  color: maroon;
-  font-size: 51px;
-  padding: .25em;
   margin: 0;
   letter-spacing: -.05em;
+  text-align: center;
 }
-.team span {
+.club {
+  font-size: 36px;
+  color: #555;
+  padding: 0 2px 2px 2px;
+}
+.team {
+  font-size: 26px;
+  color: maroon;
+  padding: 2px 2px 0 2px;
+}
+.team span, .club span {
   transform: scaleX(.75);
   font-size: 85%;
   letter-spacing: normal;
@@ -67,22 +48,71 @@ body {
   background-color: #555;
   overflow: auto;
 }
-
 .navbar a {
   float: none;
+  display: block;
+  padding: .5em;
+  color: white;
+  text-decoration: none;
+}
+.icon, .net {
+  width: 1em;
+  float: left;
+}
+.icon {
+  stroke-width: 2;
+}
+.net {
+  stroke-width: .75;
+}
+
+.home {
+  background-color: darkgray;
 }
 
 .active {
   background-color: maroon;
 }
 
-@media screen and (max-width: 500px) {
+#home:before {
+  content: "Teams";
+}
+#players:before {
+  content: "Players";
+}
+#tourneys:before {
+  content: "Tournaments";
+}
+#foes:before {
+  content: "Opponents";
+}
+#photos:before {
+  content: "Photos";
+}
+
+@media screen and (max-aspect-ratio: 1/1) {
   .navbar {
     width: 100%;
   }
   .navbar a {
     float: left;
     display: initial;
+  }
+
+  #home:before {
+    content: "Teams";
+  }
+  #players:before {
+    content: "Players";
+  }
+  #tourneys:before {
+    content: "Tourneys";
+  }
+  #foes:before {
+    content: "Foes";
+  }
+  #photos:before {
+    content: "Pics";
   }
 }
 
@@ -94,7 +124,7 @@ body {
       <path class='white' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
     </symbol>
 
-    <symbol id='net'>
+    <symbol class='white' id='net'>
       <path d='M1,5c5,2 26,2 30,0M1,8c5,2 26,2 30,0M1,11c5,2 26,2 30,0M1,14c5,2 26,2 30,0' />
       <path d='M1,4v21m-2,0h4M31,4v21m-2,0h4' />
       <path d='M4,5.9v9M7,6v9M10,6.2v9M13,6.6v9M16,6.6v9M19,6.6v9M22,6.2v9M25,6v9M28,5.9v9' />
@@ -104,17 +134,15 @@ body {
 
 </head>
 <body>
-<div style='border: 1px dotted red; width: .35in; height: .35in; float: left; font-size: .1in'>.1225 Inch sq (.35 in)</div>
-<div style='border: 1px dotted red; width: 1in; height: 1in; float: left; font-size: .25in'>1 Inch sq (1in)</div>
-
-<h3 class='team'>K<span>NIGHTS</span> 15 A<span>DIDAS</span> M<span>AROON</span></h3>
+  <h3 class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></h3>
+<h3 class='team'>15 A<span>DIDAS</span> M<span>AROON</span></h3>
 
 <div class='navbar'>
-  <a class='active' href='#'><i class='fa fa-fw fa-user'></i> Players</a> 
-  <a href='#'><svg class='icon' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;Tournaments</a>
-  <a href='#'><svg class='net white' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;Opponents</a> 
-  <a href='#'><i class='fa fa-fw fa-camera'></i> Photos</a>
-  <a href='#' style='background-color:darkgray'><i class='fa fa-fw fa-home'></i> Teams</a>
+  <a class='home' href='#'><i class='fa fa-fw fa-home'></i>&nbsp;<span id='home' /></a>
+  <a class='active' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a> 
+  <a href='#'>&nbsp;<svg class='icon' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;<span id='tourneys' /></a>
+  <a href='#'>&nbsp;<svg class='net' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;<span id='foes' /></a> 
+  <a href='#'><i class='fa fa-fw fa-camera'></i>&nbsp;<span id='photos' /></a>
 </div>
 
 <div style='margin-left: 10em; background-color: lightgray'>
