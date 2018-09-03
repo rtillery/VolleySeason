@@ -9,101 +9,102 @@ font-family: 'Enter-Sansman-Bold-Italic';
 }
 
 td.details-control {
-    text-align: center;
-    color: forestgreen;
-    cursor: pointer;
+  text-align: center;
+  color: forestgreen;
+  cursor: pointer;
 }
 tr.shown td.details-control {
-    text-align: center; 
-    color: red;
+  text-align: center; 
+  color: red;
 }
 
 body {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 .ourteamname {
-    font-size: 7mm;
-    background-color: white;
-    color: black;
+  font-size: 7mm;
+  background-color: white;
+  color: black;
 }
 .overall {
-    font-size: 7mm;
-    background-color: orange;
-    color: white;
+  font-size: 7mm;
+  background-color: orange;
+  color: white;
 }
 
 /* Height of table rows */
 tr {
-    height: 9mm;
+  height: 9mm;
 }
 
 /* Height of table heading font */
 .dataTable th {
-    font-size: 8mm;
+  font-size: 8mm;
 }
 
 /* Height of table row font */
 .dataTable td {
-    font-size: 7mm;
+  font-size: 7mm;
 }
 
 /* Detail table row font */
 .set td {
-    font-size: 7mm;
-    height: 9mm;
+  font-size: 7mm;
+  height: 9mm;
 }
 
 .percent, .win, .lose, .tie {
-    color: white;
-    font-weight: bold;
-    text-align: right;
+  color: white;
+  font-weight: bold;
+  text-align: right;
 }
 .win {
-    background-color: limegreen;
+  background-color: limegreen;
 }
 .lose {
-    background-color: red;
+  background-color: red;
 }
 .tie {
-    background-color: gold;
+  background-color: gold;
 }
 .unplayed {
 }
 
 .invisible {
-    visibility: hidden;
+  display: none;
 }
 
 .loading {
-    position: fixed;
-    z-index: 999;
-    height: 25vmin;
-    width: 25vmin;
-    overflow: show;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  position: fixed;
+  z-index: 999;
+  height: 25vmin;
+  width: 25vmin;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .cond {
-    font-size: 66.7%;
-    transform: scaleY(1.5);
+  font-size: 66.7%;
+  transform: scaleY(1.5);
 }
 
 .round {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .heading {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-table.sets tbody tr.evenopp {}
+table.sets tbody tr.evenopp {
+}
 table.sets tbody tr.oddopp {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 /*
 @media (pointer: coarse),

@@ -18,159 +18,163 @@
 </head>
 
 <body>
-    <table class='teamheader'><tbody>
-        <tr>
-            <td>
-                <table class='ourteamname'><tbody>
-                    <tr><td>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</td></tr>
-                </tbody></table>
-            </td>
-            <td>
-                <table class='overall'><tbody>
-                </tbody></table>
-            </td>
-        </tr>
-    </tbody></table>
+  <table class='teamheader'><tbody>
+    <tr>
+      <td>
+        <table class='ourteamname'><tbody>
+          <tr><td>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</td></tr>
+        </tbody></table>
+      </td>
+      <td>
+        <table class='overall'><tbody>
+        </tbody></table>
+      </td>
+    </tr>
+  </tbody></table>
 <div>
-    <table id='teamtable' class='display invisible' style='width:100%'>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Team</th>
-                <th><div class='cond'>Rank</div></th>
-                <th><div class='cond'>Win%</div></th>
-                <th>Us</th>
-                <th><div class='cond'>Them</div></th>
-            </tr>
-        </thead>
-    </table>
+  <table id='teamtable' class='display invisible' style='width:100%'>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Team</th>
+        <th><div class='cond'>Rank</div></th>
+        <th><div class='cond'>Win%</div></th>
+        <th>Us</th>
+        <th><div class='cond'>Them</div></th>
+      </tr>
+    </thead>
+  </table>
 </div>
 
 <script type='text/javascript'>
-    TEAMSHEET = "Opponents";
-    SETSHEET = "Sets";
 
-    function winlosetie(us, them) {
-        var iUs = parseInt(us);
-        var iThem = parseInt(them);
-        return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
-    }
+  TEAMSHEET = "Opponents";
+  SETSHEET = "Sets";
 
-    function format ( d ) {
-        // `d` is the original data object for the row
-        sets = setsheet.elements;
-        var setarray = $.grep(sets, function(e){ return e.OpponentCode == d["UniqueOpponentCode"]; });
-        detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
-            "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><div class='cond'>Them</div></th></tr></thead>";
-        $.each(setarray, function( index, value ) {
-            var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-            detailtable += "<tr class='set'>" +
-                "<td><div class='cond'>" + value["Tournament"] + "</div></td>" +
-                "<td class='dt-center'><div class='cond'>" + value["Date"] + "</div></td>" +
-                "<td><div class='cond'>" + value["Round"] + "</div></td>" +
-                tdwlt + value["Us"] + "</td>" +
-                tdwlt + value["Them"] + "</td>" +
-            "</tr>";
-        });
-        detailtable += "</table>";
-        return detailtable;
-    }
+  function winlosetie(us, them) {
+      var iUs = parseInt(us);
+      var iThem = parseInt(them);
+      return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
+  }
+
+  function format(d) {
+    // `d` is the original data object for the row
+    sets = setsheet.elements;
+    var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
+    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
+                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><div class='cond'>Them</div></th></tr></thead>";
+    $.each(setarray, function(index, value) {
+      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+      detailtable += "<tr class='set'>" +
+                       "<td><div class='cond'>" + value["Tournament"] + "</div></td>" +
+                       "<td class='dt-center'><div class='cond'>" + value["Date"] + "</div></td>" +
+                       "<td><div class='cond'>" + value["Round"] + "</div></td>" +
+                       tdwlt + value["Us"] + "</td>" +
+                       tdwlt + value["Them"] + "</td>" +
+                     "</tr>";
+    });
+    detailtable += "</table>";
+    return detailtable;
+  }
     
-    $(document).ready(function() {
-        $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
+  $(document).ready(function() {
+    $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
 
-        Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1wXLmCIAl1-0Z25OVh0zf2TtauGjt0xGY0MJRhTJBf-k/pubhtml',
-                         callback: showDataTable,
-                         wanted: [ SETSHEET, TEAMSHEET ] } );
-    } );
-    
-    function showDataTable(dataarray, tabletop) {
+    Tabletop.init({
+      key: 'https://docs.google.com/spreadsheets/d/1wXLmCIAl1-0Z25OVh0zf2TtauGjt0xGY0MJRhTJBf-k/pubhtml',
+      callback: showDataTable,
+      wanted: [SETSHEET, TEAMSHEET]
+    });
+  });
 
-$.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
-    if ( data == "" ) {
+  function showDataTable(dataarray, tabletop) {
+
+    $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+      if ( data == "" ) {
         return 999.0;
-    } else {
+      } else {
         return parseFloat( data );
-    }
-};
+      }
+    };
 
-        $('#teamtable').removeClass('invisible');
-        $('.loading').remove();
+    $('#teamtable').removeClass('invisible');
+    $('.loading').remove();
 
-        teamsheet = dataarray[TEAMSHEET];
-        setsheet = dataarray[SETSHEET];
-        results = teamsheet.elements;
-        overall = results[0];
-        
-        $('.overall').append("<tr>" +
-                                     "<td>Overall:</td>" +
-                                     "<td>" + overall.OverallPercent + "</td>" +
-                                     "<td>(" + overall.OverallWins + "&nbsp-&nbsp" + overall.OverallLosses + ")</td>" +
-                                 "</tr>");
+    teamsheet = dataarray[TEAMSHEET];
+    setsheet = dataarray[SETSHEET];
+    results = teamsheet.elements;
+    overall = results[0];
 
-        var table = $('#teamtable').DataTable( {
-            'data': results,
-            fixedColumns:   {
-                'heightMatch': 'none'
-            },
-            columns: [
-                { 'className': 'details-control',
-                  'orderable': false,
-                  'data': null,
-                  'defaultContent': '',
-                  'render': function () {
-                      return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
-                  },
-                  'width':'6mm' },
-                { 'data': 'OpponentName' },
-                { 'data': 'LatestRanking',
-                  'width': '9mm',
-                  'className': 'dt-center',
-                  'type': 'custom' },
-                { 'data': 'Percent',
-                  'width': '9mm' },
-                { 'data': 'Wins',
-                  'width': '9mm',
-                  'className': 'dt-center' },
-                { 'data': 'Losses',
-                  'width': '9mm',
-                  'className': 'dt-center' }
-            ],
-            paging: false,
-            searching: false,
-            fixedHeader: {
-                header: true,
-                footer: false
-            },
-            rowCallback: function(row, data, index) {
-                var tester = $(row).find('td:eq(3)');
-                if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
-                    return;
-                $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
-                $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
-            },
-            'order': [[1, 'asc']]
-        } );
+    $('.overall').append("<tr>" +
+                           "<td>Overall:</td>" +
+                           "<td>" + overall.OverallPercent + "</td>" +
+                           "<td>(" + overall.OverallWins + "&nbsp-&nbsp" + overall.OverallLosses + ")</td>" +
+                         "</tr>");
 
-        $('body').css('cursor', 'default');
+    var table = $('#teamtable').DataTable({
+      'data': results,
+      fixedColumns:   {
+        'heightMatch': 'none'
+      },
+      columns: [
+        { 'className': 'details-control',
+          'orderable': false,
+          'data': null,
+          'defaultContent': '',
+          'render': function () {
+            return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
+          },
+          'width':'6mm' },
+        { 'data': 'OpponentName' },
+        { 'data': 'LatestRanking',
+          'width': '9mm',
+          'className': 'dt-center',
+          'type': 'custom' },
+        { 'data': 'Percent',
+          'width': '9mm' },
+        { 'data': 'Wins',
+          'width': '9mm',
+          'className': 'dt-center' },
+        { 'data': 'Losses',
+          'width': '9mm',
+          'className': 'dt-center' }
+      ],
+      paging: false,
+      searching: false,
+      fixedHeader: {
+        header: true,
+        footer: false
+      },
+      rowCallback: function(row, data, index) {
+        var tester = $(row).find('td:eq(3)');
+        if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
+          return;
+        $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
+        $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+      },
+      'order': [[1, 'asc']]
+    });
 
-        // Add event listener for opening and closing details
-        $('#teamtable tbody').on('click', 'td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
-     
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                row.child.hide();
-                tr.removeClass('shown');
-            }
-            else {
-                // Open this row
-                row.child( format(row.data()) ).show();
-                tr.addClass('shown');
-            }
-        } );
-    }
+    $('body').css('cursor', 'default');
+
+    // Add event listener for opening and closing details
+    $('#teamtable tbody').on('click', 'td.details-control', function(){
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        // Open this row
+        row.child( format(row.data())).show();
+        tr.addClass('shown');
+      }
+    });
+  }
+
 </script>
 
 </body>
