@@ -80,10 +80,10 @@ a .team {
   position: relative;
 }
 .icon {
-  stroke-width: 2;
+  stroke-width: 3;
 }
 .net {
-  stroke-width: .75;
+  stroke-width: 1.5;
 }
 
 .home {
@@ -94,19 +94,19 @@ a .team {
   background-color: maroon;
 }
 
-#home:before {
+#txtteams:before {
   content: "Teams";
 }
-#players:before {
+#txtplayers:before {
   content: "Players";
 }
-#tourneys:before {
+#txttourneys:before {
   content: "Tournaments";
 }
-#foes:before {
+#txtfoes:before {
   content: "Opponents";
 }
-#photos:before {
+#txtpics:before {
   content: "Photos";
 }
 
@@ -135,29 +135,43 @@ a .team {
   .navbar {
     width: 100%;
     float: none;
+    font-size: 0;
+  }
+  .navbar div {
+    font-size: 3.9vmin;
+    display: inline-block;
+    padding: 10px 5px;
   }
   .navbar a {
+    color: white;
+    text-decoration: none;
     display: inline-block;
-    padding: 1em 1em;
+    padding: 0;
+  }
+  .navbar a svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 3.2vmin;
+    height: 3.2vmin;
   }
 
-  #home:before {
+  #txtteams:before {
     content: "Teams";
   }
-  #players:before {
+  #txtplayers:before {
     content: "Players";
   }
-  #tourneys:before {
+  #txttourneys:before {
     content: "Tourneys";
   }
   .narrow {
     font-size: 66.7%;
     transform: scaleY(1.5);
   }
-  #foes:before {
+  #txtfoes:before {
     content: "Foes";
   }
-  #photos:before {
+  #txtpics:before {
     content: "Pics";
   }
 
@@ -171,10 +185,10 @@ a .team {
 <svg width='0' height='0' style='display: block'>
   <defs>
     <symbol id='bracket'>
-      <path class='white' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
+      <path class='white icon' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
     </symbol>
 
-    <symbol class='white' id='net'>
+    <symbol class='white net' id='net'>
       <path d='M1,5c5,2 26,2 30,0M1,8c5,2 26,2 30,0M1,11c5,2 26,2 30,0M1,14c5,2 26,2 30,0' />
       <path d='M1,4v21m-2,0h4M31,4v21m-2,0h4' />
       <path d='M4,5.9v9M7,6v9M10,6.2v9M13,6.6v9M16,6.6v9M19,6.6v9M22,6.2v9M25,6v9M28,5.9v9' />
@@ -191,22 +205,13 @@ a .team {
 </div>
 
 <div class='navbar'>
-  <a class='home active' href='#'><i class='fa fa-fw fa-home'></i>&nbsp;<span id='home' /></a>
-  <a class='invisible' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;<span id='tourneys' /></a>
-  <a class='invisible' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;<span id='foes' /></a>
-  <a class='invisible' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a>
-  <a class='invisible' href='#'><i class='fa fa-fw fa-camera'></i>&nbsp;<span id='photos' /></a>
+  <div id='home' class='home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
+  <div id='tourneys' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
+  <div id='foes' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
+  <div id='players' class='invisible'><a href='#'><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
+  <div id='pics' class='invisible'><a href='#'><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
 </div>
 
-<!--
-<div style='background-color: cyan; font-size: 3.5vmin; justify-content: center'>
-  <div style='background-color: red; display: inline-block; padding: 7px'><a style=''><i class='fa fa-fw fa-home'></i> Teams</a></div>
-  <div style='background-color: green; display: inline-block; padding: 7px'><a style=''><svg width='2.5vmin' height='2.5vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> Tourneys</a></div>
-  <div style='background-color: blue; display: inline-block; padding: 7px'><a style=''><svg width='2.5vmin' height='2.5vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> Foes</a></div>
-  <div style='background-color: orange; display: inline-block; padding: 7px'><a style=''><i class='fa fa-fw fa-user'></i> Players</a></div>
-  <div style='background-color: yellow; display: inline-block; padding: 7px'><a style=''><i class='fa fa-fw fa-camera'></i> Pics</a></div>
-</div>
--->
 <div class='page'>
   <div style='padding: .75em'>
     <ul class='teamlist'>
@@ -300,9 +305,9 @@ a .team {
         $('.club').css('display', 'inline-block');
         $('#masthead').append("<div id='team' class='team'></div>");
         $('#team').html(teamrow.TeamName);
-        $('.navbar a').removeClass('invisible');
-        $('a:has(#home)').removeClass('active');
-        $('a:has(#foes)').addClass('active');
+        $('.navbar div').removeClass('invisible');
+        $('#home').removeClass('active');
+        $('#foes').addClass('active');
       }
     } else {
 
