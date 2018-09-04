@@ -72,7 +72,7 @@ tr {
 }
 
 .invisible {
-  display: none;
+  display: none !important;
 }
 
 .loading {

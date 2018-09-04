@@ -39,7 +39,7 @@ body {
 .club {
   font-size: 36px;
   color: #555;
-  padding: 6px 0 0 0;
+  padding: 6px 0 4px 0;
 }
 .team {
   font-size: 26px;
@@ -111,6 +111,10 @@ body {
   background-color: lightgray;
 }
 
+.teamlist {
+  list-style-type: none;
+}
+
 @media screen and (max-aspect-ratio: 1/1) {
   .club, .team {
     display: block;
@@ -166,46 +170,129 @@ body {
 
 <div>
   <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
-  <div class='team'>15 A<span>DIDAS</span> M<span>AROON</span></div>
+  <div id='team' class='team invisible'></div>
 </div>
 
 <div class='navbar'>
   <a class='home active' href='#'><i class='fa fa-fw fa-home'></i>&nbsp;<span id='home' /></a>
-  <a class='invisible' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a>
   <a class='invisible' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg>&nbsp;<span id='tourneys' /></a>
   <a class='invisible' href='#'><svg viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg>&nbsp;<span id='foes' /></a>
+  <a class='invisible' href='#'><i class='fa fa-fw fa-user'></i>&nbsp;<span id='players' /></a>
   <a class='invisible' href='#'><i class='fa fa-fw fa-camera'></i>&nbsp;<span id='photos' /></a>
 </div>
 
 <div class='page'>
   <div style='padding: .75em'>
-    <h1>My Page</h1>
+    <ul class='teamlist'>
+    </ul>
   </div>
 </div>
 
 <script type='text/javascript'>
-    TEAMSHEET = "Sheet1";
 
-    $(document).ready(function() {
-        $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
+  // From: https://stackoverflow.com/a/2880929
+  var urlParams = {};
+  (window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
 
-        Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml',
-                         callback: showDataTable,
-                         wanted: [ TEAMSHEET ] } );
-    } );
-    
-    function showDataTable(dataarray, tabletop) {
+    while (match = search.exec(query))
+     urlParams[decode(match[1])] = decode(match[2]);
+  })();
 
-        $('#teamtable').removeClass('invisible');
-        $('.loading').remove();
+  function isWhiteSpace(chr) {
+    return (" \t\r\n\v\f".indexOf(chr) >= 0);
+  }
+  function isDigit(chr) {
+    return (chr >= '0' && chr <= '9');
+  }
+  function isAlpha(chr) {
+    return ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z'));
+  }
+  function SmallCaps(instr) {
+    var outstr = "";
+    var i = 0;
+    var looking = true;
+    var chr = instr.charAt(i);
+    while (chr) {
+      i++;
+      if (looking) {
+        if (!isAlpha(chr) || isWhiteSpace(chr)) {
+          outstr += chr;
+        } else {
+          looking = false;
+          outstr += chr;
+          outstr += "<span>";
+        }
+      } else {
+        if (  isWhiteSpace(chr)) {
+          outstr += "</span>";
+          outstr += chr;
+          looking = true;
+        } else {
+          outstr += chr.toUpperCase();
+        }
+      }
+      chr = instr.charAt(i);
+    }
+    if (!looking)
+      outstr += "</span>";
+    return outstr;
+  }
 
-        teamsheet = dataarray[TEAMSHEET];
-        results = teamsheet.elements;
+  TEAMSHEET = "Sheet1";
 
-console.log(results);
+  $(document).ready(function() {
+    $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
+
+    Tabletop.init( {
+      key: 'https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml',
+      callback: showDataTable,
+      wanted: [ TEAMSHEET ]
+    });
+  });
+
+  function showDataTable(dataarray, tabletop) {
+    // Start by getting the list of teams from the team spreadsheet
+    teamsheet = dataarray[TEAMSHEET];
+    teamarray = teamsheet.elements;
+
+    // Decorate team names
+    $.each(teamarray, function(index, value) {
+      teamarray[index].TeamName = "<div class='team'>" + SmallCaps(value.TeamName) + "</div>";
+    });
+// console.log("teamarray: ", teamarray);
+
+    // If the URI contains a teamid, and it matches one of the ones in the
+    // team array, use the spreadsheet key to obtain that team's season data.
+    if (urlParams.teamid) {
+      var teamrow = teamarray.find(x => x.USAVCode === urlParams.teamid);
+      if (teamrow) {
+        $('#team').html(teamrow.TeamName);
+        $('#team').removeClass('invisible');
+        $('.navbar a').removeClass('invisible');
+        $('a:has(#home)').removeClass('active');
+        $('a:has(#foes)').addClass('active');
+      }
+    } else {
+
+      var teamlist = $('ul.teamlist');
+      $.each(teamarray, function(index, value) {
+        var team = $('<li/>')
+                   .appendTo(teamlist);
+        var lnk = $("<a href='" + window.location.href + "?teamid=" + value.USAVCode + "'/>")
+                  .html(value.TeamName)
+                  .appendTo(team);
+      });
+    }
+
+    $('.loading').remove();
 
 //        var table = $('#teamtable').DataTable( {
-//            'data': results,
+//            'data': teamarray,
 //            fixedColumns:   {
 //                'heightMatch': 'none'
 //            },
@@ -248,8 +335,9 @@ console.log(results);
 //            'order': [[1, 'asc']]
 //        } );
 
-        $('body').css('cursor', 'default');
-    }
+    $('body').css('cursor', 'default');
+  }
+
 </script>
 
 </body>
