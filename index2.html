@@ -110,7 +110,7 @@ a .team {
   content: "Photos";
 }
 
-.page {
+#teampage {
   margin-left: 9em;
   background-color: lightgray;
 }
@@ -176,7 +176,7 @@ a .team {
     content: "Pics";
   }
 
-  .page {
+  #teampage {
     margin-left: 0;
   }
 }
@@ -206,18 +206,30 @@ a .team {
 </div>
 
 <div class='navbar'>
-  <div id='home' class='home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
-  <div id='tourneys' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
-  <div id='foes' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
-  <div id='players' class='invisible'><a href='#'><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
-  <div id='pics' class='invisible'><a href='#'><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
+  <div id='teamstab' class='home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
+  <div id='tourneystab' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
+  <div id='foestab' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
+  <div id='playerstab' class='invisible'><a href='#'><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
+  <div id='picstab' class='invisible'><a href='#'><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
 </div>
 
-<div class='page'>
+<div id='teampage'>
   <div style='padding: .75em'>
     <ul class='teamlist'>
     </ul>
   </div>
+</div>
+
+<div id='foespage' class='invisible'>
+</div>
+
+<div id='tourneyspage' class='invisible'>
+</div>
+
+<div id='playerspage' class='invisible'>
+</div>
+
+<div id='picspage' class='invisible'>
 </div>
 
 <script type='text/javascript'>
@@ -280,6 +292,9 @@ a .team {
   $(document).ready(function() {
     $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
 
+    $('#teamstab a').attr('href',
+                          window.location.protocol + "//" + window.location.hostname + window.location.pathname);
+
     Tabletop.init( {
       key: 'https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml',
       callback: showDataTable,
@@ -304,11 +319,10 @@ a .team {
       var teamrow = teamarray.find(x => x.USAVCode === urlParams.teamid);
       if (teamrow) {
         $('.club').css('display', 'inline-block');
-        $('#masthead').append("<div id='team' class='team'></div>");
-        $('#team').html(teamrow.TeamName);
+        $('#masthead').append("<div id='team' class='team'>" + teamrow.TeamName + "</div>");
         $('.navbar div').removeClass('invisible');
-        $('#home').removeClass('active');
-        $('#foes').addClass('active');
+        $('#teamstab').removeClass('active');
+        $('#foestab').addClass('active');
       }
     } else {
 
@@ -316,7 +330,9 @@ a .team {
       $.each(teamarray, function(index, value) {
         var team = $('<li/>')
                    .appendTo(teamlist);
-        var lnk = $("<a href='" + window.location.href + "?teamid=" + value.USAVCode + "'/>")
+        var lnk = $("<a href='" +
+                    window.location.protocol + "//" + window.location.hostname + window.location.pathname +
+                    "?teamid=" + value.USAVCode + "'/>")
                   .html(value.TeamName)
                   .appendTo(team);
       });
