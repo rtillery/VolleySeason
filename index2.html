@@ -41,7 +41,7 @@ body {
   letter-spacing: -.05em;
 }
 .club {
-  font-size: 30px;
+  font-size: 29px;
   color: #555;
   padding: 6px;
   display: block; /* no team: centered */
@@ -219,30 +219,34 @@ a .team {
 </div>
 
 <div class='navbar'>
-  <div id='teamstab' class='home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
-  <div id='tourneystab' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
-  <div id='foestab' class='invisible'><a href='#'><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
-  <div id='playerstab' class='invisible'><a href='#'><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
-  <div id='picstab' class='invisible'><a href='#'><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
+  <div id='teamstab' class='tab home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
+  <div id='tourneystab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
+  <div id='foestab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
+  <div id='playerstab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
+  <div id='picstab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
 </div>
 
-<div id='teampage'>
+<div id='teampage' class='page'>
   <div style='padding: .75em'>
     <ul class='teamlist'>
     </ul>
   </div>
 </div>
 
-<div id='foespage' class='invisible'>
+<div id='foespage' class='page invisible'>
+  Foes
 </div>
 
-<div id='tourneyspage' class='invisible'>
+<div id='tourneyspage' class='page invisible'>
+  Tourneys
 </div>
 
-<div id='playerspage' class='invisible'>
+<div id='playerspage' class='page invisible'>
+  Players
 </div>
 
-<div id='picspage' class='invisible'>
+<div id='picspage' class='page invisible'>
+  Pics
 </div>
 
 <script type='text/javascript'>
@@ -307,6 +311,15 @@ a .team {
     });
   }
 
+  function DisplayPage(tab) {
+    var tabdiv = $(tab).closest('div');
+    var pageid = $(tabdiv).attr('id').replace("tab", "page");
+    $('.tab').closest('div').removeClass('active');
+    $(tabdiv).addClass('active');
+    $('.page').addClass('invisible');
+    $('#' + pageid).removeClass('invisible');
+  }
+
   // Collect URL parameters whenever the URL changes
   // From: https://stackoverflow.com/a/2880929
   var urlParams = {};
@@ -366,8 +379,7 @@ a .team {
         $('.club').addClass('withteam');
         $('#masthead').append("<div id='team' class='team'>" + teamrow.TeamName + "</div>");
         $('.navbar div').removeClass('invisible');
-        $('#teamstab').removeClass('active');
-        $('#foestab').addClass('active');
+        DisplayPage($('#foestab'));
       }
     }
 
