@@ -52,8 +52,7 @@ tr {
 
 /* Detail table row font */
 .set td {
-  font-size: 3.5vmin;
-  height: 3.5vmin;
+  font-size: 4vmin;
 }
 
 .percent, .win, .lose, .tie {
@@ -91,8 +90,8 @@ tr {
 }
 
 p, .cond {
-  font-size: 2.67vmin;
-  transform: scaleY(1.5);
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
 }
 p {
   padding: .5em 0;
