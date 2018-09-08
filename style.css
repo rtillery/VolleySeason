@@ -23,35 +23,37 @@ body {
 }
 
 .ourteamname {
-  font-size: 14mm;
+  font-size: 4vmin;
   background-color: white;
   color: black;
 }
 .overall {
-  font-size: 14mm;
+  font-size: 5vmin;
+  border-spacing: 2vmin 0;
+  height: 5vmin;
   background-color: orange;
   color: white;
 }
 
 /* Height of table rows */
 tr {
-  height: auto;
+  height: 10vmin;
 }
 
 /* Height of table heading font */
 .dataTable th {
-  font-size: 14mm;
+  font-size: 4vmin;
 }
 
 /* Height of table row font */
 .dataTable td {
-  font-size: 12mm;
+  font-size: 4vmin;
 }
 
 /* Detail table row font */
 .set td {
-  font-size: 12mm;
-  height: 16mm;
+  font-size: 3.5vmin;
+  height: 3.5vmin;
 }
 
 .percent, .win, .lose, .tie {
@@ -89,7 +91,7 @@ tr {
 }
 
 p, .cond {
-  font-size: 66.7%;
+  font-size: 2.67vmin;
   transform: scaleY(1.5);
 }
 p {
