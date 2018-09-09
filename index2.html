@@ -1,10 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html lang='en'>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 
-<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
-
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css' integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ' crossorigin='anonymous'>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
@@ -22,13 +20,12 @@
   stroke: white;
   fill: none;
 }
-
+/*
 body {
-  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
-
+*/
 #masthead {
   display: flex;
   flex-direction: row;
@@ -212,6 +209,7 @@ a .team {
 
 </head>
 <body>
+Body here
 
 <div id='masthead'>
   <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
@@ -226,32 +224,57 @@ a .team {
   <div id='picstab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
 </div>
 
-<div id='teampage' class='page'>
-  <div style='padding: .75em'>
-    <ul class='teamlist'>
-    </ul>
+<div>
+  <div id='teampage' class='page'>
+    <div style='padding: .75em'>
+      <ul class='teamlist'>
+      </ul>
+    </div>
   </div>
-</div>
 
-<div id='foespage' class='page invisible'>
-  Foes
-</div>
+  <div id='foespage' class='page invisible'>
+  Teamtable
+    <table id='teamtable' class='display' style='width:100%'>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Team</th>
+          <th><p>Rank</p></th>
+          <th><p>Win%</p></th>
+          <th>Us</th>
+          <th><p>Them</p></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 
-<div id='tourneyspage' class='page invisible'>
-  Tourneys
-</div>
+  <div id='tourneyspage' class='page invisible'>
+    Tourneys
+  </div>
 
-<div id='playerspage' class='page invisible'>
-  Players
-</div>
+  <div id='playerspage' class='page invisible'>
+    Players
+  </div>
 
-<div id='picspage' class='page invisible'>
-  Pics
+  <div id='picspage' class='page invisible'>
+    Pics
+  </div>
 </div>
 
 <script type='text/javascript'>
   TEAMSHEETKEY = "https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml";
   TEAMSHEETSHEET = "Sheet1";
+
+  FOESHEET = "Opponents";
+  SETSHEET = "Sets";
+  PLAYERSHEET = "Players";
+  TOURNEYSHEET = "Tourneys";
+
+  function winlosetie(us, them) {
+      var iUs = parseInt(us);
+      var iThem = parseInt(them);
+      return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
+  }
 
   function isWhiteSpace(chr) {
     return (" \t\r\n\v\f".indexOf(chr) >= 0);
@@ -346,13 +369,13 @@ a .team {
     // Get contents of team sheet and call specified callback function with the data
     Tabletop.init( {
       key: TEAMSHEETKEY,
-      callback: showDataTable,
+      callback: FillTeamList,
       wanted: [TEAMSHEETSHEET]
     });
   });
 
   // Display the list of teams in a clickable list
-  function showDataTable(dataarray, tabletop) {
+  function FillTeamList(dataarray, tabletop) {
     // Start by getting the list of teams from the team spreadsheet
     teamlist = dataarray[TEAMSHEETSHEET].elements;
 
@@ -373,7 +396,12 @@ a .team {
       if (!teamrow) {
         document.location.href = GetCleanURL();
       } else {
-        // Otherwise, use the team info
+        // Otherwise, use the team info and load the team results spreadsheet
+        Tabletop.init( {
+          key: teamrow.TeamSpreadsheet,
+          callback: FillTables,
+          wanted: [/* PLAYERSHEET, */ SETSHEET, TOURNEYSHEET, FOESHEET]
+        });
 
         // Switch the 
         $('.club').addClass('withteam');
@@ -386,52 +414,98 @@ a .team {
     // Clear busy spinner
     $('.loading').remove();
 
-//        var table = $('#teamtable').DataTable( {
-//            'data': teamlist,
-//            fixedColumns:   {
-//                'heightMatch': 'none'
-//            },
-//            columns: [
-//                { 'className': 'details-control',
-//                  'orderable': false,
-//                  'data': null,
-//                  'defaultContent': '',
-//                  'render': function () {
-//                      return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
-//                  },
-//                  'width':'6mm' },
-//                { 'data': 'OpponentName' },
-//                { 'data': 'LatestRanking',
-//                  'width': '9mm',
-//                  'className': 'dt-center',
-//                  'type': 'custom' },
-//                { 'data': 'Percent',
-//                  'width': '9mm' },
-//                { 'data': 'Wins',
-//                  'width': '9mm',
-//                  'className': 'dt-center' },
-//                { 'data': 'Losses',
-//                  'width': '9mm',
-//                  'className': 'dt-center' }
-//            ],
-//            paging: false,
-//            searching: false,
-//            fixedHeader: {
-//                header: true,
-//                footer: false
-//            },
-//            rowCallback: function(row, data, index) {
-//                var tester = $(row).find('td:eq(3)');
-//                if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
-//                    return;
-//                $(row).find('td:eq(1)').wrapInner("<div class='cond'></div>");
-//                $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
-//            },
-//            'order': [[1, 'asc']]
-//        } );
-
     $('body').css('cursor', 'default');
   }
+
+  function FormatFoeDropdown(d) {
+    // `d` is the original data object for the row
+    sets = setsheet.elements;
+    var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
+    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
+                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
+    $.each(setarray, function(index, value) {
+      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+      detailtable += "<tr class='set'>" +
+                       "<td><p>" + value["Tournament"] + "</p></td>" +
+                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
+                       "<td><p>" + value["Round"] + "</p></td>" +
+                       tdwlt + value["Us"] + "</td>" +
+                       tdwlt + value["Them"] + "</td>" +
+                     "</tr>";
+    });
+    detailtable += "</table>";
+    return detailtable;
+  }
+    
+  function FillTables(dataarray, tabletop) {
+    setsheet = dataarray[SETSHEET];
+    results = dataarray[FOESHEET].elements;
+    tourneydata = dataarray[TOURNEYSHEET].elements;
+    setsheet = dataarray[SETSHEET];
+    overall = results[0];
+
+    var foetable = $('#teamtable').DataTable({
+      'data': results,
+      fixedColumns:   {
+        'heightMatch': 'none'
+      },
+      columns: [
+        { 'className': 'details-control',
+          'orderable': false,
+          'data': null,
+          'defaultContent': '',
+          'render': function () {
+            return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
+          },
+          'width':'1.5em' },
+        { 'data': 'OpponentName' },
+        { 'data': 'LatestRanking',
+          'width': '1em',
+          'className': 'dt-center',
+          'type': 'custom' },
+        { 'data': 'Percent',
+          'width': '1em' },
+        { 'data': 'Wins',
+          'width': '1em',
+          'className': 'dt-center' },
+        { 'data': 'Losses',
+          'width': '1em',
+          'className': 'dt-center' }
+      ],
+      paging: false,
+      searching: false,
+      fixedHeader: {
+        header: true,
+        footer: false
+      },
+      rowCallback: function(row, data, index) {
+        var tester = $(row).find('td:eq(3)');
+        if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
+          return;
+        $(row).find('td:eq(1)').wrapInner("<p></p>");
+        $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+      },
+      'order': [[1, 'asc']]
+    });
+
+    // Add event listener for opening and closing details
+    $('#teamtable tbody').on('click', 'td.details-control', function(){
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        // Open this row
+        row.child(FormatFoeDropdown(row.data())).show();
+        tr.addClass('shown');
+      }
+    });
+  }
+
 
 </script>
 
