@@ -20,12 +20,7 @@
   stroke: white;
   fill: none;
 }
-/*
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-}
-*/
+
 #masthead {
   display: flex;
   flex-direction: row;
@@ -38,18 +33,18 @@ body {
   letter-spacing: -.05em;
 }
 .club {
-  font-size: 29px;
+  font-size: 9vmin; /* Width of portrait screen */
   color: #555;
-  padding: 6px;
+  padding: 1vmin;
   display: block; /* no team: centered */
 }
 .withteam {
   display: inline-block; /* landscape to the left */
 }
 .team {
-  font-size: 22px;
   color: maroon;
-  padding: 2px;
+  font-size: 6vmin;
+  padding: .75vmin;
   display: inline-block; /* always centered */
 }
 a .team {
@@ -119,6 +114,9 @@ a .team {
   margin-left: 9em;
   background-color: lightgray;
 }
+#teamtable {
+ width: calc(100% - 9em); /* value of .navbar width */
+}
 
 .teamlist {
   list-style-type: none;
@@ -139,6 +137,10 @@ a .team {
   .club, .team {
     display: block;
   }
+  .team {
+    font-size: 7vmin;
+    padding: .75vmin;
+  }
   .withteam {
     display: block; /* portrait centered */
   }
@@ -157,7 +159,7 @@ a .team {
     color: white;
     text-decoration: none;
     display: inline-block;
-    padding: 0;
+    padding: .75em .25em .75em .25em;
   }
   .navbar a svg {
     display: inline-block;
@@ -166,6 +168,9 @@ a .team {
     height: 3.2vmin;
   }
 
+  #teamtable {
+    width: 100%;
+  }
   #txtteams:before {
     content: "Teams";
   }
@@ -208,9 +213,8 @@ a .team {
 </svg>
 
 </head>
-<body>
-Body here
 
+<body>
 <div id='masthead'>
   <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
 <!--  <div id='team' class='team invisible'></div> -->
@@ -233,8 +237,7 @@ Body here
   </div>
 
   <div id='foespage' class='page invisible'>
-  Teamtable
-    <table id='teamtable' class='display' style='width:100%'>
+    <table id='teamtable' class='display'>
       <thead>
         <tr>
           <th></th>

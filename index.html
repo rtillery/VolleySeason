@@ -13,11 +13,209 @@
 <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
 <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css'>
 <link rel='stylesheet' type='text/css' href='style.css'>
+
+<style>
+
+.white {
+  stroke: white;
+  fill: none;
+}
+/*
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+*/
+#masthead {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.club, .team {
+  font-family: 'Enter-Sansman-Bold-Italic';
+  background-color: white;
+  letter-spacing: -.05em;
+}
+.club {
+  font-size: 29px;
+  color: #555;
+  padding: 6px;
+  display: block; /* no team: centered */
+}
+.withteam {
+  display: inline-block; /* landscape to the left */
+}
+.team {
+  font-size: 22px;
+  color: maroon;
+  padding: 2px;
+  display: inline-block; /* always centered */
+}
+a .team {
+  font-size: 9vmin;
+}
+.team span, .club span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+
+.navbar {
+  background-color: #555;
+  width: 9em;
+  float: left;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  display: list-item;
+  padding: 1em .5em;
+}
+.navbar a svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 14px;
+}
+.icon, .net {
+  width: 1em;
+  float: left;
+  top: .15em;
+  position: relative;
+}
+.icon {
+  stroke-width: 3;
+}
+.net {
+  stroke-width: 1.5;
+}
+
+.home {
+  background-color: darkgray;
+}
+
+.active {
+  background-color: maroon;
+}
+
+#txtteams:before {
+  content: "Teams";
+}
+#txtplayers:before {
+  content: "Players";
+}
+#txttourneys:before {
+  content: "Tournaments";
+}
+#txtfoes:before {
+  content: "Opponents";
+}
+#txtpics:before {
+  content: "Photos";
+}
+
+#teampage {
+  margin-left: 9em;
+  background-color: lightgray;
+}
+
+.teamlist {
+  list-style-type: none;
+  padding: 0;
+  background-color: white;
+}
+.teamlist a {
+  text-decoration: none;
+}
+.teamlist a .team {
+  text-align: left;
+}
+
+@media screen and (max-aspect-ratio: 1/1) {
+  #masthead {
+    flex-direction: column;
+  }
+  .club, .team {
+    display: block;
+  }
+  .withteam {
+    display: block; /* portrait centered */
+  }
+
+  .navbar {
+    width: 100%;
+    float: none;
+    font-size: 0;
+  }
+  .navbar div {
+    font-size: 3.9vmin;
+    display: inline-block;
+    padding: 10px 5px;
+  }
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0;
+  }
+  .navbar a svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 3.2vmin;
+    height: 3.2vmin;
+  }
+
+  #txtteams:before {
+    content: "Teams";
+  }
+  #txtplayers:before {
+    content: "Players";
+  }
+  #txttourneys:before {
+    content: "Tourneys";
+  }
+  .narrow {
+    font-size: 66.7%;
+    transform: scaleY(1.5);
+  }
+  #txtfoes:before {
+    content: "Foes";
+  }
+  #txtpics:before {
+    content: "Pics";
+  }
+
+  #teampage {
+    margin-left: 0;
+  }
+}
+
+<svg width='0' height='0' style='display: block'>
+  <defs>
+    <symbol id='bracket'>
+      <path class='white icon' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
+    </symbol>
+
+    <symbol class='white net' id='net'>
+      <path d='M1,5c5,2 26,2 30,0M1,8c5,2 26,2 30,0M1,11c5,2 26,2 30,0M1,14c5,2 26,2 30,0' />
+      <path d='M1,4v21m-2,0h4M31,4v21m-2,0h4' />
+      <path d='M4,5.9v9M7,6v9M10,6.2v9M13,6.6v9M16,6.6v9M19,6.6v9M22,6.2v9M25,6v9M28,5.9v9' />
+    </symbol>
+  </defs>
+</svg>
+
+</style>
+
 </head>
 
 <body>
-Body here
-<div>
+<div id='masthead'>
+  <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
+<!--  <div id='team' class='team invisible'></div> -->
+</div>
+
+<!-- <div>
   <table class='teamheader'><tbody>
     <tr>
       <td>
@@ -31,9 +229,8 @@ Body here
       </td>
     </tr>
   </tbody></table>
-</div>
+</div> -->
 <div>
-  Teamtable
   <table id='teamtable' class='display invisible' style='width:100%'>
     <thead>
       <tr>
