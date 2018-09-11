@@ -13,16 +13,6 @@ font-family: 'Enter-Sansman-Bold-Italic';
   fill: none;
 }
 
-td.details-control {
-  text-align: center;
-  color: forestgreen;
-  cursor: pointer;
-}
-tr.shown td.details-control {
-  text-align: center; 
-  color: red;
-}
-
 body {
   font-family: sans-serif;
   margin: 0;
@@ -105,12 +95,22 @@ a .team {
   stroke-width: 1.5;
 }
 
-.home {
+.hometab {
   background-color: darkgray;
 }
 
-.active {
+.activetab {
   background-color: maroon;
+}
+
+td.details-control {
+  text-align: center;
+  color: forestgreen;
+  cursor: pointer;
+}
+tr.shown td.details-control {
+  text-align: center; 
+  color: red;
 }
 
 #displayedpage {
@@ -259,7 +259,7 @@ table.sets tbody tr.oddopp {
     color: white;
     text-decoration: none;
     display: inline-block;
-    padding: .75em .25em .75em .25em;
+    padding: 1em .37em 1em .37em;
   }
   .navbar a svg {
     display: inline-block;

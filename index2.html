@@ -37,7 +37,7 @@
 </div>
 
 <div class='navbar'>
-  <div id='teamstab' class='tab home active'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
+  <div id='teamstab' class='tab hometab activetab'><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></div>
   <div id='tourneystab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#bracket' /></svg> <span id='txttourneys' /></a></div>
   <div id='foestab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><svg width='3.2vmin' height='3.2vmin' viewbox='0 0 32 32'><use x='0' y='0' xlink:href='#net' /></svg> <span id='txtfoes' /></a></div>
   <div id='playerstab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></div>
@@ -156,8 +156,8 @@
   function DisplayPage(tab) {
     var tabdiv = $(tab).closest('div');
     var pageid = $(tabdiv).attr('id').replace("tab", "page");
-    $('.tab').closest('div').removeClass('active');
-    $(tabdiv).addClass('active');
+    $('.tab').closest('div').removeClass('activetab');
+    $(tabdiv).addClass('activetab');
     $('.page').addClass('invisible');
     $('#' + pageid).removeClass('invisible');
   }
@@ -230,9 +230,10 @@
 
 // Adjust if the screen size changes
 $(window).resize(function() {
-  console.log("SCREEN SIZE CHANGED");
+//  console.log("SCREEN SIZE CHANGED");
   foetable.destroy();
   FillTables(currentdataarray, currenttabletop);
+//  foetable.columns.adjust().draw();
 });
       }
     }
@@ -275,6 +276,14 @@ currenttabletop = tabletop;
     tourneydata = dataarray[TOURNEYSHEET].elements;
     setsheet = dataarray[SETSHEET];
     overall = results[0];
+
+$.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+  if ( data == "" ) {
+    return 999.0;
+  } else {
+    return parseFloat( data );
+  }
+};
 
     foetable = $('.foetable').DataTable({
       'data': results,
