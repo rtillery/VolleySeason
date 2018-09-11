@@ -8,6 +8,11 @@ font-family: 'Enter-Sansman-Bold-Italic';
   font-style: normal;
 }
 
+.white {
+  stroke: white;
+  fill: none;
+}
+
 td.details-control {
   text-align: center;
   color: forestgreen;
@@ -23,17 +28,132 @@ body {
   margin: 0;
 }
 
-.ourteamname {
-  font-size: 4vmin;
-  background-color: white;
-  color: black;
+#masthead {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
+.club, .team {
+  font-family: 'Enter-Sansman-Bold-Italic';
+  background-color: white;
+  letter-spacing: -.05em;
+}
+.club {
+  font-size: 9vmin; /* Width of portrait screen */
+  color: #555;
+  padding: 1vmin;
+  display: block; /* no team: centered */
+}
+.withteam {
+  display: inline-block; /* landscape to the left */
+}
+.team {
+  color: maroon;
+  font-size: 6vmin;
+  padding: .75vmin;
+  display: inline-block; /* always centered */
+}
+a .team {
+  font-size: 9vmin;
+}
+.team span, .club span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+
 .overall {
   font-size: 5vmin;
   border-spacing: 2vmin 0;
   height: 5vmin;
   background-color: orange;
   color: white;
+}
+
+.navbar {
+  background-color: #555;
+  width: 11em;
+  float: left;
+  display: inline-block;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  display: list-item;
+  padding: 1em .5em;
+}
+.navbar div {
+  font-size: 3.9vmin;
+}
+.navbar a svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 14px;
+}
+.icon, .net {
+  width: 1em;
+  float: left;
+  top: .15em;
+  position: relative;
+}
+.icon {
+  stroke-width: 3;
+}
+.net {
+  stroke-width: 1.5;
+}
+
+.home {
+  background-color: darkgray;
+}
+
+.active {
+  background-color: maroon;
+}
+
+#displayedpage {
+  display: inline-block;
+  width: calc(100% - 11em);
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+#txtteams:before {
+  content: "Teams";
+}
+#txtplayers:before {
+  content: "Players";
+}
+#txttourneys:before {
+  content: "Tournaments";
+}
+#txtfoes:before {
+  content: "Opponents";
+}
+#txtpics:before {
+  content: "Photos";
+}
+
+#teampage {
+  background-color: lightgray;
+}
+.foetable {
+  border: 0;
+  padding: 0;
+}
+
+.teamlist {
+  list-style-type: none;
+  padding: 0;
+  background-color: white;
+}
+.teamlist a {
+  text-decoration: none;
+}
+.teamlist a .team {
+  text-align: left;
 }
 
 /* Height of table rows */
@@ -111,12 +231,79 @@ table.sets tbody tr.evenopp {
 table.sets tbody tr.oddopp {
   background-color: #f9f9f9;
 }
+
+@media screen and (max-aspect-ratio: 1/1) {
+  #masthead {
+    flex-direction: column;
+  }
+  .club, .team {
+    display: block;
+  }
+  .team {
+    font-size: 7vmin;
+    padding: .75vmin;
+  }
+  .withteam {
+    display: block; /* portrait centered */
+  }
+
+  .navbar {
+    width: 100%;
+    float: none;
+    font-size: 0;
+  }
+  .navbar div {
+    display: inline-block;
+  }
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: .75em .25em .75em .25em;
+  }
+  .navbar a svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 3.2vmin;
+    height: 3.2vmin;
+  }
+
+  #displayedpage {
+    display: block;
+    width: 100%;
+  }
+
+  .foetable {
+    width: 100%;
+  }
+  #txtteams:before {
+    content: "Teams";
+  }
+  #txtplayers:before {
+    content: "Players";
+  }
+  #txttourneys:before {
+    content: "Tourneys";
+  }
+  .narrow {
+    font-size: 66.7%;
+    transform: scaleY(1.5);
+  }
+  #txtfoes:before {
+    content: "Foes";
+  }
+  #txtpics:before {
+    content: "Pics";
+  }
+
+  #teampage {
+    margin-left: 0;
+  }
+}
+
 /*
 @media (pointer: coarse),
        (-moz-touch-enabled) {
-    .ourteamname {
-        font-size: 4vmin;
-    }
     .overall {
         font-size: 5vmin;
         border-spacing: 2vmin 0;
