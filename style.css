@@ -95,7 +95,7 @@ p, .cond {
   transform: scaleY(calc(3/2));
 }
 p {
-  padding: .5em 0;
+  {  padding: .5em 0; }
 }
 
 .round {

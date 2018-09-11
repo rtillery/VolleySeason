@@ -58,14 +58,18 @@ a .team {
 
 .navbar {
   background-color: #555;
-  width: 9em;
+  width: 11em;
   float: left;
+  display: inline-block;
 }
 .navbar a {
   color: white;
   text-decoration: none;
   display: list-item;
   padding: 1em .5em;
+}
+.navbar div {
+  font-size: 3.9vmin;
 }
 .navbar a svg {
   display: inline-block;
@@ -94,6 +98,13 @@ a .team {
   background-color: maroon;
 }
 
+#displayedpage {
+  display: inline-block;
+  width: calc(100% - 11em);
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
 #txtteams:before {
   content: "Teams";
 }
@@ -111,11 +122,11 @@ a .team {
 }
 
 #teampage {
-  margin-left: 9em;
   background-color: lightgray;
 }
-#teamtable {
- width: calc(100% - 9em); /* value of .navbar width */
+.foetable {
+  border: 0;
+  padding: 0;
 }
 
 .teamlist {
@@ -151,9 +162,7 @@ a .team {
     font-size: 0;
   }
   .navbar div {
-    font-size: 3.9vmin;
     display: inline-block;
-    padding: 10px 5px;
   }
   .navbar a {
     color: white;
@@ -168,7 +177,12 @@ a .team {
     height: 3.2vmin;
   }
 
-  #teamtable {
+  #displayedpage {
+    display: block;
+    width: 100%;
+  }
+
+  .foetable {
     width: 100%;
   }
   #txtteams:before {
@@ -228,24 +242,24 @@ a .team {
   <div id='picstab' class='tab invisible'><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></div>
 </div>
 
-<div>
+<div id='displayedpage'>
   <div id='teampage' class='page'>
-    <div style='padding: .75em'>
+    <div>
       <ul class='teamlist'>
       </ul>
     </div>
   </div>
 
   <div id='foespage' class='page invisible'>
-    <table id='teamtable' class='display'>
+    <table class='foetable display dataTable'>
       <thead>
         <tr>
-          <th></th>
+          <th style='width: 1.5em'></th>
           <th>Team</th>
-          <th><p>Rank</p></th>
-          <th><p>Win%</p></th>
-          <th>Us</th>
-          <th><p>Them</p></th>
+          <th style='width: 1em'><p>Rank</p></th>
+          <th style='width: 1em'><p>Win%</p></th>
+          <th style='width: 1em'>Us</th>
+          <th style='width: 1em'><p>Them</p></th>
         </tr>
       </thead>
     </table>
@@ -406,11 +420,18 @@ a .team {
           wanted: [/* PLAYERSHEET, */ SETSHEET, TOURNEYSHEET, FOESHEET]
         });
 
-        // Switch the 
+        // Display the team name and go to Opponents page
         $('.club').addClass('withteam');
         $('#masthead').append("<div id='team' class='team'>" + teamrow.TeamName + "</div>");
         $('.navbar div').removeClass('invisible');
         DisplayPage($('#foestab'));
+
+// Adjust if the screen size changes
+$(window).resize(function() {
+  console.log("SCREEN SIZE CHANGED");
+  foetable.destroy();
+  FillTables(currentdataarray, currenttabletop);
+});
       }
     }
 
@@ -439,15 +460,21 @@ a .team {
     detailtable += "</table>";
     return detailtable;
   }
-    
+
+var currentdataarray;
+var currenttabletop;
+var foetable;
+
   function FillTables(dataarray, tabletop) {
+currentdataarray = dataarray;
+currenttabletop = tabletop;
     setsheet = dataarray[SETSHEET];
     results = dataarray[FOESHEET].elements;
     tourneydata = dataarray[TOURNEYSHEET].elements;
     setsheet = dataarray[SETSHEET];
     overall = results[0];
 
-    var foetable = $('#teamtable').DataTable({
+    foetable = $('.foetable').DataTable({
       'data': results,
       fixedColumns:   {
         'heightMatch': 'none'
@@ -460,19 +487,19 @@ a .team {
           'render': function () {
             return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
           },
-          'width':'1.5em' },
+          'width':'1em' },
         { 'data': 'OpponentName' },
         { 'data': 'LatestRanking',
-          'width': '1em',
+          'width': '.5em',
           'className': 'dt-center',
           'type': 'custom' },
         { 'data': 'Percent',
-          'width': '1em' },
+          'width': '.5em' },
         { 'data': 'Wins',
-          'width': '1em',
+          'width': '.5em',
           'className': 'dt-center' },
         { 'data': 'Losses',
-          'width': '1em',
+          'width': '.5em',
           'className': 'dt-center' }
       ],
       paging: false,
@@ -492,9 +519,9 @@ a .team {
     });
 
     // Add event listener for opening and closing details
-    $('#teamtable tbody').on('click', 'td.details-control', function(){
+    $('.foetable tbody').on('click', 'td.details-control', function(){
       var tr = $(this).closest('tr');
-      var row = table.row(tr);
+      var row = foetable.row(tr);
 
       if (row.child.isShown()) {
         // This row is already open - close it
@@ -508,7 +535,6 @@ a .team {
       }
     });
   }
-
 
 </script>
 
