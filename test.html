@@ -144,7 +144,7 @@ p {
 }
 
 .navbar {
-  background-color: darkgray;
+  background-color: #555;
   font-size: 4vmin;
   width: 100%;
 }
@@ -164,9 +164,13 @@ p {
 }
 .navbar>ul>li>a {
   display: block;
+  color: white;
   padding: 1em .25em;
   text-decoration: none;
   background-color: inherit;
+}
+.active {
+  background-color: maroon !important;
 }
 #txtteams:before {
   content: "Teams";
@@ -290,8 +294,8 @@ p {
 <div class='navbar'>
   <ul>
     <li><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
-    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-home'></i> <span id='txttourneys' /></a></li>
-    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-home'></i> <span id='txtfoes' /></a></li>
+    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-trophy'></i> <span id='txttourneys' /></a></li>
+    <li><a href='#' class='active' onclick="DisplayPage(this)"><i class='fas fa-volleyball-ball'></i>&nbsp;&nbsp;<span id='txtfoes' /></a></li>
     <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
     <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
   </ul>
