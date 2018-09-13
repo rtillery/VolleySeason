@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang='en'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css' integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ' crossorigin='anonymous'>
+
+<style>
+/* Known defaults */
+{
+  html {
+    display: block;
+    font-size: 16px;
+    font-family: serif;
+  }
+  body {
+    display: block;
+    margin: 8px;
+    font-size: inherit;
+  }
+  div {
+    display: block;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    width: auto;
+    height: auto;
+  }
+  img {
+    display: inline-block;
+  }
+  li {
+    display: list-item;
+  }
+  p {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  script {
+    display: none;
+  }
+  span {
+  }
+  table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+    white-space: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-size: medium;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+    text-align: start;
+    font-variant: normal;
+  }
+  td {
+    display: table-cell;
+    vertical-align: inherit;
+  }
+  tfoot {
+    display: table-footer-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+  th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: center;
+  }
+  thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+  tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+  }
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+}
+
+@font-face {
+font-family: 'Enter-Sansman-Bold-Italic';
+  src: url('Enter-Sansman-Bold-Italic.ttf.woff') format('woff'),
+       url('Enter-Sansman-Bold-Italic.ttf.svg#Enter-Sansman-Bold-Italic') format('svg'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot?#iefix') format('embedded-opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-family: sans-serif;
+}
+body {
+  margin: 0;
+}
+table, tr, th, td {
+  border-spacing: 0;
+  padding: 0;
+}
+
+.masthead {
+  font-size: 0;
+}
+.clubbanner, .teambanner {
+  font-family: 'Enter-Sansman-Bold-Italic';
+  letter-spacing: -.05em;
+  text-align: center;
+  padding: .2em .2em 0 .2em;
+}
+.clubbanner {
+  color: #555;
+  font-size: calc(9vmin / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+.teambanner {
+  font-size: 7vmin;
+  color: maroon;
+}
+.teambanner span, .clubbanner span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+
+.navbar {
+  background-color: darkgray;
+  font-size: 4vmin;
+}
+.navbar ul {
+  margin: 0;
+}
+
+.rttable {
+  font-size: 4vmin;
+}
+.rttable tr td {
+  padding: 2vmin 1vmin;
+}
+.rttable thead th {
+  height: 10vmin;
+  border-bottom: 2px solid black;
+}
+.rttable tr td {
+  border-top: 1px solid #AAA;
+}
+.rttable tr:first-child td {
+  border-top: none;
+}
+.rttable {
+  border-bottom: 2px solid black;
+}
+.rtoddrow {
+  background-color: #F0F0F0;
+}
+.rtevenrow {
+  background-color: #FFF;
+}
+.rttable>tbody>tr>td:nth-child(even) {
+  background-color: rgba(240, 240, 240, 0.5);
+}
+.rttable>tbody>tr>td:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+.foename {
+  font-size: 100%;
+  transform: none;
+}
+
+#foetable tr td:nth-child(1), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6) {
+  white-space: nowrap;
+  text-align: center;
+  min-width: 8vmin;
+}
+#foetable td:nth-child(1) {
+  color: forestgreen;
+}
+#foetable td:nth-child(2) {
+  width: 99%;
+}
+#foetable td:nth-child(4) {
+  font-weight: bold;
+}
+
+/* LANDSCAPE */
+@media screen and (max-aspect-ratio: 1/1) {
+  .foename {
+    font-size: calc(100% / calc(3/2));
+    transform: scaleY(calc(3/2));
+  }
+}
+</style>
+</head>
+<body>
+<div class='masthead'>
+  <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
+  <div class='teambanner'>15 A<span>DIDAS</span> M<span>AROON</span></div>
+</div>
+<div class='navbar'>
+  <ul>
+    <li>Teams</li>
+    <li>Players</li>
+    <li>Tournaments</li>
+    <li>Opponents</li>
+    <li>Photos</li>
+  </ul>
+</div>
+<div class='pagecontainer'>
+  <div class='foetablecontainer'>
+    <table id='foetable' class='rttable'>
+      <thead>
+        <th></th>
+        <th>Team</th>
+        <th><p>Rank</p></th>
+        <th><p>Win%</p></th>
+        <th>Us</th>
+        <th><p>Them</p></th>
+      </thead>
+      <tr class='rtoddrow'>
+        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+        <td><p class='foename'>3:32 Exodus 15</p></td>
+        <td></td>
+        <td>100%</td>
+        <td>2</td>
+        <td>0</td>
+      </tr>
+      <tr class='rtevenrow'>
+        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+        <td><p class='foename'>ACE Volleyball ACE 14 National</p></td>
+        <td>36</td>
+        <td>100%</td>
+        <td>2</td>
+        <td>0</td>
+      </tr>
+      <tr class='rtoddrow'>
+        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+        <td><p class='foename'>ACE Volleyball ACE 14 Under Armour</p></td>
+        <td>14</td>
+        <td>0%</td>
+        <td>0</td>
+        <td>2</td>
+      </tr>
+      <tr class='rtevenrow'>
+        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+        <td><p class='foename'>AJV 14 Cedar Park</p></td>
+        <td></td>
+        <td>0%</td>
+        <td>0</td>
+        <td>2</td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
