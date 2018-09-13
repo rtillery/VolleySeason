@@ -114,6 +114,10 @@ table, tr, th, td {
   border-spacing: 0;
   padding: 0;
 }
+p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
 
 .masthead {
   font-size: 0;
@@ -133,7 +137,7 @@ table, tr, th, td {
   font-size: 7vmin;
   color: maroon;
 }
-.teambanner span, .clubbanner span {
+.teambanner>span, .clubbanner>span {
   transform: scaleX(.75);
   font-size: 85%;
   letter-spacing: normal;
@@ -142,25 +146,57 @@ table, tr, th, td {
 .navbar {
   background-color: darkgray;
   font-size: 4vmin;
+  width: 100%;
 }
-.navbar ul {
+.navbar>ul {
+  list-style-type: none;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: inherit;
+}
+.navbar>ul>li {
+  float: right;
+  background-color: inherit;
+}
+.navbar>ul>li:first-child {
+  float: left;
+}
+.navbar>ul>li>a {
+  display: block;
+  padding: 1em .25em;
+  text-decoration: none;
+  background-color: inherit;
+}
+#txtteams:before {
+  content: "Teams";
+}
+#txtplayers:before {
+  content: "Players";
+}
+#txttourneys:before {
+  content: "Tourneys";
+}
+#txtfoes:before {
+  content: "Foes";
+}
+#txtpics:before {
+  content: "Pics";
 }
 
+/* All rttables */
 .rttable {
   font-size: 4vmin;
 }
-.rttable tr td {
+.rttable>tbody>tr>td {
   padding: 2vmin 1vmin;
+  border-top: 1px solid #AAA;
 }
-.rttable thead th {
+.rttable>thead>tr>th {
   height: 10vmin;
   border-bottom: 2px solid black;
 }
-.rttable tr td {
-  border-top: 1px solid #AAA;
-}
-.rttable tr:first-child td {
+.rttable>tbody>tr:first-child>td {
   border-top: none;
 }
 .rttable {
@@ -179,35 +215,69 @@ table, tr, th, td {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-p {
-  font-size: calc(100% / calc(3/2));
-  transform: scaleY(calc(3/2));
-}
-.foename {
-  font-size: 100%;
-  transform: none;
-}
-
-#foetable tr td:nth-child(1), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6) {
+/* Foe/Opponent table */
+#foetable>tbody>tr>td:nth-child(1),
+#foetable>tbody>tr>td:nth-child(3),
+#foetable>tbody>tr>td:nth-child(4),
+#foetable>tbody>tr>td:nth-child(5),
+#foetable>tbody>tr>td:nth-child(6) {
   white-space: nowrap;
   text-align: center;
   min-width: 8vmin;
 }
-#foetable td:nth-child(1) {
+#foetable>tbody>tr>td:nth-child(1) {
   color: forestgreen;
 }
-#foetable td:nth-child(2) {
+#foetable>tbody>tr>td:nth-child(2) {
   width: 99%;
 }
-#foetable td:nth-child(4) {
+#foetable>tbody>tr>td:nth-child(4) {
   font-weight: bold;
 }
 
 /* LANDSCAPE */
-@media screen and (max-aspect-ratio: 1/1) {
+@media screen and (min-aspect-ratio: 1/1) {
+  .masthead {
+    width: 100%;
+    text-align: center;
+  }
+  .clubbanner, .teambanner {
+    display: inline-block;
+    padding-bottom: .2em;
+  }
+
+  .navbar {
+    display: inline-block;
+    float: left;
+    width: 10em;
+  }
+  .navbar>ul>li, .navbar>ul>li:first-child {
+    float: none;
+    display: block;
+    padding: 0;
+  }
+  .navbar>ul>li>a {
+    display: block;
+  }
+  #txtteams:before {
+    content: "Teams";
+  }
+  #txtplayers:before {
+    content: "Players";
+  }
+  #txttourneys:before {
+    content: "Tournaments";
+  }
+  #txtfoes:before {
+    content: "Opponents";
+  }
+  #txtpics:before {
+    content: "Photos";
+  }
+
   .foename {
-    font-size: calc(100% / calc(3/2));
-    transform: scaleY(calc(3/2));
+    font-size: 100%;
+    transform: none;
   }
 }
 </style>
@@ -219,56 +289,60 @@ p {
 </div>
 <div class='navbar'>
   <ul>
-    <li>Teams</li>
-    <li>Players</li>
-    <li>Tournaments</li>
-    <li>Opponents</li>
-    <li>Photos</li>
+    <li><a href='#'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
+    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-home'></i> <span id='txttourneys' /></a></li>
+    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-home'></i> <span id='txtfoes' /></a></li>
+    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
+    <li><a href='#' onclick="DisplayPage(this)"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
   </ul>
 </div>
 <div class='pagecontainer'>
   <div class='foetablecontainer'>
     <table id='foetable' class='rttable'>
       <thead>
-        <th></th>
-        <th>Team</th>
-        <th><p>Rank</p></th>
-        <th><p>Win%</p></th>
-        <th>Us</th>
-        <th><p>Them</p></th>
+        <tr>
+          <th></th>
+          <th>Team</th>
+          <th><p>Rank</p></th>
+          <th><p>Win%</p></th>
+          <th>Us</th>
+          <th><p>Them</p></th>
+        </tr>
       </thead>
-      <tr class='rtoddrow'>
-        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-        <td><p class='foename'>3:32 Exodus 15</p></td>
-        <td></td>
-        <td>100%</td>
-        <td>2</td>
-        <td>0</td>
-      </tr>
-      <tr class='rtevenrow'>
-        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-        <td><p class='foename'>ACE Volleyball ACE 14 National</p></td>
-        <td>36</td>
-        <td>100%</td>
-        <td>2</td>
-        <td>0</td>
-      </tr>
-      <tr class='rtoddrow'>
-        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-        <td><p class='foename'>ACE Volleyball ACE 14 Under Armour</p></td>
-        <td>14</td>
-        <td>0%</td>
-        <td>0</td>
-        <td>2</td>
-      </tr>
-      <tr class='rtevenrow'>
-        <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-        <td><p class='foename'>AJV 14 Cedar Park</p></td>
-        <td></td>
-        <td>0%</td>
-        <td>0</td>
-        <td>2</td>
-      </tr>
+      <tbody>
+        <tr class='rtoddrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p class='foename'>3:32 Exodus 15</p></td>
+          <td></td>
+          <td>100%</td>
+          <td>2</td>
+          <td>0</td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p class='foename'>ACE Volleyball ACE 14 National</p></td>
+          <td>36</td>
+          <td>100%</td>
+          <td>2</td>
+          <td>0</td>
+        </tr>
+        <tr class='rtoddrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p class='foename'>ACE Volleyball ACE 14 Under Armour</p></td>
+          <td>14</td>
+          <td>0%</td>
+          <td>0</td>
+          <td>2</td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p class='foename'>AJV 14 Cedar Park</p></td>
+          <td></td>
+          <td>0%</td>
+          <td>0</td>
+          <td>2</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
