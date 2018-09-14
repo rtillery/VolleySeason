@@ -21,8 +21,14 @@ html {
 }
 body {
   margin: 0;
+  font-size: 14px;
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  font-size: 4vmin;
 }
 table, tr, th, td {
+  font-size: inherit;
   border-spacing: 0;
   padding: 0;
 }
@@ -33,14 +39,14 @@ table, tr, th, td {
 
 /* All rttables */
 .rttable {
-  font-size: 4vmin;
+  {  font-size: 4vmin;}
 }
 .rttable>tbody>tr>td {
   padding: .5em .25em;
   border-top: 1px solid #AAA;
 }
 .rttable>thead>tr>th {
-  height: 10vmin;
+  height: 2.5em;
   border-bottom: 2px solid black;
 }
 .rttable>tbody>tr:first-child>td {
@@ -91,7 +97,7 @@ table, tr, th, td {
 
 .navbar {
   background-color: #555;
-  font-size: 4vmin;
+  font-size: 1em;
   width: 100%;
 }
 .navbar>ul {
