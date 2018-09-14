@@ -98,23 +98,29 @@ table, tr, th, td {
 }
 
 .navbar {
-  background-color: #555;
-  font-size: 4vmin;
+  background-color: lightgray;
+  font-size: 1em;
   width: 100%;
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  .navbar {
+    font-size: 4vmin; /* Fit width to mobile screen */
+  }
 }
 .navbar>ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: inherit;
+  background-color: #555;
 }
 .navbar>ul>li {
-  float: right;
+  float: left;
   background-color: inherit;
 }
 .navbar>ul>li:first-child {
-  float: left;
+  background-color: lightgray;
 }
 .navbar>ul>li>a {
   display: block;
@@ -122,6 +128,9 @@ table, tr, th, td {
   padding: 1em .25em;
   text-decoration: none;
   background-color: inherit;
+}
+.navbar>ul>li:first-child>a {
+  color: black;
 }
 .active {
   background-color: maroon !important;
