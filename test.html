@@ -114,9 +114,36 @@ table, tr, th, td {
   border-spacing: 0;
   padding: 0;
 }
-p {
-  font-size: calc(100% / calc(3/2));
-  transform: scaleY(calc(3/2));
+
+/* All rttables */
+.rttable {
+  font-size: 4vmin;
+}
+.rttable>tbody>tr>td {
+  padding: 2vmin 1vmin;
+  border-top: 1px solid #AAA;
+}
+.rttable>thead>tr>th {
+  height: 10vmin;
+  border-bottom: 2px solid black;
+}
+.rttable>tbody>tr:first-child>td {
+  border-top: none;
+}
+.rttable {
+  border-bottom: 2px solid black;
+}
+.rtoddrow {
+  background-color: #F0F0F0;
+}
+.rtevenrow {
+  background-color: #FFF;
+}
+.rttable>tbody>tr>td:nth-child(even) {
+  background-color: rgba(240, 240, 240, 0.5);
+}
+.rttable>tbody>tr>td:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .masthead {
@@ -188,44 +215,19 @@ p {
   content: "Pics";
 }
 
-/* All rttables */
-.rttable {
-  font-size: 4vmin;
-}
-.rttable>tbody>tr>td {
-  padding: 2vmin 1vmin;
-  border-top: 1px solid #AAA;
-}
-.rttable>thead>tr>th {
-  height: 10vmin;
-  border-bottom: 2px solid black;
-}
-.rttable>tbody>tr:first-child>td {
-  border-top: none;
-}
-.rttable {
-  border-bottom: 2px solid black;
-}
-.rtoddrow {
-  background-color: #F0F0F0;
-}
-.rtevenrow {
-  background-color: #FFF;
-}
-.rttable>tbody>tr>td:nth-child(even) {
-  background-color: rgba(240, 240, 240, 0.5);
-}
-.rttable>tbody>tr>td:nth-child(odd) {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
 /* Foe/Opponent table */
-#foetable>tbody>tr>td:nth-child(1),
-#foetable>tbody>tr>td:nth-child(3),
-#foetable>tbody>tr>td:nth-child(4),
-#foetable>tbody>tr>td:nth-child(5),
-#foetable>tbody>tr>td:nth-child(6) {
+#foetable {
   white-space: nowrap;
+}
+#foetable>tbody>tr>td:nth-child(2) {
+  white-space: normal;
+}
+#foetable>thead>tr>th>p,
+#foetable>tbody>tr>td>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+#foetable>tbody>tr>td {
   text-align: center;
   min-width: 8vmin;
 }
@@ -233,10 +235,45 @@ p {
   color: forestgreen;
 }
 #foetable>tbody>tr>td:nth-child(2) {
+  text-align: left;
   width: 99%;
+  min-width: inherit;
 }
 #foetable>tbody>tr>td:nth-child(4) {
   font-weight: bold;
+}
+
+/* Tournament table */
+#tourneytable {
+  white-space: nowrap;
+}
+#tourneytable>tbody>tr>td:nth-child(2) {
+  white-space: normal;
+}
+#tourneytable>tbody>tr>td:nth-child(1) {
+  color: forestgreen;
+}
+#tourneytable>tbody>tr>td:nth-child(2) {
+  width: 99%;
+}
+#tourneytable>tbody>tr>td:nth-child(4),
+#tourneytable>tbody>tr>td:nth-child(5) {
+  font-weight: bold;
+}
+#tourneytable>thead>tr>th>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+#tourneytable>tbody>tr>td {
+  text-align: center;
+  min-width: 8vmin;
+}
+#tourneytable>tbody>tr>td:nth-child(2) {
+  text-align: left;
+}
+#tourneytable>tbody>tr>td>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
 }
 
 /* LANDSCAPE */
@@ -280,7 +317,11 @@ p {
     content: "Photos";
   }
 
-  .foename {
+  #foetable>tbody>tr>td:nth-child(2)>p {
+    font-size: 100%;
+    transform: none;
+  }
+  #tourneytable>tbody>tr>td:nth-child(2)>p {
     font-size: 100%;
     transform: none;
   }
@@ -317,7 +358,7 @@ p {
       <tbody>
         <tr class='rtoddrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-          <td><p class='foename'>3:32 Exodus 15</p></td>
+          <td><p>3:32 Exodus 15</p></td>
           <td></td>
           <td>100%</td>
           <td>2</td>
@@ -325,7 +366,7 @@ p {
         </tr>
         <tr class='rtevenrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-          <td><p class='foename'>ACE Volleyball ACE 14 National</p></td>
+          <td><p>ACE Volleyball ACE 14 National</p></td>
           <td>36</td>
           <td>100%</td>
           <td>2</td>
@@ -333,7 +374,7 @@ p {
         </tr>
         <tr class='rtoddrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-          <td><p class='foename'>ACE Volleyball ACE 14 Under Armour</p></td>
+          <td><p>ACE Volleyball ACE 14 Under Armour</p></td>
           <td>14</td>
           <td>0%</td>
           <td>0</td>
@@ -341,7 +382,7 @@ p {
         </tr>
         <tr class='rtevenrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
-          <td><p class='foename'>AJV 14 Cedar Park</p></td>
+          <td><p>AJV 14 Cedar Park</p></td>
           <td></td>
           <td>0%</td>
           <td>0</td>
@@ -351,5 +392,53 @@ p {
     </table>
   </div>
 </div>
+  <div class='tourneytablecontainer'>
+    <table id='tourneytable' class='rttable'>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Tournament</th>
+          <th>Dates</th>
+          <th><p>Ws</p></th>
+          <th><p>Ls</p></th>
+          <th><p>Finish</p></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='rtoddrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p>Unity Kickoff</p></td>
+          <td><p>Dec 9-10</p></td>
+          <td>6</td>
+          <td>4</td>
+          <td><p>25 / 31</p></td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p>MLK (Open)</p></td>
+          <td><p>Jan 6-7</p></td>
+          <td>3</td>
+          <td>7</td>
+          <td><p>24 / 60</p></td>
+        </tr>
+        <tr class='rtoddrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p>ASICS</p></td>
+          <td><p>Jan 13-14</p></td>
+          <td>10</td>
+          <td>2</td>
+          <td><p>2 / 23</p></td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
+          <td><p>American Volleyball Challenge (Open)</p></td>
+          <td><p>Jan 27-28</p></td>
+          <td>8</td>
+          <td>3</td>
+          <td><p>15 / 26</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
