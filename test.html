@@ -5,94 +5,6 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css' integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ' crossorigin='anonymous'>
 
 <style>
-/* Known defaults */
-{
-  html {
-    display: block;
-    font-size: 16px;
-    font-family: serif;
-  }
-  body {
-    display: block;
-    margin: 8px;
-    font-size: inherit;
-  }
-  div {
-    display: block;
-    margin: 0;
-    border: 0;
-    padding: 0;
-    font-size: inherit;
-    width: auto;
-    height: auto;
-  }
-  img {
-    display: inline-block;
-  }
-  li {
-    display: list-item;
-  }
-  p {
-    display: block;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  script {
-    display: none;
-  }
-  span {
-  }
-  table {
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-    white-space: normal;
-    line-height: normal;
-    font-weight: normal;
-    font-size: medium;
-    font-style: normal;
-    color: -internal-quirk-inherit;
-    text-align: start;
-    font-variant: normal;
-  }
-  td {
-    display: table-cell;
-    vertical-align: inherit;
-  }
-  tfoot {
-    display: table-footer-group;
-    vertical-align: middle;
-    border-color: inherit;
-  }
-  th {
-    display: table-cell;
-    vertical-align: inherit;
-    font-weight: bold;
-    text-align: center;
-  }
-  thead {
-    display: table-header-group;
-    vertical-align: middle;
-    border-color: inherit;
-  }
-  tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-  }
-  ul {
-    display: block;
-    list-style-type: disc;
-    margin-top: 1em;
-    margin-bottom: 1 em;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 40px;
-  }
-}
 
 @font-face {
 font-family: 'Enter-Sansman-Bold-Italic';
@@ -115,12 +27,16 @@ table, tr, th, td {
   padding: 0;
 }
 
+.gone {
+  display: none !important;
+}
+
 /* All rttables */
 .rttable {
   font-size: 4vmin;
 }
 .rttable>tbody>tr>td {
-  padding: 2vmin 1vmin;
+  padding: .5em .25em;
   border-top: 1px solid #AAA;
 }
 .rttable>thead>tr>th {
@@ -137,13 +53,16 @@ table, tr, th, td {
   background-color: #F0F0F0;
 }
 .rtevenrow {
-  background-color: #FFF;
+  background-color: white;
 }
 .rttable>tbody>tr>td:nth-child(even) {
   background-color: rgba(240, 240, 240, 0.5);
 }
 .rttable>tbody>tr>td:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.5);
+}
+.rttable>thead>tr>th {
+  padding: 0 .25em 0 .25em;
 }
 
 .masthead {
@@ -215,6 +134,18 @@ table, tr, th, td {
   content: "Pics";
 }
 
+.win {
+  color: white;
+  background-color: limegreen !important;
+}
+.lose {
+  color: white;
+  background-color: red !important;
+}
+.tie {
+  background-color: yellow !important;
+}
+
 /* Foe/Opponent table */
 #foetable {
   white-space: nowrap;
@@ -229,15 +160,16 @@ table, tr, th, td {
 }
 #foetable>tbody>tr>td {
   text-align: center;
-  min-width: 8vmin;
+  {  min-width: 7vmin;}
 }
 #foetable>tbody>tr>td:nth-child(1) {
+  min-width: 8vmin;
   color: forestgreen;
 }
 #foetable>tbody>tr>td:nth-child(2) {
   text-align: left;
   width: 99%;
-  min-width: inherit;
+  {  min-width: inherit;}
 }
 #foetable>tbody>tr>td:nth-child(4) {
   font-weight: bold;
@@ -251,6 +183,7 @@ table, tr, th, td {
   white-space: normal;
 }
 #tourneytable>tbody>tr>td:nth-child(1) {
+  {  min-width: 8vmin;}
   color: forestgreen;
 }
 #tourneytable>tbody>tr>td:nth-child(2) {
@@ -266,12 +199,37 @@ table, tr, th, td {
 }
 #tourneytable>tbody>tr>td {
   text-align: center;
-  min-width: 8vmin;
+  {  min-width: 6vmin;}
 }
 #tourneytable>tbody>tr>td:nth-child(2) {
   text-align: left;
 }
 #tourneytable>tbody>tr>td>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+
+/* Player table */
+#playertable {
+  white-space: nowrap;
+}
+#playertable>tbody>tr>td:nth-child(2) {
+  width: 99%;
+}
+#playertable>tbody>tr>td {
+  font-weight: bold;
+}
+#playertable>tbody>tr>td {
+  text-align: center;
+  {  min-width: 8vmin;}
+}
+#playertable>tbody>tr>td:nth-child(1) {
+  {  min-width: 10vmin;}
+}
+#playertable>tbody>tr>td:nth-child(2) {
+  text-align: left;
+}
+#playertable>thead>tr>th>p {
   font-size: calc(100% / calc(3/2));
   transform: scaleY(calc(3/2));
 }
@@ -360,7 +318,7 @@ table, tr, th, td {
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>3:32 Exodus 15</p></td>
           <td></td>
-          <td>100%</td>
+          <td class='win'>100%</td>
           <td>2</td>
           <td>0</td>
         </tr>
@@ -368,7 +326,7 @@ table, tr, th, td {
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>ACE Volleyball ACE 14 National</p></td>
           <td>36</td>
-          <td>100%</td>
+          <td class='win'>100%</td>
           <td>2</td>
           <td>0</td>
         </tr>
@@ -376,7 +334,7 @@ table, tr, th, td {
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>ACE Volleyball ACE 14 Under Armour</p></td>
           <td>14</td>
-          <td>0%</td>
+          <td class='lose'>0%</td>
           <td>0</td>
           <td>2</td>
         </tr>
@@ -384,14 +342,13 @@ table, tr, th, td {
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>AJV 14 Cedar Park</p></td>
           <td></td>
-          <td>0%</td>
-          <td>0</td>
-          <td>2</td>
+          <td class='tie'>50%</td>
+          <td>1</td>
+          <td>1</td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
   <div class='tourneytablecontainer'>
     <table id='tourneytable' class='rttable'>
       <thead>
@@ -409,36 +366,75 @@ table, tr, th, td {
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>Unity Kickoff</p></td>
           <td><p>Dec 9-10</p></td>
-          <td>6</td>
-          <td>4</td>
+          <td class='win'>6</td>
+          <td class='win'>4</td>
           <td><p>25 / 31</p></td>
         </tr>
         <tr class='rtevenrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>MLK (Open)</p></td>
           <td><p>Jan 6-7</p></td>
-          <td>3</td>
-          <td>7</td>
+          <td class='lose'>3</td>
+          <td class='lose'>7</td>
           <td><p>24 / 60</p></td>
         </tr>
         <tr class='rtoddrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>ASICS</p></td>
           <td><p>Jan 13-14</p></td>
-          <td>10</td>
-          <td>2</td>
+          <td class='win'>10</td>
+          <td class='win'>2</td>
           <td><p>2 / 23</p></td>
         </tr>
         <tr class='rtevenrow'>
           <td><i class='fa fa-plus-square' aria-hidden='true'></i></td>
           <td><p>American Volleyball Challenge (Open)</p></td>
           <td><p>Jan 27-28</p></td>
-          <td>8</td>
-          <td>3</td>
+          <td class='tie'>5</td>
+          <td class='tie'>5</td>
           <td><p>15 / 26</p></td>
         </tr>
       </tbody>
     </table>
   </div>
+  <div class='playertablecontainer'>
+    <table id='playertable' class='rttable'>
+      <thead>
+        <tr>
+          <th><p>Number</p></th>
+          <th>Player</th>
+          <th><p>Position</p></th>
+          <th><p>Height</p></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='rtoddrow'>
+          <td>4</td>
+          <td>Danielle T.</td>
+          <td><p>L</p></td>
+          <td>5'5"</td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td>9</td>
+          <td>Maddie N.</td>
+          <td>OH</td>
+          <td>5'10"</td>
+        </tr>
+        <tr class='rtoddrow'>
+          <td></td>
+          <td>London C.</td>
+          <td>OH</td>
+          <td>5'10"</td>
+        </tr>
+        <tr class='rtevenrow'>
+          <td>7</td>
+          <td>Sarah H.</td>
+          <td>MH</td>
+          <td>6'0"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>
