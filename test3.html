@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang='en'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css' integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ' crossorigin='anonymous'>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='tabletop.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script>
+<script type='text/javascript' language='javascript' src='https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js'></script>
+
+<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css'>
+
+<style>
+
+@font-face {
+font-family: 'Enter-Sansman-Bold-Italic';
+  src: url('Enter-Sansman-Bold-Italic.ttf.woff') format('woff'),
+       url('Enter-Sansman-Bold-Italic.ttf.svg#Enter-Sansman-Bold-Italic') format('svg'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot'),
+       url('Enter-Sansman-Bold-Italic.ttf.eot?#iefix') format('embedded-opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-family: sans-serif;
+}
+body {
+  margin: 0;
+  font-size: 14px;
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  body {
+    font-size: 4.5vmin;
+  }
+}
+
+table, tr, th, td {
+  font-size: inherit;
+  border-spacing: 0;
+  padding: 0;
+}
+
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 25vmin;
+  width: 25vmin;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+.gone {
+  display: none !important;
+}
+
+td.details-control {
+  text-align: center;
+  color: forestgreen;
+  cursor: pointer;
+  min-width: 2em;
+}
+tr.shown td.details-control {
+  text-align: center; 
+  color: red;
+}
+table.dataTable thead th {
+  position: relative;
+  background-image: none !important;
+}
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+  position: absolute;
+  display: block;
+  font-family: "Font Awesome 5 Free";
+  top: .9em;
+  right: -.1em;
+}
+table.dataTable thead th.sorting:after {
+    content: "\f0dc";
+    color: black;
+    font-size: 0.8em;
+    padding-top: 0.12em;
+}
+table.dataTable thead th.sorting_asc:after {
+    content: "\f0de";
+}
+table.dataTable thead th.sorting_desc:after {
+    content: "\f0dd";
+}
+table.foestable thead th:nth-child(2).sorting:after,
+table.foestable thead th:nth-child(2).sorting_asc:after,
+table.foestable thead th:nth-child(2).sorting_desc:after {
+  right: 3.5em;
+}
+table.foestable thead th:nth-child(4).sorting:after,
+table.foestable thead th:nth-child(4).sorting_asc:after,
+table.foestable thead th:nth-child(4).sorting_desc:after {
+  right: .2em;
+}
+
+.masthead {
+  font-size: 0;
+}
+.clubbanner, .teambanner {
+  font-family: 'Enter-Sansman-Bold-Italic';
+  letter-spacing: -.05em;
+  text-align: center;
+  padding: .2em .2em .2em .2em;
+}
+.clubbanner {
+  color: #555;
+  font-size: calc(9vmin / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+.teambanner {
+  font-size: 7vmin;
+  color: maroon;
+}
+.teambanner>span, .clubbanner>span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+.teambanner>span, .clubbanner>span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+
+.navbar {
+  background-color: lightgray;
+  font-size: 1em;
+  width: 100%;
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  .navbar {
+    font-size: 4vmin; /* Fit width to mobile screen */
+  }
+}
+.navbar>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #555;
+}
+.navbar>ul>li {
+  float: left;
+  background-color: inherit;
+}
+.navbar>ul>li:first-child {
+  background-color: lightgray;
+}
+.navbar>ul>li>a {
+  display: block;
+  color: white;
+  padding: 1em .25em;
+  text-decoration: none;
+  background-color: inherit;
+}
+.navbar>ul>li:first-child>a {
+  color: black;
+}
+.activetab {
+  color: white !important;
+  background-color: maroon !important;
+}
+#txtteams:before {
+  content: "Teams";
+}
+#txtplayers:before {
+  content: "Players";
+}
+#txttourneys:before {
+  content: "Tourneys";
+}
+#txtfoes:before {
+  content: "Foes";
+}
+#txtpics:before {
+  content: "Pics";
+}
+
+.win {
+  color: white;
+  background-color: limegreen !important;
+}
+.lose {
+  color: white;
+  background-color: red !important;
+}
+.tie {
+  background-color: yellow !important;
+}
+
+.pagecontainer {
+  display: inline-block;
+  width: 100%;
+}
+
+.teamlist {
+  -webkit-padding-start: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  list-style-type: none;
+}
+.teamlist>li>a {
+  text-decoration: none;
+}
+
+/* LANDSCAPE */
+@media screen and (min-aspect-ratio: 1/1) {
+  .masthead {
+    width: 100%;
+    text-align: center;
+  }
+  .clubbanner, .teambanner {
+    display: inline-block;
+  }
+
+  .navbar {
+    display: inline-block;
+    float: left;
+    width: auto;
+  }
+  .navbar>ul>li, .navbar>ul>li:first-child {
+    float: none;
+    display: block;
+    padding: 0;
+  }
+  .navbar>ul>li>a {
+    display: block;
+    padding: 1em;
+  }
+  #txtteams:before {
+    content: "Teams";
+  }
+  #txtplayers:before {
+    content: "Players";
+  }
+  #txttourneys:before {
+    content: "Tournaments";
+  }
+  #txtfoes:before {
+    content: "Opponents";
+  }
+  #txtpics:before {
+    content: "Photos";
+  }
+
+  .pagecontainer {
+    width: auto;
+  }
+}
+
+.dataTable>thead>tr>th>p,
+.dataTable>tbody>tr>td>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+.dataTable>thead>tr>th {
+  padding-left: .1em;
+  height: 2.5em;
+}
+.dataTable>tbody>tr>td {
+  padding: .5em .25em;
+}
+
+</style>
+</head>
+<body>
+<div class='masthead'>
+  <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
+</div>
+<div>
+<div class='navbar'>
+  <ul>
+    <li><a href='#' class='teamstab activetab'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
+    <li><a href='#' class='tourneytab invisible' onclick="DisplayPage(this, $('.tourneypage'))"><i class='fa fa-fw fa-trophy'></i> <span id='txttourneys' /></a></li>
+    <li><a href='#' class='foestab invisible' onclick="DisplayPage(this, $('.foepage'))"><i class='fas fa-volleyball-ball'></i>&nbsp;&nbsp;<span id='txtfoes' /></a></li>
+    <li><a href='#' class='playertab invisible' onclick="DisplayPage(this, $('.playerpage'))"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
+    <li><a href='#' class='pictab invisible' onclick="DisplayPage(this, $('.photopage'))"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
+  </ul>
+</div>
+<div class='pagecontainer'>
+  <div id='teampage page'>
+    <ul class='teamlist'>
+    </ul>
+  </div>
+  <div class='foepage page gone'>
+    <table class='foestable display dataTable'>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span>Team</span></th>
+          <th><p>Rnk</p></th>
+          <th><p>Win%</p></th>
+          <th><span>Us</span></th>
+          <th><p>Thm</p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class='tourneypage page gone'>
+    <table class='tourneytable display dataTable'>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span>Tournament</span></th>
+          <th><p>Dates</p></th>
+          <th><p>Ws</p></th>
+          <th><p>Ls</p></th>
+          <th><p>Finish</p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class='playerpage page gone'>
+    <table class='playertable display dataTable'>
+      <thead>
+        <tr>
+          <th><p>Number</p></th>
+          <th>Player</th>
+          <th><p>Position</p></th>
+          <th><p>Height</p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script type='text/javascript'>
+  function winlosetie(us, them) {
+      var iUs = parseInt(us);
+      var iThem = parseInt(them);
+      return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
+  }
+
+  function isWhiteSpace(chr) {
+    return (" \t\r\n\v\f".indexOf(chr) >= 0);
+  }
+  function isDigit(chr) {
+    return (chr >= '0' && chr <= '9');
+  }
+  function isAlpha(chr) {
+    return ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z'));
+  }
+  function SmallCaps(instr) {
+    var outstr = "";
+    var i = 0;
+    var looking = true;
+    var chr = instr.charAt(i);
+    while (chr) {
+      i++;
+      if (looking) {
+        if (!isAlpha(chr) || isWhiteSpace(chr)) {
+          outstr += chr;
+        } else {
+          looking = false;
+          outstr += chr;
+          outstr += "<span>";
+        }
+      } else {
+        if (  isWhiteSpace(chr)) {
+          outstr += "</span>";
+          outstr += chr;
+          looking = true;
+        } else {
+          outstr += chr.toUpperCase();
+        }
+      }
+      chr = instr.charAt(i);
+    }
+    if (!looking)
+      outstr += "</span>";
+    return outstr;
+  }
+
+  function GetCleanURL() {
+    return window.location.protocol + "//" + window.location.hostname + window.location.pathname;
+  }
+
+  function DisplayTeamList() {
+    // Replace existing list with empty one
+    var teamlistobj = $('ul.teamlist');
+    // Populate with items from the team list, setting the link to the current URL
+    // plus the teamid
+    $.each(teamlist, function(index, value) {
+      var team = $('<li/>')
+                 .appendTo(teamlistobj);
+      var lnk = $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
+                .html(value.TeamName)
+                .appendTo(team);
+    });
+  }
+
+  function DisplayPage(tab, page) {
+    $(".activetab").removeClass('activetab');
+    $(tab).addClass('activetab');
+    $('.page').addClass('gone');
+    $(page).removeClass('gone');
+  }
+
+var currentdataarray;
+var currenttabletop;
+var foestable;
+
+  // Display the list of teams in a clickable list
+  function FillKnownPages(dataarray, tabletop) {
+    // Start by getting the list of teams from the team spreadsheet
+    teamlist = dataarray[TEAMSHEETSHEET].elements;
+
+    // Decorate the team names for desired display (either in list or in masthead)
+    $.each(teamlist, function(index, value) {
+      teamlist[index].TeamName = "<div class='teambanner'>" + SmallCaps(value.TeamName) + "</div>";
+    });
+
+    // If the URL contains no teamid, then set up the selection list
+    if (!urlParams.teamid) {
+      DisplayTeamList();
+    // Otherwise, if the teamid matches one of the ones in the team list,
+    // use the accompanying key to obtain that team's season data.
+    } else {
+      // Find the matching team
+      teamrow = teamlist.find(x => x.USAVCode === urlParams.teamid);
+      // If the teamid is unknown, reload the page using the URL without it
+      if (!teamrow) {
+        document.location.href = GetCleanURL();
+      } else {
+        // Otherwise, use the team info and load the team results spreadsheet
+        Tabletop.init( {
+          key: teamrow.TeamSpreadsheet,
+          callback: FillTables,
+          wanted: [/* PLAYERSHEET, */ SETSHEET, TOURNEYSHEET, FOESHEET]
+        });
+
+        // Display the team name and go to Opponents page
+//        $('.club').addClass('withteam');
+        $('.masthead').append("<div class='teambanner'>" + teamrow.TeamName + "</div>");
+        $('.navbar>ul>li>a').removeClass('invisible');
+        DisplayPage($('.foestab'), $('.foepage'));
+      }
+    }
+
+    // Clear busy spinner
+    $('.loading').remove();
+
+    $('body').css('cursor', 'default');
+  }
+
+  function FormatFoeDropdown(d) {
+    // `d` is the original data object for the row
+    sets = setsheet.elements;
+    var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
+    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
+                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
+    $.each(setarray, function(index, value) {
+      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+      detailtable += "<tr class='set'>" +
+                       "<td><p>" + value["Tournament"] + "</p></td>" +
+                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
+                       "<td><p>" + value["Round"] + "</p></td>" +
+                       tdwlt + value["Us"] + "</td>" +
+                       tdwlt + value["Them"] + "</td>" +
+                     "</tr>";
+    });
+    detailtable += "</table>";
+    return detailtable;
+  }
+
+  function FillTables(dataarray, tabletop) {
+
+currentdataarray = dataarray;
+currenttabletop = tabletop;
+    setsheet = dataarray[SETSHEET];
+    results = dataarray[FOESHEET].elements;
+    tourneydata = dataarray[TOURNEYSHEET].elements;
+    setsheet = dataarray[SETSHEET];
+    overall = results[0];
+
+    $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+      if ( data == "" ) {
+        return 999.0;
+      } else {
+        return parseFloat( data );
+      }
+    };
+
+    foestable = $('.foestable').DataTable({
+      'data': results,
+      fixedColumns:   {
+        'heightMatch': 'none'
+      },
+      columns: [
+        { 'className': 'details-control',
+          'orderable': false,
+          'data': null,
+          'defaultContent': '',
+          'render': function () {
+            return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
+          } },
+        { 'data': 'OpponentName' },
+        { 'data': 'LatestRanking',
+          'className': 'dt-center',
+          'type': 'custom' },
+        { 'data': 'Percent',
+          'className': 'dt-head-center dt-body-right' },
+        { 'data': 'Wins',
+          'className': 'dt-center' },
+        { 'data': 'Losses',
+          'className': 'dt-center' }
+      ],
+      paging: false,
+      searching: false,
+      fixedHeader: {
+        header: true,
+        footer: false
+      },
+      rowCallback: function(row, data, index) {
+        var tester = $(row).find('td:eq(3)');
+        if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
+          return;
+        $(row).find('td:eq(1)').wrapInner("<p></p>");
+        $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+      },
+      'order': [[1, 'asc']]
+    });
+
+    // Add event listener for opening and closing details
+    $('.foestable tbody').on('click', 'td.details-control', function(){
+      var tr = $(this).closest('tr');
+      var row = foestable.row(tr);
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        // Open this row
+        row.child(FormatFoeDropdown(row.data())).show();
+        tr.addClass('shown');
+      }
+    });
+  }
+
+  TEAMSHEETKEY = "https://docs.google.com/spreadsheets/d/17B2Rt7nFdFIpI2Be0otmxB_qr_hwVSkG505d7pQ2sNA/pubhtml";
+  TEAMSHEETSHEET = "Sheet1";
+
+  FOESHEET = "Opponents";
+  SETSHEET = "Sets";
+  PLAYERSHEET = "Players";
+  TOURNEYSHEET = "Tourneys";
+
+  // Collect URL components into urlParams[] whenever the URL changes
+  // From: https://stackoverflow.com/a/2880929
+  var urlParams = {};
+  (window.onpopstate = function() {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function(s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    while (match = search.exec(query))
+      urlParams[decode(match[1])] = decode(match[2]);
+  })();
+
+  // Set up page to get list of teams (with their USAV code & results sheet
+  // key) from team sheet, when it has completed loading.
+  $(document).ready(function() {
+    // Busy spinner
+    $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
+
+    // Set Teams tab to reload page with no specified teamid
+    $('.teamstab').attr('href', GetCleanURL());
+
+    // Get contents of team sheet and call specified callback function with the data
+    Tabletop.init( {
+      key: TEAMSHEETKEY,
+      callback: FillKnownPages,
+      wanted: [TEAMSHEETSHEET]
+    });
+  });
+
+</script>
+
+</body>
+</html>
