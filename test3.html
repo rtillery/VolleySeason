@@ -263,7 +263,9 @@ table.foestable thead th:nth-child(4).sorting_desc:after {
   }
 
   .pagecontainer {
+    display: block;
     width: auto;
+    overflow: hidden;
   }
 }
 
@@ -531,6 +533,7 @@ currenttabletop = tabletop;
         { 'data': 'Losses',
           'className': 'dt-center' }
       ],
+      "autoWidth": false,
       paging: false,
       searching: false,
       fixedHeader: {
