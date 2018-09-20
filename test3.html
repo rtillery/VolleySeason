@@ -75,40 +75,44 @@ tr.shown td.details-control {
   text-align: center; 
   color: red;
 }
-table.dataTable thead th {
+.dataTable thead th {
   position: relative;
   background-image: none !important;
 }
-table.dataTable thead th.sorting:after,
-table.dataTable thead th.sorting_asc:after,
-table.dataTable thead th.sorting_desc:after {
+.dataTable thead th.sorting:after,
+.dataTable thead th.sorting_asc:after,
+.dataTable thead th.sorting_desc:after {
   position: absolute;
   display: block;
   font-family: "Font Awesome 5 Free";
   top: .9em;
-  right: -.1em;
+  right: .1em;
 }
-table.dataTable thead th.sorting:after {
-    content: "\f0dc";
-    color: black;
-    font-size: 0.8em;
-    padding-top: 0.12em;
+.dataTable thead th.sorting:after {
+  content: "\f0dc";
+  color: black;
+  font-size: 0.8em;
+  padding-top: 0.12em;
 }
-table.dataTable thead th.sorting_asc:after {
-    content: "\f0de";
+.dataTable thead th.sorting_asc:after {
+  content: "\f0de";
 }
-table.dataTable thead th.sorting_desc:after {
-    content: "\f0dd";
+.dataTable thead th.sorting_desc:after {
+  content: "\f0dd";
+  top: .67em;
 }
-table.foestable thead th:nth-child(2).sorting:after,
-table.foestable thead th:nth-child(2).sorting_asc:after,
-table.foestable thead th:nth-child(2).sorting_desc:after {
-  right: 3.5em;
+.dataTable>thead>tr>th>p,
+.dataTable>tbody>tr>td>p {
+  font-size: calc(100% / calc(3/2));
+  transform: scaleY(calc(3/2));
 }
-table.foestable thead th:nth-child(4).sorting:after,
-table.foestable thead th:nth-child(4).sorting_asc:after,
-table.foestable thead th:nth-child(4).sorting_desc:after {
-  right: .2em;
+.dataTable>thead>tr>th {
+  padding-left: .33em;
+  padding-right: .67em;
+  height: 2.5em;
+}
+.dataTable>tbody>tr>td {
+  padding: .5em .25em;
 }
 
 .masthead {
@@ -222,6 +226,39 @@ table.foestable thead th:nth-child(4).sorting_desc:after {
   text-decoration: none;
 }
 
+.foestable>tbody>tr>td:nth-child(4)>p,
+.foestable>tbody>tr>td:nth-child(5)>p {
+  font-size: calc(100% / calc(5/4));
+  transform: scaleY(calc(5/4));
+}
+.foestable>thead>tr>th:nth-child(2)>span:before {
+  content: "Opponent";
+}
+.foestable>thead>tr>th:nth-child(3)>p:before {
+  content: "Rk";
+}
+.foestable>thead>tr>th:nth-child(4)>p:before {
+  content: "Win%";
+}
+.foestable>thead>tr>th:nth-child(5)>span:before {
+  content: "Us";
+}
+.foestable>thead>tr>th:nth-child(6)>p:before {
+  content: "Thm";
+}
+.foestable thead th:nth-child(2).sorting_asc:after,
+.foestable thead th:nth-child(2).sorting_desc:after {
+  right: 2.25em;
+}
+.foestable thead th:nth-child(2).sorting:after {
+  right: 2.9em;
+}
+.foestable thead th:nth-child(4).sorting:after,
+.foestable thead th:nth-child(4).sorting_asc:after,
+.foestable thead th:nth-child(4).sorting_desc:after {
+  right: .2em;
+}
+
 /* LANDSCAPE */
 @media screen and (min-aspect-ratio: 1/1) {
   .masthead {
@@ -267,19 +304,35 @@ table.foestable thead th:nth-child(4).sorting_desc:after {
     width: auto;
     overflow: hidden;
   }
-}
 
-.dataTable>thead>tr>th>p,
-.dataTable>tbody>tr>td>p {
-  font-size: calc(100% / calc(3/2));
-  transform: scaleY(calc(3/2));
-}
-.dataTable>thead>tr>th {
-  padding-left: .1em;
-  height: 2.5em;
-}
-.dataTable>tbody>tr>td {
-  padding: .5em .25em;
+  .foestable>tbody>tr>td:nth-child(2)>p,
+  .foestable>tbody>tr>td:nth-child(3)>p,
+  .foestable>tbody>tr>td:nth-child(4)>p {
+    font-size: 100%;
+    transform: none;
+  }
+  .foestable thead th:nth-child(2).sorting_asc:after,
+  .foestable thead th:nth-child(2).sorting_desc:after {
+    right: 5.75em;
+  }
+  .foestable thead th:nth-child(2).sorting:after {
+    right: 7.4em;
+  }
+  .foestable>thead>tr>th:nth-child(2)>span:before {
+    content: "Opponent";
+  }
+  .foestable>thead>tr>th:nth-child(3)>p:before {
+    content: "Rank";
+  }
+  .foestable>thead>tr>th:nth-child(4)>p:before {
+    content: "Win%";
+  }
+  .foestable>thead>tr>th:nth-child(5)>span:before {
+    content: "Us";
+  }
+  .foestable>thead>tr>th:nth-child(6)>p:before {
+    content: "Them";
+  }
 }
 
 </style>
@@ -308,11 +361,11 @@ table.foestable thead th:nth-child(4).sorting_desc:after {
       <thead>
         <tr>
           <th></th>
-          <th><span>Team</span></th>
-          <th><p>Rnk</p></th>
-          <th><p>Win%</p></th>
-          <th><span>Us</span></th>
-          <th><p>Thm</p></th>
+          <th><span></span></th>
+          <th><p></p></th>
+          <th><p></p></th>
+          <th><span></span></th>
+          <th><p></p></th>
         </tr>
       </thead>
       <tbody>
@@ -541,11 +594,13 @@ currenttabletop = tabletop;
         footer: false
       },
       rowCallback: function(row, data, index) {
-        var tester = $(row).find('td:eq(3)');
-        if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
+        var winpct = $(row).find('td:eq(3)');
+        if (winpct.hasClass('win') || winpct.hasClass('lose') || winpct.hasClass('tie') || winpct.hasClass('unplayed'))
           return;
         $(row).find('td:eq(1)').wrapInner("<p></p>");
-        $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+        $(row).find('td:eq(2)').wrapInner("<p></p>");
+        winpct.wrapInner("<p></p>");
+        winpct.addClass(winlosetie(data["Wins"], data["Losses"]));
       },
       'order': [[1, 'asc']]
     });
