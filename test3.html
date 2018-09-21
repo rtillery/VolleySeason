@@ -258,6 +258,15 @@ tr.shown td.details-control {
 .foestable thead th:nth-child(4).sorting_desc:after {
   right: .2em;
 }
+.set>td {
+  padding-top: .5em !important;
+  padding-bottom: .5em !important;
+}
+.sets>thead>tr>th>p,
+.set>td>p {
+  font-size: calc(100% / calc(3/2)) !important;
+  transform: scaleY(calc(3/2));
+}
 
 /* LANDSCAPE */
 @media screen and (min-aspect-ratio: 1/1) {
@@ -305,7 +314,10 @@ tr.shown td.details-control {
     overflow: hidden;
   }
 
-  .foestable>tbody>tr>td:nth-child(2)>p,
+  .foestable>tbody>tr>td:nth-child(2)>p {
+    font-size: calc(100% / calc(5/4));
+    transform: scaleY(calc(5/4));
+  }
   .foestable>tbody>tr>td:nth-child(3)>p,
   .foestable>tbody>tr>td:nth-child(4)>p {
     font-size: 100%;
@@ -332,6 +344,11 @@ tr.shown td.details-control {
   }
   .foestable>thead>tr>th:nth-child(6)>p:before {
     content: "Them";
+  }
+  .sets>thead>tr>th>p,
+  .set>td>p {
+    font-size: calc(100% / calc(5/4)) !important;
+    transform: scaleY(calc(5/4));
   }
 }
 
