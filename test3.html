@@ -28,23 +28,26 @@ font-family: 'Enter-Sansman-Bold-Italic';
 html {
   font-family: sans-serif;
 }
-body {
+body,
+.teampage,
+.foepage, 
+.tourneypage,
+.playerpage {
   margin: 0;
   font-size: 14px;
 }
 @media (pointer: coarse),
        (-moz-touch-enabled) {
-  body {
+  body,
+  .teampage,
+  .foepage, 
+  .tourneypage,
+  .playerpage {
     font-size: 4.5vmin;
   }
 }
 .pagecontainer {
   font-size: 0;
-}
-div {
-  font-size: inherit;
-  -webkit-margin-before: 0px;
-  -webkit-margin-after: 0px;
 }
 
 table, tr, th, td {
@@ -229,6 +232,7 @@ tr.shown td.details-control {
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
   list-style-type: none;
+  padding: 0;
 }
 .teamlist>li>a {
   text-decoration: none;
@@ -266,9 +270,11 @@ tr.shown td.details-control {
 .foestable thead th:nth-child(4).sorting_desc:after {
   right: .2em;
 }
+.sets>thead>tr>th {
+  padding: 0;
+}
 .set>td {
-  padding-top: .5em !important;
-  padding-bottom: .5em !important;
+  padding: .5em !important;
 }
 .sets>thead>tr>th>p,
 .set>td>p {
@@ -369,9 +375,9 @@ tr.shown td.details-control {
 <body>
 <div class='masthead'>
   <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
-</div><!--
---><div style='background-color: pink'><!--
---><div class='navbar'>
+</div>
+<div>
+<div class='navbar'>
   <ul>
     <li><a href='#' class='teamstab activetab'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
     <li><a href='#' class='tourneytab invisible' onclick="DisplayPage(this, $('.tourneypage'))"><i class='fa fa-fw fa-trophy'></i> <span id='txttourneys' /></a></li>
@@ -379,13 +385,13 @@ tr.shown td.details-control {
     <li><a href='#' class='playertab invisible' onclick="DisplayPage(this, $('.playerpage'))"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
     <li><a href='#' class='pictab invisible' onclick="DisplayPage(this, $('.photopage'))"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
   </ul>
-</div><!--
---><div class='pagecontainer' style='background-color: aqua'><!--
---><div id='teampage page' style='background-color: yellow'>
+</div>
+<div class='pagecontainer'>
+  <div id='teampage page'>
     <ul class='teamlist'>
     </ul>
-  </div><!--
---><div class='foepage page gone'>
+  </div>
+  <div class='foepage page gone'>
     <table class='foestable display dataTable'>
       <thead>
         <tr>
@@ -400,8 +406,8 @@ tr.shown td.details-control {
       <tbody>
       </tbody>
     </table>
-  </div><!--
---><div class='tourneypage page gone'>
+  </div>
+  <div class='tourneypage page gone'>
     <table class='tourneytable display dataTable'>
       <thead>
         <tr>
@@ -416,8 +422,8 @@ tr.shown td.details-control {
       <tbody>
       </tbody>
     </table>
-  </div><!--
---><div class='playerpage page gone'>
+  </div>
+  <div class='playerpage page gone'>
     <table class='playertable display dataTable'>
       <thead>
         <tr>
@@ -430,9 +436,9 @@ tr.shown td.details-control {
       <tbody>
       </tbody>
     </table>
-  </div><!--
---></div><!--
---></div>
+  </div>
+</div>
+</div>
 
 <script type='text/javascript'>
   function winlosetie(us, them) {
@@ -557,14 +563,14 @@ var tourneytable;
     // `d` is the original data object for the row
     sets = setsheet.elements;
     var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
-    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
+    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em;'>" +
                   "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
     $.each(setarray, function(index, value) {
       var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
       detailtable += "<tr class='set'>" +
                        "<td><p>" + value["Tournament"] + "</p></td>" +
                        "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
-                       "<td><p>" + value["Round"] + "</p></td>" +
+                       "<td class='dt-left'><p>" + value["Round"] + "</p></td>" +
                        tdwlt + value["Us"] + "</td>" +
                        tdwlt + value["Them"] + "</td>" +
                      "</tr>";
