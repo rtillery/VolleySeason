@@ -238,36 +238,36 @@ tr.shown td.details-control {
   text-decoration: none;
 }
 
-.foestable>tbody>tr>td:nth-child(4)>p,
-.foestable>tbody>tr>td:nth-child(5)>p {
+.foetable>tbody>tr>td:nth-child(4)>p,
+.foetable>tbody>tr>td:nth-child(5)>p {
   font-size: calc(100% / calc(5/4));
   transform: scaleY(calc(5/4));
 }
-.foestable>thead>tr>th:nth-child(2)>span:before {
+.foetable>thead>tr>th:nth-child(2)>span:before {
   content: "Opponent";
 }
-.foestable>thead>tr>th:nth-child(3)>p:before {
+.foetable>thead>tr>th:nth-child(3)>p:before {
   content: "Rk";
 }
-.foestable>thead>tr>th:nth-child(4)>p:before {
+.foetable>thead>tr>th:nth-child(4)>p:before {
   content: "Win%";
 }
-.foestable>thead>tr>th:nth-child(5)>span:before {
+.foetable>thead>tr>th:nth-child(5)>span:before {
   content: "Us";
 }
-.foestable>thead>tr>th:nth-child(6)>p:before {
+.foetable>thead>tr>th:nth-child(6)>p:before {
   content: "Thm";
 }
-.foestable thead th:nth-child(2).sorting_asc:after,
-.foestable thead th:nth-child(2).sorting_desc:after {
+.foetable thead th:nth-child(2).sorting_asc:after,
+.foetable thead th:nth-child(2).sorting_desc:after {
   right: 2.25em;
 }
-.foestable thead th:nth-child(2).sorting:after {
+.foetable thead th:nth-child(2).sorting:after {
   right: 2.9em;
 }
-.foestable thead th:nth-child(4).sorting:after,
-.foestable thead th:nth-child(4).sorting_asc:after,
-.foestable thead th:nth-child(4).sorting_desc:after {
+.foetable thead th:nth-child(4).sorting:after,
+.foetable thead th:nth-child(4).sorting_asc:after,
+.foetable thead th:nth-child(4).sorting_desc:after {
   right: .2em;
 }
 .sets>thead>tr>th {
@@ -277,9 +277,16 @@ tr.shown td.details-control {
   padding: .5em !important;
 }
 .sets>thead>tr>th>p,
-.set>td>p {
+.set>td>p,
+.cond {
   font-size: calc(100% / calc(3/2)) !important;
   transform: scaleY(calc(3/2));
+}
+.heading {
+  font-weight: bold;
+}
+.round {
+  text-decoration: underline;
 }
 
 .nowrap {
@@ -332,35 +339,35 @@ tr.shown td.details-control {
     overflow: hidden;
   }
 
-  .foestable>tbody>tr>td:nth-child(2)>p {
+  .foetable>tbody>tr>td:nth-child(2)>p {
     font-size: calc(100% / calc(5/4));
     transform: scaleY(calc(5/4));
   }
-  .foestable>tbody>tr>td:nth-child(3)>p,
-  .foestable>tbody>tr>td:nth-child(4)>p {
+  .foetable>tbody>tr>td:nth-child(3)>p,
+  .foetable>tbody>tr>td:nth-child(4)>p {
     font-size: 100%;
     transform: none;
   }
-  .foestable thead th:nth-child(2).sorting_asc:after,
-  .foestable thead th:nth-child(2).sorting_desc:after {
+  .foetable thead th:nth-child(2).sorting_asc:after,
+  .foetable thead th:nth-child(2).sorting_desc:after {
     right: 5.75em;
   }
-  .foestable thead th:nth-child(2).sorting:after {
+  .foetable thead th:nth-child(2).sorting:after {
     right: 7.4em;
   }
-  .foestable>thead>tr>th:nth-child(2)>span:before {
+  .foetable>thead>tr>th:nth-child(2)>span:before {
     content: "Opponent";
   }
-  .foestable>thead>tr>th:nth-child(3)>p:before {
+  .foetable>thead>tr>th:nth-child(3)>p:before {
     content: "Rank";
   }
-  .foestable>thead>tr>th:nth-child(4)>p:before {
+  .foetable>thead>tr>th:nth-child(4)>p:before {
     content: "Win%";
   }
-  .foestable>thead>tr>th:nth-child(5)>span:before {
+  .foetable>thead>tr>th:nth-child(5)>span:before {
     content: "Us";
   }
-  .foestable>thead>tr>th:nth-child(6)>p:before {
+  .foetable>thead>tr>th:nth-child(6)>p:before {
     content: "Them";
   }
   .sets>thead>tr>th>p,
@@ -392,7 +399,7 @@ tr.shown td.details-control {
     </ul>
   </div>
   <div class='foepage page gone'>
-    <table class='foestable display dataTable'>
+    <table class='foetable display dataTable'>
       <thead>
         <tr>
           <th></th>
@@ -512,10 +519,11 @@ tr.shown td.details-control {
     $(page).removeClass('gone');
   }
 
-var currentdataarray;
-var currenttabletop;
-var foestable;
-var tourneytable;
+  var currentdataarray;
+  var currenttabletop;
+  var foetable;
+  var tourneytable;
+  var playertable;
 
   // Display the list of teams in a clickable list
   function FillKnownPages(dataarray, tabletop) {
@@ -539,11 +547,11 @@ var tourneytable;
       if (!teamrow) {
         document.location.href = GetCleanURL();
       } else {
-        // Otherwise, use the team info and load the team results spreadsheet
+        // Otherwise, use the team info and load the team foedata spreadsheet
         Tabletop.init( {
           key: teamrow.TeamSpreadsheet,
           callback: FillTables,
-          wanted: [/* PLAYERSHEET, */ SETSHEET, TOURNEYSHEET, FOESHEET]
+          wanted: [PLAYERSHEET, SETSHEET, TOURNEYSHEET, FOESHEET]
         });
 
         // Display the team name and go to Opponents page
@@ -561,9 +569,9 @@ var tourneytable;
 
   function FormatFoeDropdown(d) {
     // `d` is the original data object for the row
-    sets = setsheet.elements;
+    sets = setdata;
     var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
-    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em;'>" +
+    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em'>" +
                   "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
     $.each(setarray, function(index, value) {
       var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
@@ -575,6 +583,42 @@ var tourneytable;
                        tdwlt + value["Them"] + "</td>" +
                      "</tr>";
     });
+    detailtable += "</table>";
+    return detailtable;
+  }
+
+  function FormatTourneyDropdown(d) {
+    sets = setdata;
+    var setarray = $.grep(sets, function(e) { return e.Tournament == d["Tournament"]; });
+    var detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em'>";
+    var daterounds = [];
+    $.each(setarray, function(index, row) {
+      var setdate = row["Date"];
+      var setround = row["Round"];
+      var dateround = setdate + setround;
+      if ($.inArray(dateround, daterounds) < 0)
+          daterounds.push(dateround);
+    });
+    $.each(daterounds, function(index, dtrd) {
+      var dtrdsetarray = $.grep(sets, function(e) { return dtrd == e.Date + e.Round; });
+      detailtable += "<tr><td class='dt-right round'>" + dtrdsetarray[0]["Date"] + "</td><td class='round'>" + dtrdsetarray[0]["Round"] + "</td><td class='heading'>Us</td><td><p class='cond heading'>Them</p></td>";
+      var evenopp = true;
+      var lastopponent = "";
+      $.each(dtrdsetarray, function(index, value) {
+        var opponent = value['Opponent'];
+        if (opponent !== lastopponent) {
+          evenopp = !evenopp;
+          lastopponent = opponent;
+        }
+        var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+        detailtable += "<tr class='set " + (evenopp ? "evenopp" : "oddopp") + "'>" +
+                         "<td colspan='2'><p>" + opponent + "</p></td>" +
+                         tdwlt + value['Us'] + "</td>" +
+                         tdwlt + value['Them'] + "</td>" +
+                       "</tr>";
+      });
+    });
+    detailtable += "<tr><td class='heading dt-right'>Points:</td><td>" + d["Points"] + "</tr>";
     detailtable += "</table>";
     return detailtable;
   }
@@ -592,13 +636,14 @@ var tourneytable;
       'Jul': 243
     };
 
-currentdataarray = dataarray;
-currenttabletop = tabletop;
-    setsheet = dataarray[SETSHEET];
-    results = dataarray[FOESHEET].elements;
+    currentdataarray = dataarray;
+    currenttabletop = tabletop;
+
+    playerdata = dataarray[PLAYERSHEET].elements;
+    setdata = dataarray[SETSHEET].elements;
+    foedata = dataarray[FOESHEET].elements;
     tourneydata = dataarray[TOURNEYSHEET].elements;
-    setsheet = dataarray[SETSHEET];
-    overall = results[0];
+    overall = foedata[0];
 
     $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
       if ( data == "" ) {
@@ -616,8 +661,8 @@ currenttabletop = tabletop;
       return val;
     };
 
-    foestable = $('.foestable').DataTable({
-      'data': results,
+    foetable = $('.foetable').DataTable({
+      'data': foedata,
       fixedColumns:   {
         'heightMatch': 'none'
       },
@@ -660,9 +705,9 @@ currenttabletop = tabletop;
     });
 
     // Add event listener for opening and closing details
-    $('.foestable tbody').on('click', 'td.details-control', function(){
+    $('.foetable tbody').on('click', 'td.details-control', function(){
       var tr = $(this).closest('tr');
-      var row = foestable.row(tr);
+      var row = foetable.row(tr);
 
       if (row.child.isShown()) {
         // This row is already open - close it
@@ -727,7 +772,7 @@ currenttabletop = tabletop;
     // Add event listener for opening and closing details
     $('.tourneytable tbody').on('click', 'td.details-control', function () {
       var tr = $(this).closest('tr');
-      var row = table.row( tr );
+      var row = tourneytable.row( tr );
 
       if ( row.child.isShown() ) {
         // This row is already open - close it
@@ -736,9 +781,36 @@ currenttabletop = tabletop;
       }
       else {
         // Open this row
-        row.child( format(row.data()) ).show();
+        row.child( FormatTourneyDropdown(row.data()) ).show();
         tr.addClass('shown');
       }
+    });
+
+    playertable = $('.playertable').DataTable({
+      'data': playerdata,
+      fixedColumns:   {
+        'heightMatch': 'none'
+      },
+      columns: [
+        { 'data': 'Number',
+          'className': 'dt-center' },
+        { 'data': 'Player',
+          'className': 'dt-left' },
+        { 'data': 'Position',
+          'className': 'dt-center' },
+        { 'data': 'Height',
+          'className': 'dt-center' }
+      ],
+      "autoWidth": false,
+      paging: false,
+      searching: false,
+      fixedHeader: {
+        header: true,
+        footer: false
+      },
+//      rowCallback: function(row, data, index) {
+//      },
+      'ordering': false
     });
   }
 
@@ -764,7 +836,7 @@ currenttabletop = tabletop;
       urlParams[decode(match[1])] = decode(match[2]);
   })();
 
-  // Set up page to get list of teams (with their USAV code & results sheet
+  // Set up page to get list of teams (with their USAV code & foedata sheet
   // key) from team sheet, when it has completed loading.
   $(document).ready(function() {
     // Busy spinner
