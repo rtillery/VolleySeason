@@ -38,6 +38,14 @@ body {
     font-size: 4.5vmin;
   }
 }
+.pagecontainer {
+  font-size: 0;
+}
+div {
+  font-size: inherit;
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+}
 
 table, tr, th, td {
   font-size: inherit;
@@ -361,9 +369,9 @@ tr.shown td.details-control {
 <body>
 <div class='masthead'>
   <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
-</div>
-<div style='background-color: pink'>
-<div class='navbar'>
+</div><!--
+--><div style='background-color: pink'><!--
+--><div class='navbar'>
   <ul>
     <li><a href='#' class='teamstab activetab'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
     <li><a href='#' class='tourneytab invisible' onclick="DisplayPage(this, $('.tourneypage'))"><i class='fa fa-fw fa-trophy'></i> <span id='txttourneys' /></a></li>
@@ -371,8 +379,8 @@ tr.shown td.details-control {
     <li><a href='#' class='playertab invisible' onclick="DisplayPage(this, $('.playerpage'))"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
     <li><a href='#' class='pictab invisible' onclick="DisplayPage(this, $('.photopage'))"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
   </ul>
-</div>
-<div class='pagecontainer' style='background-color: aqua'><!--
+</div><!--
+--><div class='pagecontainer' style='background-color: aqua'><!--
 --><div id='teampage page' style='background-color: yellow'>
     <ul class='teamlist'>
     </ul>
