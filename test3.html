@@ -144,6 +144,9 @@ tr.shown td.details-control {
   font-size: 7vmin;
   color: maroon;
 }
+.teambannernolink {
+  color: #805050;
+}
 .teambanner>span, .clubbanner>span {
   transform: scaleX(.75);
   font-size: 85%;
@@ -525,9 +528,14 @@ tr.shown td.details-control {
       }
       var team = $('<li/>')
                  .appendTo(teamlistobj);
-      $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
-        .html(value.TeamName)
-        .appendTo(team);
+      if (value.TeamSpreadsheet)
+        $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
+          .html(value.TeamName)
+          .appendTo(team);
+      else
+        $(value.TeamName)
+          .addClass('teambannernolink')
+          .appendTo(team);
     });
   }
 
