@@ -233,6 +233,11 @@ tr.shown td.details-control {
   -webkit-margin-after: 0;
   list-style-type: none;
   padding: 0;
+  font-size: 6vmin;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Enter-Sansman-Bold-Italic';
+  color: #555;
 }
 .teamlist>li>a {
   text-decoration: none;
@@ -331,6 +336,10 @@ tr.shown td.details-control {
   }
   #txtpics:before {
     content: "Photos";
+  }
+
+  .teamlist {
+    text-align: left;
   }
 
   .pagecontainer {
@@ -501,14 +510,24 @@ tr.shown td.details-control {
   function DisplayTeamList() {
     // Replace existing list with empty one
     var teamlistobj = $('ul.teamlist');
+    // Sort teams by reverse years
+    teamlist.sort(function(a, b) {
+      return b.Year - a.Year;
+    });
     // Populate with items from the team list, setting the link to the current URL
     // plus the teamid
+    var year = 0;
     $.each(teamlist, function(index, value) {
+      if (value.Year != year) {
+        year = value.Year;
+        $("<li style='text-align: center; text-decoration: underline'>" + year.toString() + "</li>")
+        .appendTo(teamlistobj);
+      }
       var team = $('<li/>')
                  .appendTo(teamlistobj);
-      var lnk = $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
-                .html(value.TeamName)
-                .appendTo(team);
+      $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
+        .html(value.TeamName)
+        .appendTo(team);
     });
   }
 
@@ -529,7 +548,6 @@ tr.shown td.details-control {
   function FillKnownPages(dataarray, tabletop) {
     // Start by getting the list of teams from the team spreadsheet
     teamlist = dataarray[TEAMSHEETSHEET].elements;
-
     // Decorate the team names for desired display (either in list or in masthead)
     $.each(teamlist, function(index, value) {
       teamlist[index].TeamName = "<div class='teambanner'>" + SmallCaps(value.TeamName) + "</div>";
