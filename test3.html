@@ -645,7 +645,7 @@ tr.shown td.details-control {
     tourneydata = dataarray[TOURNEYSHEET].elements;
     overall = foedata[0];
 
-    $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
+    $.fn.dataTable.ext.type.order['ranksort-pre'] = function ( data ) {
       if ( data == "" ) {
         return 999.0;
       } else {
@@ -653,7 +653,7 @@ tr.shown td.details-control {
       }
     };
 
-    $.fn.dataTable.ext.type.order['custom2-pre'] = function ( data ) {
+    $.fn.dataTable.ext.type.order['datesort-pre'] = function ( data ) {
       month = data.substr(0, 3);
       var pat = /\s*\d+/g;
       day = pat.exec(data);
@@ -677,7 +677,7 @@ tr.shown td.details-control {
         { 'data': 'OpponentName' },
         { 'data': 'LatestRanking',
           'className': 'dt-center',
-          'type': 'custom' },
+          'type': 'ranksort' },
         { 'data': 'Percent',
           'className': 'dt-head-center dt-body-right' },
         { 'data': 'Wins',
@@ -737,7 +737,7 @@ tr.shown td.details-control {
         { 'data': 'Tournament' },
         { 'data': 'Dates',
           'className': 'dt-center nowrap',
-          'type': 'custom2' },
+          'type': 'datesort' },
         { 'data': 'Wins',
           'className': 'dt-center' },
         { 'data': 'Losses',
