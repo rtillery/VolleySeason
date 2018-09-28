@@ -580,10 +580,10 @@ tr.shown td.details-control {
           wanted: [PLAYERSHEET, SETSHEET, TOURNEYSHEET, FOESHEET]
         });
 
-        // Display the team name and go to Opponents page
+        // Display the team name and go to default page
         $('.masthead').append("<div class='teambanner'>" + teamrow.TeamName + "</div>");
         $('.navbar>ul>li>a').removeClass('invisible');
-        DisplayPage($('.foestab'), $('.foepage'));
+        DisplayPage($('.tourneytab'), $('.tourneypage'));
       }
     }
 
