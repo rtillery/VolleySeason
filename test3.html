@@ -29,6 +29,7 @@ html {
   font-family: sans-serif;
 }
 body,
+.overall,
 .teampage,
 .foepage, 
 .tourneypage,
@@ -39,12 +40,34 @@ body,
 @media (pointer: coarse),
        (-moz-touch-enabled) {
   body,
+  .overall,
   .teampage,
   .foepage, 
   .tourneypage,
   .playerpage {
     font-size: 4.5vmin;
   }
+}
+.overallcenter {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding-bottom: .2em;
+}
+.overall {
+  width: auto;
+  background-color: maroon;
+  display: inline-block;
+  align-content: center;
+  border-radius: .5em;
+}
+.overalltable {
+  color: white;
+  font-weight: bold;
+  padding: .5em;
+}
+.overalltable tbody td {
+  padding-left: .5em;
 }
 .pagecontainer {
   font-size: 0;
@@ -133,7 +156,7 @@ tr.shown td.details-control {
   font-family: 'Enter-Sansman-Bold-Italic';
   letter-spacing: -.05em;
   text-align: center;
-  padding: .2em .2em .2em .2em;
+  padding: .2em .2em 0 .2em;
 }
 .clubbanner {
   color: #555;
@@ -142,11 +165,11 @@ tr.shown td.details-control {
 }
 .teambanner {
   font-size: 7vmin;
-  color: maroon;
+  {  color: maroon; }
 }
-.teambannernolink {
+{ .teambannernolink {
   color: #805050;
-}
+} }
 .teambanner>span, .clubbanner>span {
   transform: scaleX(.75);
   font-size: 85%;
@@ -396,6 +419,11 @@ tr.shown td.details-control {
   <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
 </div>
 <div>
+<div class='overallcenter'>
+  <div class='overall gone'>
+    <table class='overalltable' style='width:auto;margin:auto'><tbody/></table>
+  </div>
+</div>
 <div class='navbar'>
   <ul>
     <li><a href='#' class='teamstab activetab'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
@@ -531,10 +559,11 @@ tr.shown td.details-control {
       if (value.TeamSpreadsheet)
         $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
           .html(value.TeamName)
+//          .css('color', value.Color)
           .appendTo(team);
       else
         $(value.TeamName)
-          .addClass('teambannernolink')
+//          .css('color', value.Color)
           .appendTo(team);
     });
   }
@@ -544,6 +573,7 @@ tr.shown td.details-control {
     $(tab).addClass('activetab');
     $('.page').addClass('gone');
     $(page).removeClass('gone');
+    $('.overall').removeClass('gone');
   }
 
   var currentdataarray;
@@ -558,7 +588,7 @@ tr.shown td.details-control {
     teamlist = dataarray[TEAMSHEETSHEET].elements;
     // Decorate the team names for desired display (either in list or in masthead)
     $.each(teamlist, function(index, value) {
-      teamlist[index].TeamName = "<div class='teambanner'>" + SmallCaps(value.TeamName) + "</div>";
+      teamlist[index].TeamName = "<div class='teambanner' style='" + "color:" + value.Color + "'>" + SmallCaps(value.TeamName) + "</div>";
     });
 
     // If the URL contains no teamid, then set up the selection list
@@ -577,11 +607,11 @@ tr.shown td.details-control {
         Tabletop.init( {
           key: teamrow.TeamSpreadsheet,
           callback: FillTables,
-          wanted: [PLAYERSHEET, SETSHEET, TOURNEYSHEET, FOESHEET]
+          wanted: [PLAYERSHEET, SETSHEET, TOURNEYSHEET, FOESHEET, OVERALLSHEET]
         });
 
         // Display the team name and go to default page
-        $('.masthead').append("<div class='teambanner'>" + teamrow.TeamName + "</div>");
+        $('.masthead').append(teamrow.TeamName);
         $('.navbar>ul>li>a').removeClass('invisible');
         DisplayPage($('.tourneytab'), $('.tourneypage'));
       }
@@ -669,7 +699,7 @@ tr.shown td.details-control {
     setdata = dataarray[SETSHEET].elements;
     foedata = dataarray[FOESHEET].elements;
     tourneydata = dataarray[TOURNEYSHEET].elements;
-    overall = foedata[0];
+    overalldata = dataarray[OVERALLSHEET].elements[0];
 
     $.fn.dataTable.ext.type.order['ranksort-pre'] = function ( data ) {
       if ( data == "" ) {
@@ -686,6 +716,12 @@ tr.shown td.details-control {
       val = parseInt(order[month], 10) + parseInt(day, 10);
       return val;
     };
+
+    $('.overalltable').append("<tr>" +
+                           "<td>Overall:</td>" +
+                           "<td>" + overalldata.OverallPercent + "</td>" +
+                           "<td>(" + overalldata.OverallWins + "&nbsp-&nbsp" + overalldata.OverallLosses + ")</td>" +
+                         "</tr>");
 
     foetable = $('.foetable').DataTable({
       'data': foedata,
@@ -847,6 +883,7 @@ tr.shown td.details-control {
   SETSHEET = "Sets";
   PLAYERSHEET = "Players";
   TOURNEYSHEET = "Tourneys";
+  OVERALLSHEET = "Overall";
 
   // Collect URL components into urlParams[] whenever the URL changes
   // From: https://stackoverflow.com/a/2880929
