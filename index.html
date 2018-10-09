@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang='en'>
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -13,368 +13,79 @@
 <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
 <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css'>
 <link rel='stylesheet' type='text/css' href='style.css'>
-
-<style>
-
-.white {
-  stroke: white;
-  fill: none;
-}
-/*
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-}
-*/
-#masthead {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.club, .team {
-  font-family: 'Enter-Sansman-Bold-Italic';
-  background-color: white;
-  letter-spacing: -.05em;
-}
-.club {
-  font-size: 29px;
-  color: #555;
-  padding: 6px;
-  display: block; /* no team: centered */
-}
-.withteam {
-  display: inline-block; /* landscape to the left */
-}
-.team {
-  font-size: 22px;
-  color: maroon;
-  padding: 2px;
-  display: inline-block; /* always centered */
-}
-a .team {
-  font-size: 9vmin;
-}
-.team span, .club span {
-  transform: scaleX(.75);
-  font-size: 85%;
-  letter-spacing: normal;
-}
-
-.navbar {
-  background-color: #555;
-  width: 9em;
-  float: left;
-}
-.navbar a {
-  color: white;
-  text-decoration: none;
-  display: list-item;
-  padding: 1em .5em;
-}
-.navbar a svg {
-  display: inline-block;
-  vertical-align: middle;
-  width: 18px;
-  height: 14px;
-}
-.icon, .net {
-  width: 1em;
-  float: left;
-  top: .15em;
-  position: relative;
-}
-.icon {
-  stroke-width: 3;
-}
-.net {
-  stroke-width: 1.5;
-}
-
-.hometab {
-  background-color: darkgray;
-}
-
-.activetab {
-  background-color: maroon;
-}
-
-#txtteams:before {
-  content: "Teams";
-}
-#txtplayers:before {
-  content: "Players";
-}
-#txttourneys:before {
-  content: "Tournaments";
-}
-#txtfoes:before {
-  content: "Opponents";
-}
-#txtpics:before {
-  content: "Photos";
-}
-
-#teampage {
-  margin-left: 9em;
-  background-color: lightgray;
-}
-
-.teamlist {
-  list-style-type: none;
-  padding: 0;
-  background-color: white;
-}
-.teamlist a {
-  text-decoration: none;
-}
-.teamlist a .team {
-  text-align: left;
-}
-
-@media screen and (max-aspect-ratio: 1/1) {
-  #masthead {
-    flex-direction: column;
-  }
-  .club, .team {
-    display: block;
-  }
-  .withteam {
-    display: block; /* portrait centered */
-  }
-
-  .navbar {
-    width: 100%;
-    float: none;
-    font-size: 0;
-  }
-  .navbar div {
-    font-size: 3.9vmin;
-    display: inline-block;
-    padding: 10px 5px;
-  }
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0;
-  }
-  .navbar a svg {
-    display: inline-block;
-    vertical-align: middle;
-    width: 3.2vmin;
-    height: 3.2vmin;
-  }
-
-  #txtteams:before {
-    content: "Teams";
-  }
-  #txtplayers:before {
-    content: "Players";
-  }
-  #txttourneys:before {
-    content: "Tourneys";
-  }
-  .narrow {
-    font-size: 66.7%;
-    transform: scaleY(1.5);
-  }
-  #txtfoes:before {
-    content: "Foes";
-  }
-  #txtpics:before {
-    content: "Pics";
-  }
-
-  #teampage {
-    margin-left: 0;
-  }
-}
-
-<svg width='0' height='0' style='display: block'>
-  <defs>
-    <symbol id='bracket'>
-      <path class='white icon' d='M32,16h-11m-10,-10h10v20h-10m-10,5h10v-10h-10m0,-20h10v10h-10' />
-    </symbol>
-
-    <symbol class='white net' id='net'>
-      <path d='M1,5c5,2 26,2 30,0M1,8c5,2 26,2 30,0M1,11c5,2 26,2 30,0M1,14c5,2 26,2 30,0' />
-      <path d='M1,4v21m-2,0h4M31,4v21m-2,0h4' />
-      <path d='M4,5.9v9M7,6v9M10,6.2v9M13,6.6v9M16,6.6v9M19,6.6v9M22,6.2v9M25,6v9M28,5.9v9' />
-    </symbol>
-  </defs>
-</svg>
-
-</style>
-
 </head>
-
 <body>
-<div id='masthead'>
-  <div class='club'><div class='cond'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div></div>
-<!--  <div id='team' class='team invisible'></div> -->
+<div class='masthead'>
+  <div class='clubbanner'>K<span>NIGHTS</span> V<span>OLLEYBALL</span> A<span>CADEMY</span></div>
 </div>
-
-<!-- <div>
-  <table class='teamheader'><tbody>
-    <tr>
-      <td>
-        <table class='ourteamname'><tbody>
-          <tr><td>Knights Volleyball Academy 15 Adidas Maroon (KVA15AM)</td></tr>
-        </tbody></table>
-      </td>
-      <td>
-        <table class='overall'><tbody>
-        </tbody></table>
-      </td>
-    </tr>
-  </tbody></table>
-</div> -->
 <div>
-  <table id='teamtable' class='display invisible' style='width:100%'>
-    <thead>
-      <tr>
-        <th></th>
-        <th>Team</th>
-        <th><p>Rank</p></th>
-        <th><p>Win%</p></th>
-        <th>Us</th>
-        <th><p>Them</p></th>
-      </tr>
-    </thead>
-  </table>
+<div class='overallcenter'>
+  <div class='overall gone'>
+    <table class='overalltable' style='width:auto;margin:auto'><tbody/></table>
+  </div>
 </div>
-
-<script type='text/javascript'>
-
-  TEAMSHEET = "Opponents";
-  SETSHEET = "Sets";
-
-  function winlosetie(us, them) {
-      var iUs = parseInt(us);
-      var iThem = parseInt(them);
-      return (iUs > iThem) ? 'win' : ((iUs < iThem) ? 'lose' : 'tie');
-  }
-
-  function format(d) {
-    // `d` is the original data object for the row
-    sets = setsheet.elements;
-    var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
-    detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:50px;'>" +
-                  "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
-    $.each(setarray, function(index, value) {
-      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-      detailtable += "<tr class='set'>" +
-                       "<td><p>" + value["Tournament"] + "</p></td>" +
-                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
-                       "<td><p>" + value["Round"] + "</p></td>" +
-                       tdwlt + value["Us"] + "</td>" +
-                       tdwlt + value["Them"] + "</td>" +
-                     "</tr>";
-    });
-    detailtable += "</table>";
-    return detailtable;
-  }
-    
-  $(document).ready(function() {
-    $('body').prepend("<i class='fas fa-volleyball-ball fa-spin loading' style='font-size:25vmin'></i>");
-
-    Tabletop.init({
-      key: 'https://docs.google.com/spreadsheets/d/1wXLmCIAl1-0Z25OVh0zf2TtauGjt0xGY0MJRhTJBf-k/pubhtml',
-      callback: showDataTable,
-      wanted: [SETSHEET, TEAMSHEET]
-    });
-  });
-
-  function showDataTable(dataarray, tabletop) {
-
-    $.fn.dataTable.ext.type.order['custom-pre'] = function ( data ) {
-      if ( data == "" ) {
-        return 999.0;
-      } else {
-        return parseFloat( data );
-      }
-    };
-
-    $('#teamtable').removeClass('invisible');
-    $('.loading').remove();
-
-    teamsheet = dataarray[TEAMSHEET];
-    setsheet = dataarray[SETSHEET];
-    results = teamsheet.elements;
-    overall = results[0];
-
-    $('.overall').append("<tr>" +
-                           "<td>Overall:</td>" +
-                           "<td>" + overall.OverallPercent + "</td>" +
-                           "<td>(" + overall.OverallWins + "&nbsp-&nbsp" + overall.OverallLosses + ")</td>" +
-                         "</tr>");
-
-    var table = $('#teamtable').DataTable({
-      'data': results,
-      fixedColumns:   {
-        'heightMatch': 'none'
-      },
-      columns: [
-        { 'className': 'details-control',
-          'orderable': false,
-          'data': null,
-          'defaultContent': '',
-          'render': function () {
-            return "<i class='fa fa-plus-square' aria-hidden='true'></i>";
-          },
-          'width':'1.5em' },
-        { 'data': 'OpponentName' },
-        { 'data': 'LatestRanking',
-          'width': '1em',
-          'className': 'dt-center',
-          'type': 'custom' },
-        { 'data': 'Percent',
-          'width': '1em' },
-        { 'data': 'Wins',
-          'width': '1em',
-          'className': 'dt-center' },
-        { 'data': 'Losses',
-          'width': '1em',
-          'className': 'dt-center' }
-      ],
-      paging: false,
-      searching: false,
-      fixedHeader: {
-        header: true,
-        footer: false
-      },
-      rowCallback: function(row, data, index) {
-        var tester = $(row).find('td:eq(3)');
-        if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
-          return;
-        $(row).find('td:eq(1)').wrapInner("<p></p>");
-        $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
-      },
-      'order': [[1, 'asc']]
-    });
-
-    $('body').css('cursor', 'default');
-
-    // Add event listener for opening and closing details
-    $('#teamtable tbody').on('click', 'td.details-control', function(){
-      var tr = $(this).closest('tr');
-      var row = table.row(tr);
-
-      if (row.child.isShown()) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-      }
-      else {
-        // Open this row
-        row.child( format(row.data())).show();
-        tr.addClass('shown');
-      }
-    });
-  }
-
-</script>
-
+<div class='navbar'>
+  <ul>
+    <li><a href='#' class='teamstab activetab'><i class='fa fa-fw fa-home'></i> <span id='txtteams' /></a></li>
+    <li><a href='#' class='tourneytab invisible' onclick="DisplayPage(this, $('.tourneypage'))"><i class='fa fa-fw fa-trophy'></i> <span id='txttourneys' /></a></li>
+    <li><a href='#' class='foestab invisible' onclick="DisplayPage(this, $('.foepage'))"><i class='fas fa-volleyball-ball'></i>&nbsp;&nbsp;<span id='txtfoes' /></a></li>
+    <li><a href='#' class='playertab invisible' onclick="DisplayPage(this, $('.playerpage'))"><i class='fa fa-fw fa-user'></i> <span id='txtplayers' /></a></li>
+    <li><a href='#' class='pictab invisible' onclick="DisplayPage(this, $('.photopage'))"><i class='fa fa-fw fa-camera'></i> <span id='txtpics' /></a></li>
+  </ul>
+</div>
+<div class='pagecontainer'>
+  <div id='teampage page'>
+    <ul class='teamlist'>
+    </ul>
+  </div>
+  <div class='foepage page gone'>
+    <table class='foetable display dataTable'>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span></span></th>
+          <th><p></p></th>
+          <th><p></p></th>
+          <th><span></span></th>
+          <th><p></p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class='tourneypage page gone'>
+    <table class='tourneytable display dataTable'>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span>Tournament</span></th>
+          <th><p>Dates</p></th>
+          <th><p>Ws</p></th>
+          <th><p>Ls</p></th>
+          <th><p>Finish</p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class='playerpage page gone'>
+    <table class='playertable display dataTable'>
+      <thead>
+        <tr>
+          <th><p>Number</p></th>
+          <th>Player</th>
+          <th><p>Position</p></th>
+          <th><p>Height</p></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

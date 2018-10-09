@@ -8,193 +8,58 @@ font-family: 'Enter-Sansman-Bold-Italic';
   font-style: normal;
 }
 
-.white {
-  stroke: white;
-  fill: none;
-}
-
-body {
+html {
   font-family: sans-serif;
+}
+body,
+.overall,
+.teampage,
+.foepage, 
+.tourneypage,
+.playerpage {
   margin: 0;
+  font-size: 14px;
 }
-
-#masthead {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  body,
+  .overall,
+  .teampage,
+  .foepage, 
+  .tourneypage,
+  .playerpage {
+    font-size: 4.5vmin;
+  }
 }
-.club, .team {
-  font-family: 'Enter-Sansman-Bold-Italic';
-  background-color: white;
-  letter-spacing: -.05em;
-}
-.club {
-  font-size: 9vmin; /* Width of portrait screen */
-  color: #555;
-  padding: 1vmin;
-  display: block; /* no team: centered */
-}
-.withteam {
-  display: inline-block; /* landscape to the left */
-}
-.team {
-  color: maroon;
-  font-size: 6vmin;
-  padding: .75vmin;
-  display: inline-block; /* always centered */
-}
-a .team {
-  font-size: 9vmin;
-}
-.team span, .club span {
-  transform: scaleX(.75);
-  font-size: 85%;
-  letter-spacing: normal;
-}
-
-.overall {
-  font-size: 5vmin;
-  border-spacing: 2vmin 0;
-  height: 5vmin;
-  background-color: orange;
-  color: white;
-}
-
-.navbar {
-  background-color: #555;
-  width: 11em;
-  float: left;
+.overallcenter {
   display: inline-block;
-}
-.navbar a {
-  color: white;
-  text-decoration: none;
-  display: list-item;
-  padding: 1em .5em;
-}
-.navbar div {
-  font-size: 3.9vmin;
-}
-.navbar a svg {
-  display: inline-block;
-  vertical-align: middle;
-  width: 18px;
-  height: 14px;
-}
-.icon, .net {
-  width: 1em;
-  float: left;
-  top: .15em;
-  position: relative;
-}
-.icon {
-  stroke-width: 3;
-}
-.net {
-  stroke-width: 1.5;
-}
-
-.hometab {
-  background-color: darkgray;
-}
-
-.activetab {
-  background-color: maroon;
-}
-
-td.details-control {
+  width: 100%;
   text-align: center;
-  color: forestgreen;
-  cursor: pointer;
+  padding-bottom: .2em;
 }
-tr.shown td.details-control {
-  text-align: center; 
-  color: red;
-}
-
-#displayedpage {
+.overall {
+  width: auto;
+  background-color: maroon;
   display: inline-block;
-  width: calc(100% - 11em);
-  margin: 0;
-  border: 0;
-  padding: 0;
+  align-content: center;
+  border-radius: .5em;
 }
-#txtteams:before {
-  content: "Teams";
-}
-#txtplayers:before {
-  content: "Players";
-}
-#txttourneys:before {
-  content: "Tournaments";
-}
-#txtfoes:before {
-  content: "Opponents";
-}
-#txtpics:before {
-  content: "Photos";
-}
-
-#teampage {
-  background-color: lightgray;
-}
-.foetable {
-  border: 0;
-  padding: 0;
-}
-
-.teamlist {
-  list-style-type: none;
-  padding: 0;
-  background-color: white;
-}
-.teamlist a {
-  text-decoration: none;
-}
-.teamlist a .team {
-  text-align: left;
-}
-
-/* Height of table rows */
-tr {
-  height: 10vmin;
-}
-
-/* Height of table heading font */
-.dataTable th {
-  font-size: 4vmin;
-}
-
-/* Height of table row font */
-.dataTable td {
-  font-size: 4vmin;
-}
-
-/* Detail table row font */
-.set td {
-  font-size: 4vmin;
-}
-
-.percent, .win, .lose, .tie {
+.overalltable {
   color: white;
   font-weight: bold;
-  text-align: right;
+  padding: .5em;
 }
-.win {
-  background-color: limegreen;
+.overalltable tbody td {
+  padding-left: .5em;
 }
-.lose {
-  background-color: red;
-}
-.tie {
-  background-color: gold;
-}
-.unplayed {
+.pagecontainer {
+  font-size: 0;
 }
 
-.invisible {
-  display: none !important;
+table, tr, th, td {
+  font-size: inherit;
+  border-spacing: 0;
+  padding: 0;
 }
 
 .loading {
@@ -210,71 +75,261 @@ tr {
   right: 0;
 }
 
-p, .cond {
+.invisible {
+  visibility: hidden !important;
+}
+.gone {
+  display: none !important;
+}
+
+td.details-control {
+  text-align: center;
+  color: forestgreen;
+  cursor: pointer;
+  min-width: 2em;
+}
+tr.shown td.details-control {
+  text-align: center; 
+  color: red;
+}
+.dataTable thead th {
+  position: relative;
+  background-image: none !important;
+}
+.dataTable thead th.sorting:after,
+.dataTable thead th.sorting_asc:after,
+.dataTable thead th.sorting_desc:after {
+  position: absolute;
+  display: block;
+  font-family: "Font Awesome 5 Free";
+  top: .9em;
+  right: .1em;
+}
+.dataTable thead th.sorting:after {
+  content: "\f0dc";
+  color: black;
+  font-size: 0.8em;
+  padding-top: 0.12em;
+}
+.dataTable thead th.sorting_asc:after {
+  content: "\f0de";
+}
+.dataTable thead th.sorting_desc:after {
+  content: "\f0dd";
+  top: .67em;
+}
+.dataTable>thead>tr>th>p,
+.dataTable>tbody>tr>td>p {
   font-size: calc(100% / calc(3/2));
   transform: scaleY(calc(3/2));
 }
-p {
-  {  padding: .5em 0; }
+.dataTable>thead>tr>th {
+  padding-left: .33em;
+  padding-right: .67em;
+  height: 2.5em;
+}
+.dataTable>tbody>tr>td {
+  padding: .5em .25em;
 }
 
+.masthead {
+  font-size: 0;
+}
+.clubbanner, .teambanner {
+  font-family: 'Enter-Sansman-Bold-Italic';
+  letter-spacing: -.05em;
+  text-align: center;
+  padding: .2em .2em 0 .2em;
+}
+.clubbanner {
+  color: #555;
+  font-size: calc(9vmin / calc(3/2));
+  transform: scaleY(calc(3/2));
+}
+.teambanner {
+  font-size: 7vmin;
+  {  color: maroon; }
+}
+{ .teambannernolink {
+  color: #805050;
+} }
+.teambanner>span, .clubbanner>span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+.teambanner>span, .clubbanner>span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+
+.navbar {
+  background-color: lightgray;
+  font-size: 1em;
+  width: 100%;
+}
+@media (pointer: coarse),
+       (-moz-touch-enabled) {
+  .navbar {
+    font-size: 4vmin; /* Fit width to mobile screen */
+  }
+}
+.navbar>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #555;
+}
+.navbar>ul>li {
+  float: left;
+  background-color: inherit;
+}
+.navbar>ul>li:first-child {
+  background-color: lightgray;
+}
+.navbar>ul>li>a {
+  display: block;
+  color: white;
+  padding: 1em .25em;
+  text-decoration: none;
+  background-color: inherit;
+}
+.navbar>ul>li:first-child>a {
+  color: black;
+}
+.activetab {
+  color: white !important;
+  background-color: maroon !important;
+}
+#txtteams:before {
+  content: "Teams";
+}
+#txtplayers:before {
+  content: "Players";
+}
+#txttourneys:before {
+  content: "Tourneys";
+}
+#txtfoes:before {
+  content: "Foes";
+}
+#txtpics:before {
+  content: "Pics";
+}
+
+.win {
+  color: white;
+  background-color: limegreen !important;
+}
+.lose {
+  color: white;
+  background-color: red !important;
+}
+.tie {
+  background-color: yellow !important;
+}
+
+.pagecontainer {
+  display: inline-block;
+  width: 100%;
+}
+
+.teamlist {
+  -webkit-padding-start: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  list-style-type: none;
+  padding: 0;
+  font-size: 6vmin;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Enter-Sansman-Bold-Italic';
+  color: #555;
+}
+.teamlist>li>a {
+  text-decoration: none;
+}
+
+.foetable>tbody>tr>td:nth-child(4)>p,
+.foetable>tbody>tr>td:nth-child(5)>p {
+  font-size: calc(100% / calc(5/4));
+  transform: scaleY(calc(5/4));
+}
+.foetable>thead>tr>th:nth-child(2)>span:before {
+  content: "Opponent";
+}
+.foetable>thead>tr>th:nth-child(3)>p:before {
+  content: "Rk";
+}
+.foetable>thead>tr>th:nth-child(4)>p:before {
+  content: "Win%";
+}
+.foetable>thead>tr>th:nth-child(5)>span:before {
+  content: "Us";
+}
+.foetable>thead>tr>th:nth-child(6)>p:before {
+  content: "Thm";
+}
+.foetable thead th:nth-child(2).sorting_asc:after,
+.foetable thead th:nth-child(2).sorting_desc:after {
+  right: 2.25em;
+}
+.foetable thead th:nth-child(2).sorting:after {
+  right: 2.9em;
+}
+.foetable thead th:nth-child(4).sorting:after,
+.foetable thead th:nth-child(4).sorting_asc:after,
+.foetable thead th:nth-child(4).sorting_desc:after {
+  right: .2em;
+}
+.sets>thead>tr>th {
+  padding: 0;
+}
+.set>td {
+  padding: .5em !important;
+}
+.sets>thead>tr>th>p,
+.set>td>p,
+.cond {
+  font-size: calc(100% / calc(3/2)) !important;
+  transform: scaleY(calc(3/2));
+}
+.heading {
+  font-weight: bold;
+}
 .round {
   text-decoration: underline;
 }
 
-.heading {
-  font-weight: bold;
+.nowrap {
+  white-space: nowrap !important;
 }
 
-table.sets tbody tr.evenopp {
-}
-table.sets tbody tr.oddopp {
-  background-color: #f9f9f9;
-}
-
-@media screen and (max-aspect-ratio: 1/1) {
-  #masthead {
-    flex-direction: column;
+/* LANDSCAPE */
+@media screen and (min-aspect-ratio: 1/1) {
+  .masthead {
+    width: 100%;
+    text-align: center;
   }
-  .club, .team {
-    display: block;
-  }
-  .team {
-    font-size: 7vmin;
-    padding: .75vmin;
-  }
-  .withteam {
-    display: block; /* portrait centered */
+  .clubbanner, .teambanner {
+    display: inline-block;
   }
 
   .navbar {
-    width: 100%;
+    display: inline-block;
+    float: left;
+    width: auto;
+  }
+  .navbar>ul>li, .navbar>ul>li:first-child {
     float: none;
-    font-size: 0;
-  }
-  .navbar div {
-    display: inline-block;
-  }
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    padding: 1em .37em 1em .37em;
-  }
-  .navbar a svg {
-    display: inline-block;
-    vertical-align: middle;
-    width: 3.2vmin;
-    height: 3.2vmin;
-  }
-
-  #displayedpage {
     display: block;
-    width: 100%;
+    padding: 0;
   }
-
-  .foetable {
-    width: 100%;
+  .navbar>ul>li>a {
+    display: block;
+    padding: 1em;
   }
   #txtteams:before {
     content: "Teams";
@@ -283,55 +338,59 @@ table.sets tbody tr.oddopp {
     content: "Players";
   }
   #txttourneys:before {
-    content: "Tourneys";
-  }
-  .narrow {
-    font-size: 66.7%;
-    transform: scaleY(1.5);
+    content: "Tournaments";
   }
   #txtfoes:before {
-    content: "Foes";
+    content: "Opponents";
   }
   #txtpics:before {
-    content: "Pics";
+    content: "Photos";
   }
 
-  #teampage {
-    margin-left: 0;
+  .teamlist {
+    text-align: left;
+  }
+
+  .pagecontainer {
+    display: block;
+    width: auto;
+    overflow: hidden;
+  }
+
+  .foetable>tbody>tr>td:nth-child(2)>p {
+    font-size: calc(100% / calc(5/4));
+    transform: scaleY(calc(5/4));
+  }
+  .foetable>tbody>tr>td:nth-child(3)>p,
+  .foetable>tbody>tr>td:nth-child(4)>p {
+    font-size: 100%;
+    transform: none;
+  }
+  .foetable thead th:nth-child(2).sorting_asc:after,
+  .foetable thead th:nth-child(2).sorting_desc:after {
+    right: 5.75em;
+  }
+  .foetable thead th:nth-child(2).sorting:after {
+    right: 7.4em;
+  }
+  .foetable>thead>tr>th:nth-child(2)>span:before {
+    content: "Opponent";
+  }
+  .foetable>thead>tr>th:nth-child(3)>p:before {
+    content: "Rank";
+  }
+  .foetable>thead>tr>th:nth-child(4)>p:before {
+    content: "Win%";
+  }
+  .foetable>thead>tr>th:nth-child(5)>span:before {
+    content: "Us";
+  }
+  .foetable>thead>tr>th:nth-child(6)>p:before {
+    content: "Them";
+  }
+  .sets>thead>tr>th>p,
+  .set>td>p {
+    font-size: calc(100% / calc(5/4)) !important;
+    transform: scaleY(calc(5/4));
   }
 }
-
-/*
-@media (pointer: coarse),
-       (-moz-touch-enabled) {
-    .overall {
-        font-size: 5vmin;
-        border-spacing: 2vmin 0;
-        height: 5vmin;
-    }
-*/
-    /* Height of table rows */
-/*    tr {
-        height: 10vmin;
-    }
-*/    
-    /* Height of table heading font */
-/*    .dataTable th {
-        font-size: 4vmin;
-    }
-*/    
-    /* Height of table row font */
-/*    .dataTable td {
-        font-size: 4vmin;
-    }
-*/    
-    /* Detail table row font */
-/*    .set td {
-        font-size: 3.5vmin;
-        height: 3.5vmin;
-    }
-    .cond {
-        font-size: 2.67vmin;
-    }
-}
-*/
