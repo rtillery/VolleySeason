@@ -132,57 +132,58 @@ function FillKnownPages(dataarray, tabletop) {
 }
 
 function FormatFoeDropdown(d) {
-  // `d` is the original data object for the row
-  sets = setdata;
-  var setarray = $.grep(sets, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
-  detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em'>" +
-                "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
-  $.each(setarray, function(index, value) {
-    var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-    detailtable += "<tr class='set'>" +
-                     "<td><p>" + value["Tournament"] + "</p></td>" +
-                     "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
-                     "<td class='dt-left'><p>" + value["Round"] + "</p></td>" +
-                     tdwlt + value["Us"] + "</td>" +
-                     tdwlt + value["Them"] + "</td>" +
-                   "</tr>";
-  });
-  detailtable += "</table>";
+  var setarray = $.grep(setdata, function(e) { return e.OpponentCode == d["UniqueOpponentCode"]; });
+  detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em'>";
+  if (d.UniqueOpponentCode) {
+    detailtable += "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
+    $.each(setarray, function(index, value) {
+      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+      detailtable += "<tr class='set'>" +
+                       "<td><p>" + value["Tournament"] + "</p></td>" +
+                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
+                       "<td class='dt-left'><p>" + value["Round"] + "</p></td>" +
+                       tdwlt + value["Us"] + "</td>" +
+                       tdwlt + value["Them"] + "</td>" +
+                     "</tr>";
+    });
+    detailtable += "</table>";
+  }
   return detailtable;
 }
 
 function FormatTourneyDropdown(d) {
-  sets = setdata;
-  var setarray = $.grep(sets, function(e) { return e.Tournament == d["Tournament"]; });
+  var setarray = $.grep(setdata, function(e) { return e.Tournament == d["Tournament"]; });
   var detailtable = "<table class='sets' cellpadding='5' cellspacing='0' border='0' style='padding-left:1em'>";
-  var daterounds = [];
-  $.each(setarray, function(index, row) {
-    var setdate = row["Date"];
-    var setround = row["Round"];
-    var dateround = setdate + setround;
-    if ($.inArray(dateround, daterounds) < 0)
-        daterounds.push(dateround);
-  });
-  $.each(daterounds, function(index, dtrd) {
-    var dtrdsetarray = $.grep(sets, function(e) { return dtrd == e.Date + e.Round; });
-    detailtable += "<tr><td class='dt-right round'>" + dtrdsetarray[0]["Date"] + "</td><td class='round'>" + dtrdsetarray[0]["Round"] + "</td><td class='heading'>Us</td><td><p class='cond heading'>Them</p></td>";
-    var evenopp = true;
-    var lastopponent = "";
-    $.each(dtrdsetarray, function(index, value) {
-      var opponent = value['Opponent'];
-      if (opponent !== lastopponent) {
-        evenopp = !evenopp;
-        lastopponent = opponent;
-      }
-      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-      detailtable += "<tr class='set " + (evenopp ? "evenopp" : "oddopp") + "'>" +
-                       "<td colspan='2'><p>" + opponent + "</p></td>" +
-                       tdwlt + value['Us'] + "</td>" +
-                       tdwlt + value['Them'] + "</td>" +
-                     "</tr>";
+  if (setarray[0].OpponentCode) {
+    var daterounds = [];
+    $.each(setarray, function(index, row) {
+      var setdate = row["Date"];
+      var setround = row["Round"];
+      var dateround = setdate + setround;
+      if ($.inArray(dateround, daterounds) < 0)
+          daterounds.push(dateround);
     });
-  });
-  detailtable += "<tr><td class='heading dt-right'>Points:</td><td>" + d["Points"] + "</tr>";
+    $.each(daterounds, function(index, dtrd) {
+      var dtrdsetarray = $.grep(setdata, function(e) { return dtrd == e.Date + e.Round; });
+      detailtable += "<tr><td class='dt-right round'>" + dtrdsetarray[0]["Date"] + "</td><td class='round'>" + dtrdsetarray[0]["Round"] + "</td><td class='heading'>Us</td><td><p class='cond heading'>Them</p></td>";
+      var evenopp = true;
+      var lastopponent = "";
+      $.each(dtrdsetarray, function(index, value) {
+        var opponent = value['Opponent'];
+        if (opponent !== lastopponent) {
+          evenopp = !evenopp;
+          lastopponent = opponent;
+        }
+        var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
+        detailtable += "<tr class='set " + (evenopp ? "evenopp" : "oddopp") + "'>" +
+                         "<td colspan='2'><p>" + opponent + "</p></td>" +
+                         tdwlt + value['Us'] + "</td>" +
+                         tdwlt + value['Them'] + "</td>" +
+                       "</tr>";
+      });
+    });
+    detailtable += "<tr><td class='heading dt-right'>Points:</td><td>" + d["Points"] + "</tr>";
+  }
   detailtable += "</table>";
   return detailtable;
 }
@@ -225,9 +226,12 @@ function FillTables(dataarray, tabletop) {
     return val;
   };
 
+  var percent = overalldata.OverallPercent;
+  if (percent === "#DIV/0!")
+    percent = "0%";
   $('.overalltable').append("<tr>" +
                          "<td>Overall:</td>" +
-                         "<td>" + overalldata.OverallPercent + "</td>" +
+                         "<td>" + percent + "</td>" +
                          "<td>(" + overalldata.OverallWins + "&nbsp-&nbsp" + overalldata.OverallLosses + ")</td>" +
                        "</tr>");
 
