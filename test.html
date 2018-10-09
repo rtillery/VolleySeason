@@ -41,7 +41,6 @@ table, tr, th, td {
 
 /* All rttables */
 .rttable {
-  {  font-size: 4vmin;}
 }
 .rttable>tbody>tr>td {
   padding: .5em .25em;
@@ -71,6 +70,9 @@ table, tr, th, td {
 }
 .rttable>thead>tr>th {
   padding: 0 .167em 0 .167em;
+}
+.rtsort {
+  background-color: #F6F6F6;
 }
 
 .masthead {
@@ -263,8 +265,7 @@ table, tr, th, td {
 
   .navbar {
     display: inline-block;
-    float: left;
-    width: auto;
+    width: 100%;
   }
   .navbar>ul>li, .navbar>ul>li:first-child {
     float: none;
@@ -322,7 +323,7 @@ table, tr, th, td {
       <thead>
         <tr>
           <th></th>
-          <th><span>Team<i class='fa fa-fw fa-sort-down cond'></i></span></th>
+          <th class='rtsort'><span>Team<i class='fa fa-fw fa-sort-down cond'></i></span></th>
           <th><p>Rank<i class='fa fa-fw fa-sort'></i></p></th>
           <th><p>Win%<i class='fa fa-fw fa-sort'></i></p></th>
           <th><span>Us<i class='fa fa-fw fa-sort cond'></i></span></th>
@@ -371,7 +372,7 @@ table, tr, th, td {
         <tr>
           <th></th>
           <th><span>Tournament<i class='fa fa-fw fa-sort cond'></i></span></th>
-          <th><p>Dates<i class='fa fa-fw fa-sort-down'></i></p></th>
+          <th class='rtsort'><p>Dates<i class='fa fa-fw fa-sort-down'></i></p></th>
           <th><p>Ws<i class='fa fa-fw fa-sort'></i></p></th>
           <th><p>Ls<i class='fa fa-fw fa-sort'></i></p></th>
           <th><p>Finish<i class='fa fa-fw fa-sort'></i></p></th>
