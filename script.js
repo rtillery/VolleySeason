@@ -233,7 +233,7 @@ function FillTables(dataarray, tabletop) {
                          "<td>Overall:</td>" +
                          "<td>" + percent + "</td>" +
                          "<td>(" + overalldata.OverallWins + "&nbsp-&nbsp" + overalldata.OverallLosses + ")</td>" +
-	                 "<td>#" + overalldata.LatestRanking + ")</td>" +
+	                 "<td>#" + overalldata.LatestRanking + "</td>" +
                        "</tr>");
 
   foetable = $('.foetable').DataTable({
