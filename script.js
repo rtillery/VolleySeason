@@ -269,7 +269,7 @@ function FillTables(dataarray, tabletop) {
     },
     rowCallback: function(row, data, index) {
       var winpct = $(row).find('td:eq(3)');
-      if (winpct.hasClass('win') || winpct.hasClass('lose') || winpct.hasClass('tie') || winpct.hasClass('unplayed'))
+      if (winpct.hasClass('win') || winpct.hasClass('lose') || winpct.hasClass('tie'))
         return;
       $(row).find('td:eq(1)').wrapInner("<p></p>");
       $(row).find('td:eq(2)').wrapInner("<p></p>");
@@ -329,17 +329,22 @@ function FillTables(dataarray, tabletop) {
       footer: false
     },
     rowCallback: function(row, data, index) {
-      var tester = $(row).find('td:eq(3)');
-      if (tester.hasClass('win') || tester.hasClass('lose') || tester.hasClass('tie') || tester.hasClass('unplayed'))
-        return;
-      $(row).find('td:eq(1)').wrapInner("<p></p>");
-      $(row).find('td:eq(2)').wrapInner("<p></p>");
-      $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
-      $(row).find('td:eq(4)').addClass(winlosetie(data["Wins"], data["Losses"]));
-      var item = $(row).find('td:eq(5)');
-      item[0].innerHTML = data["Finish"] + " / " + data["Teams"];
-      item.wrapInner("<p></p>");
-      $(row).find('td:eq(6)').wrapInner("<p></p>");
+      if (!$(row).hasClass('decorated')) {
+        if (isNaN(data["Finish"]) && data["Finish"]) {
+          $(row).find('td:eq(1)').wrapInner("<p><a href='" + data["Finish"] + "'></a></p>");
+          $(row).find('td:eq(2)').wrapInner("<p></p>");
+        } else {
+          $(row).find('td:eq(1)').wrapInner("<p></p>");
+          $(row).find('td:eq(2)').wrapInner("<p></p>");
+          $(row).find('td:eq(3)').addClass(winlosetie(data["Wins"], data["Losses"]));
+          $(row).find('td:eq(4)').addClass(winlosetie(data["Wins"], data["Losses"]));
+          var item = $(row).find('td:eq(5)');
+          item[0].innerHTML = data["Finish"] + " / " + data["Teams"];
+          item.wrapInner("<p></p>");
+          $(row).find('td:eq(6)').wrapInner("<p></p>");
+        }
+        $(row).addClass('decorated');
+      }
     },
     'order': [[2, 'asc']]
   });
