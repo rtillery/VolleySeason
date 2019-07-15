@@ -39,7 +39,7 @@ body,
 }
 .overall {
   width: auto;
-  background-color: maroon;
+  background-color: black;
   display: inline-block;
   align-content: center;
   border-radius: .5em;
@@ -135,30 +135,73 @@ tr.shown td.details-control {
 .masthead {
   font-size: 0;
 }
-.clubbanner, .teambanner {
+.teamlistbanner {
+  font-family: sans-serif;
+  letter-spacing: normal;
+  text-align: center;
+  padding: .2em .2em 0 .2em;
+}
+.evcclubbanner, .evcteambanner, .evcteam {
+  font-family: sans-serif;
+  letter-spacing: normal;
+  text-align: center;
+  padding: .2em .2em 0 .2em;
+}
+.kvaclubbanner, .kvateambanner, .kvateam {
   font-family: 'Enter-Sansman-Bold-Italic';
   letter-spacing: -.05em;
   text-align: center;
   padding: .2em .2em 0 .2em;
 }
-.clubbanner {
-  color: #555;
+.vbcclubbanner, .vbcteambanner, .vbcteam {
+  font-family: sans-serif;
+  letter-spacing: normal;
+  text-align: center;
+  padding: .2em .2em 0 .2em;
+}
+.evcclubbanner, .evcteambanner, .evcteam, .vbcclubbanner, .vbcteambanner, .vbcteam {
+  font-weight: bold;
+}
+.teamlistbanner {
+  color: black;
+  font-size: calc(9vmin / calc(5/4));
+  transform: scaleY(calc(5/4));
+  font-weight: bold;
+}
+.evcclubbanner {
   font-size: calc(9vmin / calc(3/2));
   transform: scaleY(calc(3/2));
 }
-.teambanner {
-  font-size: 7vmin;
-  {  color: maroon; }
+.kvaclubbanner {
+  font-size: calc(9vmin / calc(3/2));
+  transform: scaleY(calc(3/2));
 }
-{ .teambannernolink {
-  color: #805050;
-} }
-.teambanner>span, .clubbanner>span {
+.vbcclubbanner {
+  font-size: calc(9vmin / calc(3/2));
+  transform: scaleY(calc(3/2));
+  font-weight: bold;
+}
+.evcteambanner, .evcteam {
+  font-size: 6vmin;
+}
+.kvateambanner, .kvateam {
+  font-size: 5.5vmin;
+}
+.vbcteambanner, .vbcteam {
+  font-size: 6vmin;
+  font-weight: bold;
+}
+.evcclubbanner>span, .evcteambanner>span, .evcteam>span {
   transform: scaleX(.75);
   font-size: 85%;
   letter-spacing: normal;
 }
-.teambanner>span, .clubbanner>span {
+.kvaclubbanner>span, .kvateambanner>span, .kvateam>span {
+  transform: scaleX(.75);
+  font-size: 85%;
+  letter-spacing: normal;
+}
+.vbcclubbanner>span, .vbcteambanner>span, .vbcteam>span {
   transform: scaleX(.75);
   font-size: 85%;
   letter-spacing: normal;
@@ -201,7 +244,7 @@ tr.shown td.details-control {
 }
 .activetab {
   color: white !important;
-  background-color: maroon !important;
+  background-color: black !important;
 }
 #txtteams:before {
   content: "Teams";
@@ -245,7 +288,7 @@ tr.shown td.details-control {
   font-size: 6vmin;
   text-align: center;
   font-weight: bold;
-  font-family: 'Enter-Sansman-Bold-Italic';
+  font-family: serif;
   color: #555;
 }
 .teamlist>li>a {
@@ -313,7 +356,13 @@ tr.shown td.details-control {
     width: 100%;
     text-align: center;
   }
+  .teamlistbanner {
+    display: inline-block;
+  }
   .clubbanner, .teambanner {
+    display: inline-block;
+  }
+  .kvaclubbanner, .kvateambanner {
     display: inline-block;
   }
 

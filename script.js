@@ -7,12 +7,15 @@ function winlosetie(us, them) {
 function isWhiteSpace(chr) {
   return (" \t\r\n\v\f".indexOf(chr) >= 0);
 }
+
 function isDigit(chr) {
   return (chr >= '0' && chr <= '9');
 }
+
 function isAlpha(chr) {
   return ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z'));
 }
+
 function SmallCaps(instr) {
   var outstr = "";
   var i = 0;
@@ -68,7 +71,7 @@ function DisplayTeamList() {
                .appendTo(teamlistobj);
     if (value.TeamSpreadsheet)
       $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
-        .html(value.TeamName)
+        .html(`<div style='color:${value.Color}'>${value.TeamName}</div>`)
         .appendTo(team);
     else
       $(value.TeamName)
@@ -94,11 +97,6 @@ var playertable;
 function FillKnownPages(dataarray, tabletop) {
   // Start by getting the list of teams from the team spreadsheet
   teamlist = dataarray[TEAMSHEETSHEET].elements;
-  // Decorate the team names for desired display (either in list or in masthead)
-  $.each(teamlist, function(index, value) {
-    teamlist[index].TeamName = "<div class='teambanner' style='" + "color:" + value.Color + "'>" + SmallCaps(value.TeamName) + "</div>";
-  });
-
   // If the URL contains no teamid, then set up the selection list
   if (!urlParams.teamid) {
     DisplayTeamList();
@@ -119,7 +117,8 @@ function FillKnownPages(dataarray, tabletop) {
       });
 
       // Display the team name and go to default page
-      $('.masthead').append(teamrow.TeamName);
+      $('.masthead').html(`<div style='color:${teamrow.ClubColor}'>${teamrow.Masthead}</div>`)
+         .append(`<div style='color:${teamrow.Color}'>${teamrow.ShortTeamName}</div>`);
       $('.navbar>ul>li>a').removeClass('invisible');
       DisplayPage($('.tourneytab'), $('.tourneypage'));
     }
@@ -229,12 +228,14 @@ function FillTables(dataarray, tabletop) {
   var percent = overalldata.OverallPercent;
   if (percent === "#DIV/0!")
     percent = "0%";
-  $('.overalltable').append("<tr>" +
-                         "<td>Overall:</td>" +
-                         "<td>" + percent + "</td>" +
-                         "<td>(" + overalldata.OverallWins + "&nbsp-&nbsp" + overalldata.OverallLosses + ")</td>" +
-	                 "<td>#" + overalldata.LatestRanking + "</td>" +
-                       "</tr>");
+  $('.overall').css("background-color", teamrow.Color);
+  $('.overalltable').append(
+    `<div style='background-color:${teamrow.Color}'><tr>
+      <td>Overall:</td>
+      <td>${percent}</td>
+      <td>(${overalldata.OverallWins}&nbsp-&nbsp${overalldata.OverallLosses})</td>
+      <td>#${overalldata.LatestRanking}&nbsp</td>
+    </div></tr>`);
 
   foetable = $('.foetable').DataTable({
     'data': foedata,
