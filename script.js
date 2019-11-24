@@ -48,7 +48,7 @@ function SmallCaps(instr) {
 }
 
 function GetCleanURL() {
-  return window.location.protocol + "//" + window.location.hostname + window.location.pathname;
+  return `${window.location.protocol}//${window.location.hostname}${window.location.pathname}`;
 }
 
 function DisplayTeamList() {
@@ -64,18 +64,17 @@ function DisplayTeamList() {
   $.each(teamlist, function(index, value) {
     if (value.Year != year) {
       year = value.Year;
-      $("<li style='text-align: center; text-decoration: underline'>" + year.toString() + "</li>")
-      .appendTo(teamlistobj);
+      $(`<li style='text-align:center; text-decoration:underline'>${year.toString()}</li>`)
+        .appendTo(teamlistobj);
     }
     var team = $('<li/>')
                .appendTo(teamlistobj);
     if (value.TeamSpreadsheet)
-      $("<a href='" + GetCleanURL() + "?teamid=" + value.USAVCode + "'/>")
+      $(`<a href='${GetCleanURL()}?teamid=${value.USAVCode}'/>`)
         .html(`<div style='color:${value.Color}'>${value.TeamName}</div>`)
         .appendTo(team);
     else
-      $(value.TeamName)
-        .appendTo(team);
+      $(value.TeamName).appendTo(team);
   });
 }
 
@@ -136,14 +135,14 @@ function FormatFoeDropdown(d) {
   if (d.UniqueOpponentCode) {
     detailtable += "<thead><tr><th>Tournament</th><th>Date</th><th>Round</th><th>Us</th><th><p>Them</p></th></tr></thead>";
     $.each(setarray, function(index, value) {
-      var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-      detailtable += "<tr class='set'>" +
-                       "<td><p>" + value["Tournament"] + "</p></td>" +
-                       "<td class='dt-center'><p>" + value["Date"] + "</p></td>" +
-                       "<td class='dt-left'><p>" + value["Round"] + "</p></td>" +
-                       tdwlt + value["Us"] + "</td>" +
-                       tdwlt + value["Them"] + "</td>" +
-                     "</tr>";
+      var tdwlt = `<td class='${winlosetie(value["Us"], value["Them"])} dt-center'>`;
+      detailtable += `<tr class='set'>
+                        <td><p>${value["Tournament"]}</p></td>
+                        <td class='dt-center'><p>${value["Date"]}</p></td>
+                        <td class='dt-left'><p>${value["Round"]}</p></td>
+                        ${tdwlt}${value["Us"]}"</td>
+                        ${tdwlt}${value["Them"]}</td>
+                      </tr>`;
     });
     detailtable += "</table>";
   }
@@ -164,7 +163,12 @@ function FormatTourneyDropdown(d) {
     });
     $.each(daterounds, function(index, dtrd) {
       var dtrdsetarray = $.grep(setdata, function(e) { return dtrd == e.Date + e.Round; });
-      detailtable += "<tr><td class='dt-right round'>" + dtrdsetarray[0]["Date"] + "</td><td class='round'>" + dtrdsetarray[0]["Round"] + "</td><td class='heading'>Us</td><td><p class='cond heading'>Them</p></td>";
+      detailtable += `<tr>
+                        <td class='dt-right round'>${dtrdsetarray[0]["Date"]}</td>
+                        <td class='round'>${dtrdsetarray[0]["Round"]}</td>
+                        <td class='heading'>Us</td>
+                        <td><p class='cond heading'>Them</p></td>
+                      </tr>`;
       var evenopp = true;
       var lastopponent = "";
       $.each(dtrdsetarray, function(index, value) {
@@ -173,15 +177,18 @@ function FormatTourneyDropdown(d) {
           evenopp = !evenopp;
           lastopponent = opponent;
         }
-        var tdwlt = "<td class='" + winlosetie(value["Us"], value["Them"]) + " dt-center'>";
-        detailtable += "<tr class='set " + (evenopp ? "evenopp" : "oddopp") + "'>" +
-                         "<td colspan='2'><p>" + opponent + "</p></td>" +
-                         tdwlt + value['Us'] + "</td>" +
-                         tdwlt + value['Them'] + "</td>" +
-                       "</tr>";
+        var tdwlt = `<td class='${winlosetie(value["Us"], value["Them"])} dt-center'>`;
+        detailtable += `<tr class='set ${(evenopp ? "evenopp" : "oddopp")}'>
+                          <td colspan='2'><p>${opponent}</p></td>
+                          ${tdwlt}${value['Us']}</td>
+                          ${tdwlt}${value['Them']}</td>
+                        </tr>`;
       });
     });
-    detailtable += "<tr><td class='heading dt-right'>Points:</td><td>" + d["Points"] + "</tr>";
+    detailtable += `<tr>
+                      <td class='heading dt-right'>Points:</td>
+                      <td>${d["Points"]}</td>
+                    </tr>`;
   }
   detailtable += "</table>";
   return detailtable;
