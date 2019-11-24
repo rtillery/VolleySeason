@@ -141,25 +141,25 @@ tr.shown td.details-control {
   text-align: center;
   padding: .2em .2em 0 .2em;
 }
-[class^="evc"] {
+.evcclubbanner, .evcteambanner, .evcteam {
   font-family: sans-serif;
   letter-spacing: normal;
   text-align: center;
   padding: .2em .2em 0 .2em;
 }
-[class^="kva"] {
+.kvaclubbanner, .kvateambanner, .kvateam {
   font-family: 'Enter-Sansman-Bold-Italic';
   letter-spacing: -.05em;
   text-align: center;
   padding: .2em .2em 0 .2em;
 }
-[class^="vbc"] {
+.vbcclubbanner, .vbcteambanner, .vbcteam {
   font-family: sans-serif;
   letter-spacing: normal;
   text-align: center;
   padding: .2em .2em 0 .2em;
 }
-[class^="evc"], [class^="vbc"] {
+.evcclubbanner, .evcteambanner, .evcteam, .vbcclubbanner, .vbcteambanner, .vbcteam {
   font-weight: bold;
 }
 .teamlistbanner {
@@ -181,13 +181,13 @@ tr.shown td.details-control {
   transform: scaleY(calc(3/2));
   font-weight: bold;
 }
-[class^="evcteam"] {
+.evcteambanner, .evcteam {
   font-size: 6vmin;
 }
-[class^="kvateam"] {
+.kvateambanner, .kvateam {
   font-size: 5.5vmin;
 }
-[class^="vbcteam"] {
+.vbcteambanner, .vbcteam {
   font-size: 6vmin;
   font-weight: bold;
 }
@@ -359,7 +359,10 @@ tr.shown td.details-control {
   .teamlistbanner {
     display: inline-block;
   }
-  div[class$="clubbanner"], div[class$="teambanner"]
+  .clubbanner, .teambanner {
+    display: inline-block;
+  }
+  .kvaclubbanner, .kvateambanner {
     display: inline-block;
   }
 
